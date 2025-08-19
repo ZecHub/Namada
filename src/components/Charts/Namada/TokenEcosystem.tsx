@@ -12,7 +12,6 @@ import { useResponsiveFontSize } from "../../hooks/useResponsiveFontSize";
 import { DATA_URL } from "../../lib/chart/data-url";
 import { getNamadaSupply } from "../../lib/chart/helpers";
 import { FlattenedTokenData } from "../../lib/chart/types";
-import { Spinner } from "flowbite-react";
 import {
   Area,
   AreaChart,
@@ -30,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../UI/shadcn/select";
+import ChartContainer from "../ChartContainer";
 
 type NamadaAsset = {
   id: string;
@@ -78,7 +78,9 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
       }
     }
 
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 2000);
     return () => controller.abort();
   }, []);
 
@@ -113,10 +115,7 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
       : [props.selectedTokenId];
 
   return (
-    <Card
-      ref={props.divChartRef}
-      className="shadow-sm border border-gray-200 dark:border-slate-700"
-    >
+    <Card className="shadow-sm border border-gray-200 dark:border-slate-700">
       <CardHeader className="flex flex-row items-center mb-12">
         <CardTitle className="flex-1 text-xl">
           {props.selectedTokenId === "all"
@@ -154,90 +153,82 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="relative">
-          <ResponsiveContainer width="100%" height={420}>
-            {loading ? (
-              <div className="flex justify-center items-center h-full">
-                <Spinner />
-              </div>
-            ) : (
-              <AreaChart data={chartData}>
-                <defs>
-                  {activeTokenIds.map((id, index) => (
-                    <linearGradient
-                      key={id}
-                      id={`${id}-gradient`}
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="5%"
-                        stopColor={`hsl(var(--chart-${(index % 6) + 1}))`}
-                        stopOpacity={0.6}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor={`hsl(var(--chart-${(index % 6) + 1}))`}
-                        stopOpacity={0.05}
-                      />
-                    </linearGradient>
-                  ))}
-                </defs>
-
-                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
-                <XAxis dataKey="Date" tick={{ fontSize, fill: "#94a3b8" }} />
-                <YAxis
-                  tick={{ fontSize, fill: "#94a3b8" }}
-                  tickFormatter={(value: number) => {
-                    // Use billions format for Namada, thousands for others
-                    if (props.selectedTokenId === "Namada") {
-                      return `${(value / 1e9).toFixed(1)}B`;
-                    }
-                    return `${(value / 1e3).toFixed(0)}k`;
-                  }}
-                />
-                <Tooltip
-                  wrapperStyle={{
-                    backgroundColor: "hsl(var(--chart-1)",
-                  }}
-                />
-                <Legend
-                  verticalAlign="bottom"
-                  align="center"
-                  content={() => (
-                    <div className="pt-5 flex justify-center gap-6 text-sm mt-2 text-slate-600 dark:text-slate-300">
-                      {activeTokenIds.map((id, index) => (
-                        <div key={id} className="flex items-center gap-2">
-                          <span
-                            className="w-3 h-3 inline-block rounded-sm"
-                            style={{
-                              background: `hsl(var(--chart-${
-                                (index % 6) + 1
-                              }))`,
-                            }}
-                          />
-                          <p>{id}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                />
+          <ChartContainer ref={props.divChartRef} loading={loading}>
+            <AreaChart data={chartData} width={100} height={100}>
+              <defs>
                 {activeTokenIds.map((id, index) => (
-                  <Area
+                  <linearGradient
                     key={id}
-                    type="monotone"
-                    dataKey={id}
-                    stroke={`hsl(var(--chart-${(index % 6) + 1}))`}
-                    fill={`url(#${id}-gradient)`}
-                    name={id}
-                    strokeWidth={2}
-                    animationDuration={600}
-                  />
+                    id={`${id}-gradient`}
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="5%"
+                      stopColor={`hsl(var(--chart-${(index % 6) + 1}))`}
+                      stopOpacity={0.6}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor={`hsl(var(--chart-${(index % 6) + 1}))`}
+                      stopOpacity={0.05}
+                    />
+                  </linearGradient>
                 ))}
-              </AreaChart>
-            )}
-          </ResponsiveContainer>
+              </defs>
+
+              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
+              <XAxis dataKey="Date" tick={{ fontSize, fill: "#94a3b8" }} />
+              <YAxis
+                tick={{ fontSize, fill: "#94a3b8" }}
+                tickFormatter={(value: number) => {
+                  // Use billions format for Namada, thousands for others
+                  if (props.selectedTokenId === "Namada") {
+                    return `${(value / 1e9).toFixed(1)}B`;
+                  }
+                  return `${(value / 1e3).toFixed(0)}k`;
+                }}
+              />
+              <Tooltip
+                wrapperStyle={{
+                  backgroundColor: "hsl(var(--chart-1)",
+                }}
+              />
+              <Legend
+                verticalAlign="bottom"
+                align="center"
+                content={() => (
+                  <div className="pt-5 flex justify-center gap-6 text-sm mt-2 text-slate-600 dark:text-slate-300">
+                    {activeTokenIds.map((id, index) => (
+                      <div key={id} className="flex items-center gap-2">
+                        <span
+                          className="w-3 h-3 inline-block rounded-sm"
+                          style={{
+                            background: `hsl(var(--chart-${(index % 6) + 1}))`,
+                          }}
+                        />
+                        <p>{id}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              />
+              {activeTokenIds.map((id, index) => (
+                <Area
+                  key={id}
+                  type="monotone"
+                  dataKey={id}
+                  stroke={`hsl(var(--chart-${(index % 6) + 1}))`}
+                  fill={`url(#${id}-gradient)`}
+                  name={id}
+                  strokeWidth={2}
+                  animationDuration={600}
+                />
+              ))}
+            </AreaChart>
+          </ChartContainer>
         </div>
       </CardContent>
     </Card>

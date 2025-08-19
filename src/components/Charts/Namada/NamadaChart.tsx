@@ -73,7 +73,7 @@ function NamadaChart(props: NamadaChartProps) {
                   </TabsContent>
 
                   <ChartFooter
-                    imgLabel={selectedTokenId}
+                    imgLabel={activeTab}
                     handleSaveToPng={props.handleSaveToPng}
                     lastUpdatedDate={props.lastUpdated}
                   />

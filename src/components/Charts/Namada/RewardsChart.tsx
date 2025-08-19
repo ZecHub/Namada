@@ -26,6 +26,7 @@ import "chartjs-adapter-date-fns";
 import { format, parse } from "date-fns";
 import { RefObject, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import ChartContainer from "../ChartContainer";
 
 ChartJS.register(
   CategoryScale,
@@ -266,7 +267,6 @@ const RewardChart = (props: RewardChartProps) => {
 
   return (
     <div
-      ref={props.divChartRef}
       className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
@@ -305,9 +305,15 @@ const RewardChart = (props: RewardChartProps) => {
         </div>
       </div>
 
-      <div className="w-full" style={{ height: "480px", position: "relative" }}>
-        <Line data={chartData} options={options} />
-      </div>
+      <ChartContainer ref={props.divChartRef} loading={loading}>
+        <div
+          className="w-full"
+          style={{ height: "480px", position: "relative" }}
+        >
+          <Line data={chartData} options={options} />
+        </div>
+      </ChartContainer>
+
       {/* <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-blue-50 dark:bg-slate-800 p-4 rounded-lg">
           <h3 className="font-semibold text-blue-800">Current Staked Ratio</h3>

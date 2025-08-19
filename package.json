@@ -17,6 +17,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "dom-to-image": "^2.6.0",
+    "dom-to-image-more": "^3.6.3",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.6",
     "html2canvas": "^1.4.1",
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@types/dom-to-image": "^2.6.7",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
