@@ -1,0 +1,92 @@
+.governance-proposals {
+    padding-top: 30px
+}
+
+.epoch-banner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    padding: 21px 23px;
+    margin-bottom: 23px;
+    font-size: 18px
+}
+
+.epoch-banner b {
+    font-weight: 700
+}
+
+.proposals-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    background: #1e2a3a
+}
+
+.proposals-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 1020px;
+    text-align: left
+}
+
+.proposals-table th {
+    background: #344256;
+    color: #d8dfe8;
+    font: 600 11px 'DM Mono';
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 15px 22px
+}
+
+.proposals-table td {
+    border-top: 1px solid #344256;
+    color: #d0d7e0;
+    font-size: 13px;
+    padding: 17px 22px;
+    white-space: nowrap
+}
+
+.proposals-table tbody tr:hover {
+    background: #26364b
+}
+
+.proposals-table td:first-child {
+    font-weight: 600
+}
+
+.proposals-table td:nth-child(2) {
+    color: #f6f8fb
+}
+
+.proposals-table code {
+    font: 12px 'DM Mono';
+    color: #aebbd0
+}
+
+.dashboard-view[data-view="proposals"]>.dashboard {
+    display: none
+}
+
+.dashboard-view[data-view="proposals"]>.governance-proposals {
+    display: block
+}
+
+@media(max-width:760px) {
+    .governance-proposals {
+        padding-top: 24px
+    }
+
+    .epoch-banner {
+        font-size: 16px;
+        padding: 18px
+    }
+
+    .proposals-table th,
+    .proposals-table td {
+        padding-left: 14px;
+        padding-right: 14px
+    }
+}

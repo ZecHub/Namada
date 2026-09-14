@@ -1,0 +1,141 @@
+:root {
+    --ink: #f6f8fb;
+    --muted: #aeb8c7;
+    --line: #344256;
+    --lime: #218bff;
+    --blue: #b8c0ce;
+    --surface: #1e2a3a;
+    --deep: #020918
+}
+
+.brand-mark {
+    color: #218bff;
+    border-color: #218bff
+}
+
+.hero h1 span,
+.pathway h2 span,
+.text-link,
+.data-source-link,
+.dashboard-link,
+.source svg,
+.arrow,
+.proposal-row svg,
+.validator-row em svg,
+.table-link,
+.validator-table td a {
+    color: #218bff
+}
+
+.button.primary,
+.category-scroll button.active,
+.category-scroll button:hover {
+    background: #218bff;
+    border-color: #218bff;
+    color: #fff
+}
+
+.button.secondary {
+    background: #172234;
+    border-color: #40516a
+}
+
+.pulse,
+.live-dot,
+.status-pill i {
+    background: #218bff;
+    box-shadow: 0 0 0 5px #218bff18
+}
+
+.hero-grid:after {
+    border-color: #244d75;
+    box-shadow: 0 0 0 48px #08182b, 0 0 0 49px #244d75, 0 0 0 122px #08182b, 0 0 0 123px #1d4166
+}
+
+.guide-card.featured,
+.metrics-panel {
+    background: #26364b
+}
+
+.dashboard-page {
+    background: #020918
+}
+
+.dashboard-tabs button.active {
+    color: #fff;
+    border-bottom-color: #218bff
+}
+
+.analytics-card,
+.validators-card,
+.proposals-panel,
+.metrics-panel,
+.validator-table-wrap {
+    border-color: #33445a
+}
+
+.bar {
+    background: linear-gradient(180deg, #218bff, #1d5fa8)
+}
+
+.detail-address code {
+    background: #172337
+}
+
+.validator-details,
+.validator-table th {
+    background: #344256
+}
+
+.detail-panels>div,
+.detail-address {
+    background: #344256
+}
+
+.dashboard-main {
+    padding-top: 32px
+}
+
+.dashboard-intro {
+    padding-bottom: 0
+}
+
+.dashboard-intro h1 {
+    margin-bottom: 12px
+}
+
+.dashboard-view {
+    margin-top: 30px
+}
+
+.dashboard-view .dashboard {
+    padding-top: 30px
+}
+
+.dashboard-view .dashboard>.section-heading h2 {
+    font-size: 28px;
+    letter-spacing: -.04em
+}
+
+.dashboard-view .dashboard>.section-heading {
+    margin-bottom: 21px
+}
+
+.dashboard-view .dashboard>.section-heading .section-kicker {
+    display: none
+}
+
+.dashboard-view[data-view="validator"] .dashboard>.section-heading,
+.dashboard-view[data-view="validator"] .dashboard>.section-heading+.dashboard-grid,
+.dashboard-view[data-view="validator"] .dashboard>.section-heading~.analytics-grid,
+.dashboard-view[data-view="validator"] .dashboard>.section-heading~.validators-card {
+    display: none
+}
+
+.dashboard-view[data-view="validator"] .dashboard {
+    padding: 0
+}
+
+.dashboard-view[data-view="validator"] .validator-directory {
+    padding-top: 30px
+}

@@ -5,7 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  // The previous metrics dashboard is retained as archive code but is no longer
+  // part of the learning hub bundle. Keep it out of the active app lint scope.
+  { ignores: ['dist', 'src/components/**', 'src/layouts/**'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

@@ -1,0 +1,204 @@
+.charts-workspace {
+    padding-top: 30px
+}
+
+.metrics-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 24px
+}
+
+.metrics-heading h2 {
+    font: 600 29px 'Space Grotesk';
+    letter-spacing: -.05em;
+    margin: 14px 0 0
+}
+
+.metric-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px
+}
+
+.metric-cards>div {
+    min-height: 93px;
+    padding: 18px 20px;
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 6px
+}
+
+.metric-cards span,
+.metric-cards small {
+    display: block;
+    color: #aeb8c7;
+    font-size: 12px
+}
+
+.metric-cards b {
+    display: block;
+    color: #f6f8fb;
+    font: 600 18px 'Space Grotesk';
+    margin-top: 11px
+}
+
+.metric-cards small {
+    color: #d8f36b;
+    font: 10px 'DM Mono';
+    margin-top: 6px
+}
+
+.analytics-shell {
+    margin-top: 28px;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    padding: 24px;
+    background: #020918
+}
+
+.analytics-shell-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px
+}
+
+.analytics-shell-heading h3 {
+    font: 600 22px 'Space Grotesk';
+    margin: 0;
+    text-transform: capitalize
+}
+
+.analytics-shell-heading a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #d8f36b;
+    font: 11px 'DM Mono'
+}
+
+.chart-tabs {
+    display: flex;
+    gap: 5px;
+    background: #1e2a3a;
+    border-radius: 5px;
+    padding: 4px;
+    overflow-x: auto
+}
+
+.chart-tabs button {
+    flex: none;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #aeb8c7;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer
+}
+
+.chart-tabs button.active,
+.chart-tabs button:hover {
+    background: #020918;
+    color: #f6f8fb;
+    box-shadow: inset 0 0 0 1px #344256
+}
+
+.chart-panel {
+    border: 1px solid #344256;
+    border-radius: 5px;
+    margin-top: 16px;
+    padding: 24px
+}
+
+.chart-panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end
+}
+
+.chart-panel-heading h3 {
+    font: 600 20px 'Space Grotesk';
+    margin: 7px 0 0
+}
+
+.large-bars {
+    height: 280px;
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    border-bottom: 1px solid #344256;
+    margin-top: 28px;
+    padding: 0 10px
+}
+
+.large-bar-column {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 8px
+}
+
+.large-bar {
+    width: 100%;
+    max-width: 38px;
+    min-height: 6px;
+    background: #d8f36b;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 0 18px #d8f36b1c
+}
+
+.large-bar-column small {
+    color: #8fa0b5;
+    font: 9px 'DM Mono'
+}
+
+.chart-empty {
+    display: grid;
+    place-items: center;
+    min-height: 270px;
+    color: #8fa0b5;
+    font-size: 13px;
+    text-align: center
+}
+
+@media(max-width:760px) {
+    .metrics-heading {
+        display: block
+    }
+
+    .metrics-heading .directory-note {
+        display: block;
+        margin-top: 15px
+    }
+
+    .metric-cards {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .analytics-shell {
+        padding: 17px
+    }
+
+    .analytics-shell-heading {
+        display: block
+    }
+
+    .analytics-shell-heading a {
+        margin-top: 14px
+    }
+
+    .chart-panel {
+        padding: 17px
+    }
+
+    .large-bars {
+        gap: 4px;
+        padding: 0 3px
+    }
+}

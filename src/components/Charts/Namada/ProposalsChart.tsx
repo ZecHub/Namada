@@ -200,6 +200,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
     );
   }
 
+  console.log("Vote Counts:", voteCounts);
   const totalProposals = voteCounts.length;
   const totalAddresses = voteCounts.reduce((sum, count) => sum + count, 0);
   const avgAddresses = (totalAddresses / totalProposals).toFixed(0);
