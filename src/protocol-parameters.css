@@ -1,0 +1,150 @@
+.protocol-parameters {
+    padding-top: 31px
+}
+
+.parameters-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 25px
+}
+
+.parameters-heading h2 {
+    font: 600 29px 'Space Grotesk';
+    letter-spacing: -.05em;
+    margin: 14px 0 0
+}
+
+.parameters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+}
+
+.parameter-card {
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    overflow: hidden
+}
+
+.parameter-card h3 {
+    font: 600 18px 'DM Sans';
+    margin: 0;
+    padding: 19px 22px;
+    border-bottom: 1px solid #344256;
+    color: var(--ink)
+}
+
+.parameter-rows {
+    padding: 9px 22px 13px
+}
+
+.parameter-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+    color: #c4ccd6;
+    font-size: 13px
+}
+
+.parameter-row span {
+    text-transform: capitalize
+}
+
+.parameter-row b {
+    text-align: right;
+    color: #f6f8fb;
+    font-size: 13px
+}
+
+.parameters-grid .parameter-card:nth-child(3),
+.parameters-grid .parameter-card:nth-child(4) {
+    min-height: 100%
+}
+
+.parameter-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px
+}
+
+.parameter-details-grid details {
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    color: #c4ccd6
+}
+
+.parameter-details-grid summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 17px 19px;
+    font: 600 13px 'DM Sans';
+    display: flex;
+    justify-content: space-between
+}
+
+.parameter-details-grid summary::-webkit-details-marker {
+    display: none
+}
+
+.parameter-details-grid summary span {
+    font: 10px 'DM Mono';
+    color: #d8f36b
+}
+
+.parameter-details-grid details[open] summary {
+    border-bottom: 1px solid #344256
+}
+
+.parameter-details-grid code {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 190px;
+    overflow: auto;
+    padding: 16px;
+    color: #9aa9bc;
+    font: 10px 'DM Mono';
+    line-height: 1.6
+}
+
+.dashboard-view[data-view="parameters"]>.dashboard {
+    display: none
+}
+
+.dashboard-view[data-view="parameters"]>.validator-directory {
+    display: none
+}
+
+@media(max-width:760px) {
+    .parameters-heading {
+        display: block
+    }
+
+    .parameters-heading .directory-note {
+        display: block;
+        margin-top: 14px
+    }
+
+    .parameters-grid,
+    .parameter-details-grid {
+        grid-template-columns: 1fr
+    }
+
+    .parameter-row {
+        font-size: 12px
+    }
+
+    .parameter-card h3 {
+        padding: 17px 18px
+    }
+
+    .parameter-rows {
+        padding: 8px 18px 12px
+    }
+}

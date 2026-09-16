@@ -1,0 +1,13 @@
+.source-links {
+    display: flex;
+    gap: 16px;
+    align-items: center
+}
+
+@media(max-width:760px) {
+    .source-links {
+        margin-top: 22px;
+        flex-wrap: wrap;
+        gap: 12px
+    }
+}

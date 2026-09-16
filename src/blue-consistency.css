@@ -1,0 +1,41 @@
+:root {
+    --blue: #218bff
+}
+
+.eyebrow,
+.section-kicker,
+.card-tag,
+.proposal-status,
+.directory-note {
+    color: #218bff
+}
+
+.hero-note .note-line {
+    background: #218bff
+}
+
+.hero-note a {
+    color: #218bff
+}
+
+.proposal-row .proposal-id,
+.metric-date {
+    color: #8fa0b5
+}
+
+.validator-table td {
+    color: #c0c8d4
+}
+
+.validator-table td a,
+.dashboard-source {
+    color: #218bff
+}
+
+.bar-icon i {
+    background: #218bff
+}
+
+.pathway-links a span {
+    color: #8fa0b5
+}

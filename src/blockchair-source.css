@@ -1,0 +1,20 @@
+.charts-workspace .metrics-heading>.directory-note {
+    font-size: 0
+}
+
+.charts-workspace .metrics-heading>.directory-note:after {
+    content: 'Price source: Blockchair Zcash API · supply source: Namada';
+    font: 10px 'DM Mono';
+    color: #d8f36b
+}
+
+.charts-workspace .analytics-shell-heading>a {
+    font-size: 0;
+    pointer-events: none
+}
+
+.charts-workspace .analytics-shell-heading>a:after {
+    content: 'Blockchair price API';
+    font: 11px 'DM Mono';
+    color: #d8f36b
+}

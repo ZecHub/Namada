@@ -1,0 +1,88 @@
+.dashboard-view {
+    border-top: 1px solid var(--line);
+    margin-top: 35px
+}
+
+.dashboard-tabs {
+    display: flex;
+    gap: 34px;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none
+}
+
+.dashboard-tabs button {
+    flex: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: #889692;
+    padding: 17px 3px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer
+}
+
+.dashboard-tabs button:hover,
+.dashboard-tabs button.active {
+    color: #d8f36b;
+    border-bottom-color: #d8f36b
+}
+
+.dashboard-view .dashboard {
+    padding-top: 30px
+}
+
+.dashboard-view .validator-directory {
+    padding-top: 48px
+}
+
+.dashboard-view[data-view="parameters"] .dashboard-grid,
+.dashboard-view[data-view="parameters"] .analytics-grid> :first-child,
+.dashboard-view[data-view="parameters"] .validators-card,
+.dashboard-view[data-view="parameters"] .validator-directory {
+    display: none
+}
+
+.dashboard-view[data-view="proposals"] .dashboard,
+.dashboard-view[data-view="proposals"] .dashboard-grid>.metrics-panel,
+.dashboard-view[data-view="proposals"] .analytics-grid,
+.dashboard-view[data-view="proposals"] .validators-card,
+.dashboard-view[data-view="proposals"] .validator-directory {
+    display: none
+}
+
+.dashboard-view[data-view="validator"] .dashboard,
+.dashboard-view[data-view="validator"] .validator-directory {
+    display: block
+}
+
+.dashboard-view[data-view="validator"] .dashboard-grid,
+.dashboard-view[data-view="validator"] .analytics-grid,
+.dashboardView[data-view="validator"] .validators-card {
+    display: none
+}
+
+.dashboardView[data-view="charts"] .dashboard-grid,
+.dashboardView[data-view="charts"] .analytics-grid> :last-child,
+.dashboardView[data-view="charts"] .validators-card,
+.dashboardView[data-view="charts"] .validator-directory {
+    display: none
+}
+
+.dashboardView[data-view="charts"] .dashboard {
+    padding-bottom: 0
+}
+
+@media(max-width:760px) {
+    .dashboardTabs {
+        gap: 20px
+    }
+    .dashboardTabs button {
+        font-size: 12px
+    }
+
+    .dashboardView {
+        margin-top: 28px
+    }
+}
