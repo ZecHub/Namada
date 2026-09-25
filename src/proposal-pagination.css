@@ -1,0 +1,68 @@
+.epoch-banner small {
+    margin-left: auto;
+    color: #8fa0b5;
+    font: 10px 'DM Mono';
+    text-transform: uppercase;
+    letter-spacing: .06em
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 17px 2px;
+    color: #8fa0b5;
+    font: 11px 'DM Mono'
+}
+
+.pagination>div {
+    display: flex;
+    align-items: center;
+    gap: 13px
+}
+
+.pagination button {
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 4px;
+    color: #f6f8fb;
+    padding: 8px 12px;
+    font: 11px 'DM Mono';
+    cursor: pointer
+}
+
+.pagination button:hover:not(:disabled) {
+    border-color: #d8f36b;
+    color: #d8f36b
+}
+
+.pagination button:disabled {
+    opacity: .45;
+    cursor: not-allowed
+}
+
+.pagination b {
+    font-weight: 400;
+    color: #d8f36b
+}
+
+@media(max-width:760px) {
+    .epoch-banner {
+        flex-wrap: wrap
+    }
+
+    .epoch-banner small {
+        width: 100%;
+        margin: 5px 0 0
+    }
+
+    .pagination {
+        display: block
+    }
+
+    .pagination>div {
+        justify-content: space-between;
+        margin-top: 14px
+    }
+}

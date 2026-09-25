@@ -1,0 +1,43 @@
+.charts-workspace .metric-cards>div {
+    position: relative;
+    overflow: hidden
+}
+
+.charts-workspace .metric-cards>div:after {
+    content: '';
+    position: absolute;
+    right: -25px;
+    bottom: -35px;
+    width: 95px;
+    height: 95px;
+    border: 1px solid #d8f36b22;
+    border-radius: 50%
+}
+
+.charts-workspace .analytics-shell {
+    box-shadow: 0 20px 60px #00000026
+}
+
+.charts-workspace .chart-panel {
+    background: linear-gradient(180deg, #071326, #020918);
+    background-image: linear-gradient(#26365022 1px, transparent 1px), linear-gradient(90deg, #26365022 1px, transparent 1px);
+    background-size: 100% 56px, 72px 100%
+}
+
+.charts-workspace .large-bars {
+    border-bottom-color: #506077
+}
+
+.charts-workspace .large-bar {
+    transition: height .35s ease, filter .2s
+}
+
+.charts-workspace .large-bar:hover {
+    filter: brightness(1.25);
+    box-shadow: 0 0 20px #d8f36b66
+}
+
+.charts-workspace .chart-tabs button.active {
+    color: #d8f36b;
+    box-shadow: inset 0 0 0 1px #d8f36b66
+}

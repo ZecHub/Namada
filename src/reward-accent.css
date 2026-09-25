@@ -1,0 +1,17 @@
+.reward-axis-chart .participation-bar {
+    background: #d8f36b;
+    box-shadow: 0 0 15px #d8f36b33
+}
+
+.reward-axis-chart .participation-bar:hover {
+    background: #d8f36b;
+    filter: brightness(1.18);
+    box-shadow: 0 0 22px #d8f36b88
+}
+
+.charts-workspace .chart-tabs button:hover,
+.charts-workspace .chart-tabs button.active {
+    color: #d8f36b;
+    background: #020918;
+    box-shadow: inset 0 0 0 1px #d8f36b66
+}
