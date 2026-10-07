@@ -97,6 +97,67 @@
     color: #111a1b !important
 }
 
+.source-reward-chart {
+    background: #020918 !important;
+    border-color: #344256 !important;
+    color: #f6f8fb !important
+}
+
+.source-reward-chart label,
+.source-reward-chart h3,
+.source-reward-chart p {
+    color: #f6f8fb
+}
+
+.source-reward-chart .text-slate-600,
+.source-reward-chart .text-slate-300,
+.source-reward-chart .text-slate-400 {
+    color: #aeb8c7 !important
+}
+
+.source-proposals-chart {
+    background: #020918 !important;
+    border-color: #344256 !important;
+    color: #f6f8fb !important
+}
+
+.source-proposals-chart h2,
+.source-proposals-chart h3,
+.source-proposals-chart label,
+.source-proposals-chart p {
+    color: #f6f8fb
+}
+
+.source-proposals-select {
+    background: #172337 !important;
+    border-color: #40516a !important;
+    color: #f6f8fb !important;
+    outline: none
+}
+
+.source-proposals-select:focus {
+    border-color: #d8f36b !important;
+    box-shadow: 0 0 0 2px #d8f36b44
+}
+
+.source-proposals-select option {
+    background: #172337;
+    color: #f6f8fb
+}
+
+.source-proposals-chart .bg-blue-50,
+.source-proposals-chart .bg-green-50,
+.source-proposals-chart .bg-purple-50 {
+    background: #172337 !important;
+    border: 1px solid #344256
+}
+
+.source-proposals-chart .text-blue-800,
+.source-proposals-chart .text-green-800,
+.source-proposals-chart .text-purple-800 {
+    color: #d8f36b !important
+}
+
 .source-charts-workspace .recharts-cartesian-grid line {
     stroke: #344256;
     stroke-opacity: .65
