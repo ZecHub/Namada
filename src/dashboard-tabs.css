@@ -75,14 +75,14 @@
 }
 
 @media(max-width:760px) {
-    .dashboardTabs {
+    .dashboard-tabs {
         gap: 20px
     }
-    .dashboardTabs button {
+    .dashboard-tabs button {
         font-size: 12px
     }
 
-    .dashboardView {
+    .dashboard-view {
         margin-top: 28px
     }
 }

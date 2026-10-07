@@ -13,38 +13,6 @@ import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 
-const blockchairPriceApi = DATA_URL.blockchairUrl;
-const browserFetch = window.fetch.bind(window);
-const fetch = (input: RequestInfo | URL, init?: RequestInit) => {
-  const requestedUrl = String(input);
-  const url = requestedUrl.includes("api.coingecko.com")
-    ? blockchairPriceApi
-    : requestedUrl;
-  return browserFetch(url, init).then(async (response) => {
-    if (url === blockchairPriceApi) {
-      const payload = (await response.clone().json()) as {
-        data?: {
-          market_price_usd?: number;
-          market_price_btc?: number;
-          market_cap_usd?: number;
-        };
-      };
-      const data = payload.data || {};
-      return new Response(
-        JSON.stringify({
-          namada: {
-            usd: data.market_price_usd,
-            btc: data.market_price_btc,
-            usd_market_cap: data.market_cap_usd,
-          },
-        }),
-        { status: response.status, headers: response.headers },
-      );
-    }
-    return response;
-  });
-};
-
 type Validator = {
   Name?: string;
   Address?: string;
@@ -382,9 +350,18 @@ function MarketMetrics() {
 
   useEffect(() => {
     Promise.all([
-      fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true",
-      ).then((response) => response.json()),
+      fetch(DATA_URL.blockchairUrl)
+        .then((response) => response.json())
+        .then((payload) => {
+          const data = payload.data || {};
+          return {
+            namada: {
+              usd: data.market_price_usd,
+              btc: data.market_price_btc,
+              usd_market_cap: data.market_cap_usd,
+            },
+          };
+        }),
       fetch(DATA_URL.namadaSupplyUrl).then((response) => response.json()),
     ])
       .then(([market, supply]) => {
@@ -410,7 +387,7 @@ function MarketMetrics() {
           <h2>Namada metrics</h2>
         </div>
         <span className="directory-note">
-          Price source: CoinGecko · supply source: Namada
+          Price source: Blockchair Zcash API · supply source: Namada
         </span>
       </div>
       <div className="metric-cards">
@@ -841,11 +818,6 @@ export default function Dashboard() {
             ))}
           </nav>
           {activeTab === "parameters" && <ProtocolParameters />}
-          {activeTab === "parameters" && (
-            <section className="staking-economics section-wrap" aria-label="Staking economics">
-              <RewardsChart />
-            </section>
-          )}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
           {activeTab === "charts" && <SourceChartsWorkspace />}
           <NetworkDashboard />

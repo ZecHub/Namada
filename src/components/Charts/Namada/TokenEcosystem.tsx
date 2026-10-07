@@ -118,19 +118,19 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
       ref={props.divChartRef}
       className="shadow-sm border border-gray-200 dark:border-slate-700"
     >
-      <CardHeader className="flex flex-row imd:flex-col items-center mb-12">
-        <CardTitle className="flex-1 text-xl">
+      <CardHeader className="flex flex-col items-start gap-4 mb-12 lg:flex-row lg:items-center lg:gap-6">
+        <CardTitle className="w-full min-w-0 text-xl lg:flex-1">
           {props.selectedTokenId === "all"
             ? "Namada Tokens Ecosystem Overview (Excluding Namada)"
             : props.selectedTokenId + " Supply Chart"}
         </CardTitle>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full min-w-0 flex-col items-stretch gap-2 sm:flex-row sm:items-center lg:w-auto">
           <label className="text-sm font-medium">Filter by Token</label>
           <Select
             value={props.selectedTokenId}
             onValueChange={props.setSelectedTokenId}
           >
-            <SelectTrigger className="w-48 border dark:border-slate-700">
+            <SelectTrigger className="w-full border dark:border-slate-700 sm:w-48">
               <SelectValue placeholder="All Tokens" />
             </SelectTrigger>
             <SelectContent className="source-chart-select-content border dark:border-slate-700">
