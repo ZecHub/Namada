@@ -94,13 +94,18 @@ const RewardChart = (props: RewardChartProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Filter data based on time range
-  // Filter data based on time range
+  // Filter relative to the newest snapshot in the dataset. The JSON is an
+  // archive and may lag behind today, so comparing it with the current clock
+  // makes valid 7d/30d ranges appear empty.
   const filteredData = (() => {
     if (timeRange === "all") return namadaRewards;
 
     const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
-    const cutoffDate = new Date();
+    const latestDate = namadaRewards.reduce((latest, item) => {
+      const itemDate = parse(item.Date, "MM/dd/yyyy", new Date());
+      return itemDate > latest ? itemDate : latest;
+    }, new Date(0));
+    const cutoffDate = new Date(latestDate);
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     return namadaRewards.filter((item) => {
@@ -286,7 +291,7 @@ const RewardChart = (props: RewardChartProps) => {
       className="source-reward-chart bg-white dark:bg-slate-900 px-4 py-6 imd:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-row imd:flex-col  gap-4 mb-12 space-y-1.5 items-center">
+      <div className="flex flex-col items-start gap-4 mb-12 lg:flex-row lg:items-center lg:gap-6">
         <CardTitle className="flex-1 text-xl">
           Staked Ratio / Annual Rewards / Inflation
         </CardTitle>

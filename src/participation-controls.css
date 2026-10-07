@@ -176,6 +176,19 @@
     margin-top: 7px
 }
 
+/* The reward card can be narrower than the viewport inside the dashboard.
+   Stack its heading and controls before they start competing for width. */
+@media(max-width:1200px) {
+    .reward-chart-heading {
+        display: block
+    }
+
+    .reward-filters {
+        margin-top: 16px;
+        flex-wrap: wrap
+    }
+}
+
 @media(max-width:760px) {
     .reward-chart-card {
         padding: 17px
