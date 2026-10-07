@@ -112,11 +112,13 @@ const ProposalsChart = (props: ProposalsChartProps) => {
         title: {
           display: true,
           text: "Proposal Index",
+          color: "#aeb8c7",
           font: {
             size: 14,
             weight: "bold",
           },
         },
+        ticks: { color: "#aeb8c7" },
         grid: {
           display: false,
         },
@@ -127,6 +129,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
         title: {
           display: true,
           text: "Number of Addresses",
+          color: "#aeb8c7",
           font: {
             size: 14,
             weight: "bold",
@@ -134,8 +137,9 @@ const ProposalsChart = (props: ProposalsChartProps) => {
         },
         beginAtZero: true,
         grid: {
-          color: "rgba(0, 0, 0, 0.05)",
+          color: "#344256",
         },
+        ticks: { color: "#aeb8c7" },
       },
     },
     plugins: {
@@ -146,13 +150,18 @@ const ProposalsChart = (props: ProposalsChartProps) => {
           size: 18,
           weight: "bold",
         },
+        color: "#f6f8fb",
         padding: 20,
       },
       legend: {
         display: false,
       },
       tooltip: {
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backgroundColor: "#172337",
+        borderColor: "#40516a",
+        borderWidth: 1,
+        titleColor: "#f6f8fb",
+        bodyColor: "#dce5f2",
         padding: 12,
         titleFont: {
           size: 14,
@@ -200,6 +209,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
     );
   }
 
+  console.log("Vote Counts:", voteCounts);
   const totalProposals = voteCounts.length;
   const totalAddresses = voteCounts.reduce((sum, count) => sum + count, 0);
   const avgAddresses = (totalAddresses / totalProposals).toFixed(0);
@@ -209,7 +219,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
   return (
     <div
       ref={props.divChartRef}
-      className="bg-white dark:bg-slate-900 px-4 py-6 md:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
+      className="source-proposals-chart bg-white dark:bg-slate-900 px-4 py-6 md:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
       <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
@@ -221,7 +231,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value as any)}
-            className="w-48 border dark:border-slate-700 rounded px-3 py-2 bg-white dark:bg-slate-800"
+            className="source-proposals-select w-48 border dark:border-slate-700 rounded px-3 py-2 bg-white dark:bg-slate-800"
           >
             <option value="all">All Proposals ({totalProposals})</option>
             <option value="10">First 10 Proposals</option>

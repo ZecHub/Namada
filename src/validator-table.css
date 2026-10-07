@@ -1,0 +1,137 @@
+.validator-directory {
+    padding-top: 105px
+}
+
+.directory-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 24px
+}
+
+.directory-heading h2 {
+    font: 600 clamp(2.4rem, 4vw, 4rem) 'Space Grotesk';
+    letter-spacing: -.07em;
+    margin: 15px 0 0
+}
+
+.directory-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #82928e;
+    font: 10px 'DM Mono';
+    text-transform: uppercase;
+    letter-spacing: .05em
+}
+
+.directory-note svg {
+    color: var(--lime)
+}
+
+.validator-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #293a3b;
+    border-radius: 5px;
+    background: var(--surface)
+}
+
+.validator-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 760px;
+    text-align: left
+}
+
+.validator-table th {
+    font: 10px 'DM Mono';
+    font-weight: 400;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #84948f;
+    background: #213232;
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--line)
+}
+
+.validator-table td {
+    padding: 17px 18px;
+    border-bottom: 1px solid var(--line);
+    color: #b4bfbb;
+    font-size: 12px
+}
+
+.validator-table tr:last-child td {
+    border-bottom: 0
+}
+
+.validator-table tbody tr:hover {
+    background: #1c2b2b
+}
+
+.table-validator {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.table-validator>span:last-child {
+    display: grid;
+    gap: 4px
+}
+
+.table-validator b {
+    font-size: 13px;
+    color: var(--ink)
+}
+
+.table-validator small {
+    font: 9px 'DM Mono';
+    color: #71817e;
+    max-width: 210px;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--lime);
+    font: 10px 'DM Mono';
+    text-transform: uppercase
+}
+
+.status-pill i {
+    width: 6px;
+    height: 6px;
+    background: var(--lime);
+    border-radius: 50%
+}
+
+.validator-table td a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--lime)
+}
+
+@media(max-width:760px) {
+    .validator-directory {
+        padding-top: 75px
+    }
+
+    .directory-heading {
+        display: block
+    }
+
+    .directory-note {
+        margin-top: 17px
+    }
+
+    .validator-table th,
+    .validator-table td {
+        padding-left: 13px;
+        padding-right: 13px
+    }
+}

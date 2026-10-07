@@ -1,0 +1,64 @@
+:root {
+    --lime: #d8f36b;
+    --blue: #d8f36b
+}
+
+.brand-mark,
+.text-link,
+.data-source-link,
+.dashboard-link,
+.source svg,
+.arrow,
+.proposal-row svg,
+.validator-row em svg,
+.table-link,
+.validator-table td a,
+.hero h1 span,
+.pathway h2 span,
+.hero-note a,
+.eyebrow,
+.section-kicker,
+.card-tag,
+.proposal-status,
+.directory-note {
+    color: #d8f36b !important
+}
+
+.button.primary,
+.category-scroll button.active,
+.category-scroll button:hover {
+    background: #d8f36b !important;
+    border-color: #d8f36b !important;
+    color: #17201e !important
+}
+
+.pulse,
+.live-dot,
+.status-pill i {
+    background: #d8f36b !important
+}
+
+.hero-grid:after {
+    border-color: #d8f36b66
+}
+
+.dashboard-tabs button.active {
+    border-bottom-color: #d8f36b !important
+}
+
+.bar {
+    background: linear-gradient(180deg, #d8f36b, #91a94c) !important
+}
+
+.bar-icon i {
+    background: #d8f36b !important
+}
+
+.validator-avatar,
+.detail-avatar {
+    color: #d8f36b
+}
+
+.validator-table td a {
+    color: #d8f36b !important
+}

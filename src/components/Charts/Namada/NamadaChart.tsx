@@ -17,6 +17,7 @@ import ProposalsChart from "./ProposalsChart";
 type NamadaChartProps = {
   lastUpdated: Date;
   divChartRef: RefObject<HTMLDivElement | null>;
+  showMetrics?: boolean;
   handleSaveToPng: (
     poolType: string,
     poolData: Record<
@@ -44,11 +45,13 @@ function NamadaChart(props: NamadaChartProps) {
   return (
     <ErrorBoundary fallback="Failed to render Namada Chart">
       <div className="space-y-6">
-        <CryptoMetrics
-          selectedCoin={selectedTokenId === "all" ? "Namada" : selectedTokenId}
-        />
+        {props.showMetrics !== false && (
+          <CryptoMetrics
+            selectedCoin={selectedTokenId === "all" ? "Namada" : selectedTokenId}
+          />
+        )}
 
-        <Card className="shadow-sm border border-gray-200 dark:border-slate-700">
+        <Card className="shadow-sm border mt-8 border-gray-200 dark:border-slate-700">
           <CardHeader className="mb-4">
             <CardTitle className="text-xl">Analytics Charts</CardTitle>
           </CardHeader>

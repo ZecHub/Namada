@@ -180,7 +180,10 @@ const RewardChart = (props: RewardChartProps) => {
         title: {
           display: true,
           text: "Date",
+          color: "#aeb8c7",
         },
+        ticks: { color: "#aeb8c7" },
+        grid: { color: "#344256" },
       },
       y: {
         type: "linear" as const,
@@ -189,8 +192,10 @@ const RewardChart = (props: RewardChartProps) => {
         title: {
           display: true,
           text: "Staked Ratio (%)",
-          color: "gray",
+          color: "#aeb8c7",
         },
+        ticks: { color: "#aeb8c7" },
+        grid: { color: "#344256" },
         min: 20,
         max: 50,
       },
@@ -201,7 +206,9 @@ const RewardChart = (props: RewardChartProps) => {
         title: {
           display: true,
           text: "Inflation Rate & Rewards (%)",
+          color: "#aeb8c7",
         },
+        ticks: { color: "#aeb8c7" },
         min: 0,
         max: 20,
         grid: {
@@ -213,8 +220,17 @@ const RewardChart = (props: RewardChartProps) => {
       title: {
         display: true,
         text: "Staking Economics Dashboard",
+        color: "#f6f8fb",
+      },
+      legend: {
+        labels: { color: "#dce5f2" },
       },
       tooltip: {
+        backgroundColor: "#172337",
+        borderColor: "#40516a",
+        borderWidth: 1,
+        titleColor: "#f6f8fb",
+        bodyColor: "#dce5f2",
         callbacks: {
           label: function (context: any) {
             let label = context.dataset.label || "";
@@ -265,12 +281,12 @@ const RewardChart = (props: RewardChartProps) => {
   }
 
   return (
-    <div
-      ref={props.divChartRef}
-      className="bg-white dark:bg-slate-900 px-4 py-6 imd:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
+      <div
+        ref={props.divChartRef}
+      className="source-reward-chart bg-white dark:bg-slate-900 px-4 py-6 imd:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-col imd:flex-row  gap-4 mb-12 space-y-1.5 items-center">
+      <div className="flex flex-row imd:flex-col  gap-4 mb-12 space-y-1.5 items-center">
         <CardTitle className="flex-1 text-xl">
           Staked Ratio / Annual Rewards / Inflation
         </CardTitle>
@@ -285,7 +301,7 @@ const RewardChart = (props: RewardChartProps) => {
             <SelectTrigger className="w-48 border dark:border-slate-700">
               <SelectValue placeholder="All Tokens" />
             </SelectTrigger>
-            <SelectContent className="border dark:border-slate-700">
+            <SelectContent className="source-chart-select-content border dark:border-slate-700">
               <SelectItem value="all">All Tokens</SelectItem>
               {[
                 { label: "Last 7 days", value: "7d" },

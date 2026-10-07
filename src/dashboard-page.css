@@ -1,0 +1,72 @@
+.dashboard-page {
+    min-height: 100vh;
+    background: var(--deep)
+}
+
+.dashboard-header {
+    border-bottom: 1px solid var(--line)
+}
+
+.dashboard-back {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    font-size: 13px
+}
+
+.dashboard-back:hover {
+    color: var(--lime)
+}
+
+.dashboard-source {
+    font-size: 13px
+}
+
+.dashboard-main {
+    padding: 36px 0 90px
+}
+
+.dashboard-intro {
+    padding-bottom: 8px
+}
+
+.dashboard-intro h1 {
+    font: 600 clamp(3.5rem, 7vw, 6.5rem)/.9 'Space Grotesk';
+    letter-spacing: -.09em;
+    margin: 18px 0 17px
+}
+
+.dashboard-intro p {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0;
+    max-width: 500px;
+    line-height: 1.5
+}
+
+.dashboard-main .dashboard {
+    padding-top: 60px
+}
+
+@media(max-width:760px) {
+    .dashboard-header {
+        width: calc(100% - 32px)
+    }
+
+    .dashboard-source {
+        display: none
+    }
+
+    .dashboard-main {
+        padding-top: 25px
+    }
+
+    .dashboard-main .dashboard {
+        padding-top: 55px
+    }
+
+    .dashboard-back {
+        margin-left: auto
+    }
+}

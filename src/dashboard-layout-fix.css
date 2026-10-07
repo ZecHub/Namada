@@ -1,0 +1,72 @@
+.dashboard-view {
+    width: min(1160px, calc(100% - 48px));
+    margin: 30px auto 0;
+    border-top: 1px solid var(--line)
+}
+
+.dashboard-view .section-wrap {
+    width: 100%
+}
+
+.dashboard-tabs {
+    width: 100%
+}
+
+.dashboard-view .dashboard {
+    width: 100%;
+    margin: 0
+}
+
+.dashboard-view .validator-directory {
+    width: 100%
+}
+
+.dashboard-header {
+    width: min(1160px, calc(100% - 48px))
+}
+
+.dashboard-intro {
+    width: min(1160px, calc(100% - 48px))
+}
+
+.dashboard-main {
+    padding-bottom: 70px
+}
+
+.validator-directory {
+    padding-bottom: 30px
+}
+
+.directory-heading {
+    gap: 30px
+}
+
+.directory-note {
+    white-space: nowrap
+}
+
+.validator-details {
+    max-width: 100%
+}
+
+@media(max-width:760px) {
+
+    .dashboard-view,
+    .dashboard-header,
+    .dashboard-intro {
+        width: calc(100% - 32px)
+    }
+
+    .dashboard-view {
+        margin-top: 24px
+    }
+
+    .directory-heading {
+        gap: 12px
+    }
+
+    .directory-note {
+        white-space: normal;
+        line-height: 1.4
+    }
+}

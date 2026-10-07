@@ -108,7 +108,7 @@ export default function ShieldedTokenEcosystem(
       ref={props.divChartRef}
       className="shadow-sm border border-gray-200 dark:border-slate-700"
     >
-      <CardHeader className="flex imd:flex-row items-center mb-12">
+      <CardHeader className="flex flex-row imd:flex-col items-center mb-12">
         <CardTitle className="flex-1 text-xl">
           {props.selectedTokenId === "all"
             ? "Namada Tokens Shielded Supply Overview (Excluding Namada)"
@@ -123,7 +123,7 @@ export default function ShieldedTokenEcosystem(
             <SelectTrigger className="w-48 border dark:border-slate-700">
               <SelectValue placeholder="All Tokens" />
             </SelectTrigger>
-            <SelectContent className="border dark:border-slate-700">
+            <SelectContent className="source-chart-select-content border dark:border-slate-700">
               <SelectItem
                 className="hover:cursor-pointer bg-slate-50 dark:bg-slate-800 text-background"
                 value="all"
