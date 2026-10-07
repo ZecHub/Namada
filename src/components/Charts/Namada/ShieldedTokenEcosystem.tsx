@@ -108,7 +108,7 @@ export default function ShieldedTokenEcosystem(
       ref={props.divChartRef}
       className="shadow-sm border border-gray-200 dark:border-slate-700"
     >
-      <CardHeader className="flex imd:flex-row items-center mb-12">
+      <CardHeader className="flex imd:flex-col items-center mb-12">
         <CardTitle className="flex-1 text-xl">
           {props.selectedTokenId === "all"
             ? "Namada Tokens Shielded Supply Overview (Excluding Namada)"
