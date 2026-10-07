@@ -94,13 +94,18 @@ const RewardChart = (props: RewardChartProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Filter data based on time range
-  // Filter data based on time range
+  // Filter relative to the newest snapshot in the dataset. The JSON is an
+  // archive and may lag behind today, so comparing it with the current clock
+  // makes valid 7d/30d ranges appear empty.
   const filteredData = (() => {
     if (timeRange === "all") return namadaRewards;
 
     const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
-    const cutoffDate = new Date();
+    const latestDate = namadaRewards.reduce((latest, item) => {
+      const itemDate = parse(item.Date, "MM/dd/yyyy", new Date());
+      return itemDate > latest ? itemDate : latest;
+    }, new Date(0));
+    const cutoffDate = new Date(latestDate);
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     return namadaRewards.filter((item) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -37,12 +37,23 @@ type ProtocolData = {
 type ProposalSnapshot = {
   Last_committed_epoch?: number;
   Proposal?: {
-    id: number;
+    id?: number;
+    Id?: number;
     Type: string;
     Author: string;
     Start_Epoch: string;
     End_Epoch: string;
     Activation_Epoch: string;
+    Status?: string;
+    Data?: string;
+    Result?: string;
+    Content?: {
+      authors?: string;
+      details?: string;
+      "discussions-to"?: string;
+      motivation?: string;
+      title?: string;
+    };
   }[];
 };
 type RewardPoint = {
@@ -60,7 +71,9 @@ export function GovernanceProposals() {
       .then((rows: ProposalSnapshot[]) => setSnapshot(rows[0]))
       .catch(() => setSnapshot({ Proposal: [] }));
   }, []);
-  const proposals = [...(snapshot?.Proposal || [])].sort((a, b) => b.id - a.id);
+  const proposals = [...(snapshot?.Proposal || [])].sort(
+    (a, b) => (b.id ?? b.Id ?? 0) - (a.id ?? a.Id ?? 0),
+  );
   return (
     <section className="governance-proposals section-wrap">
       <div className="epoch-banner">
@@ -82,10 +95,10 @@ export function GovernanceProposals() {
           </thead>
           <tbody>
             {proposals.map((proposal, index) => (
-              <tr key={proposal.id}>
+              <tr key={proposal.id ?? proposal.Id ?? index}>
                 <td>{index + 1}</td>
                 <td>
-                  <b>{proposal.id}</b>
+                  <b>{proposal.id ?? proposal.Id}</b>
                 </td>
                 <td>{proposal.Type}</td>
                 <td>
@@ -278,6 +291,7 @@ function RewardsChart() {
               value={range}
               onChange={(event) => setRange(event.target.value as typeof range)}
             >
+              <option value="7">Last 7 days</option>
               <option value="14">Last 14 days</option>
               <option value="30">Last 30 days</option>
               <option value="90">Last 90 days</option>
@@ -450,6 +464,7 @@ function SourceChartsWorkspace() {
 function PaginatedGovernanceProposals() {
   const [snapshots, setSnapshots] = useState<ProposalSnapshot[]>([]);
   const [page, setPage] = useState(1);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const pageSize = 10;
   useEffect(() => {
     Promise.all([
@@ -461,14 +476,15 @@ function PaginatedGovernanceProposals() {
       )
       .catch(() => setSnapshots([]));
   }, []);
-  const proposalMap = new Map<
-    number,
-    NonNullable<ProposalSnapshot["Proposal"]>[number]
-  >();
+  type NormalizedProposal = NonNullable<ProposalSnapshot["Proposal"]>[number] & {
+    id: number;
+  };
+  const proposalMap = new Map<number, NormalizedProposal>();
   snapshots.forEach((snapshot) =>
-    snapshot.Proposal?.forEach((proposal) =>
-      proposalMap.set(proposal.id, proposal),
-    ),
+    snapshot.Proposal?.forEach((proposal) => {
+      const id = proposal.id ?? proposal.Id;
+      if (id !== undefined) proposalMap.set(id, { ...proposal, id });
+    }),
   );
   const proposals = [...proposalMap.values()].sort((a, b) => b.id - a.id);
   const pageCount = Math.max(1, Math.ceil(proposals.length / pageSize));
@@ -499,7 +515,26 @@ function PaginatedGovernanceProposals() {
           </thead>
           <tbody>
             {visible.map((proposal, index) => (
-              <tr key={proposal.id}>
+              <Fragment key={proposal.id}>
+                <tr
+                  key={proposal.id}
+                  className={`proposal-table-row${expandedId === proposal.id ? " is-expanded" : ""}`}
+                  tabIndex={0}
+                  aria-expanded={expandedId === proposal.id}
+                  onClick={() =>
+                    setExpandedId((current) =>
+                      current === proposal.id ? null : proposal.id,
+                    )
+                  }
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setExpandedId((current) =>
+                        current === proposal.id ? null : proposal.id,
+                      );
+                    }
+                  }}
+                >
                 <td>{(page - 1) * pageSize + index + 1}</td>
                 <td>
                   <b>{proposal.id}</b>
@@ -511,7 +546,50 @@ function PaginatedGovernanceProposals() {
                 <td>{proposal.Start_Epoch}</td>
                 <td>{proposal.End_Epoch}</td>
                 <td>{proposal.Activation_Epoch}</td>
-              </tr>
+                </tr>
+                {expandedId === proposal.id && (
+                  <tr className="proposal-details-row">
+                    <td colSpan={7}>
+                      <article className="proposal-details">
+                        <div className="proposal-details-heading">
+                          <div>
+                            <span className="section-kicker">Proposal {proposal.id}</span>
+                            <h3>{proposal.Content?.title || proposal.Type}</h3>
+                          </div>
+                          {proposal.Content?.["discussions-to"] && (
+                            <a
+                              href={proposal.Content["discussions-to"]}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              Open discussion ↗
+                            </a>
+                          )}
+                        </div>
+                        {proposal.Content?.motivation && (
+                          <div className="proposal-detail-block">
+                            <h4>Motivation</h4>
+                            <p>{proposal.Content.motivation}</p>
+                          </div>
+                        )}
+                        {proposal.Content?.details && (
+                          <div className="proposal-detail-block">
+                            <h4>Details</h4>
+                            <p className="proposal-detail-copy">{proposal.Content.details}</p>
+                          </div>
+                        )}
+                        {proposal.Result && (
+                          <div className="proposal-detail-block">
+                            <h4>Result</h4>
+                            <p>{proposal.Result}</p>
+                          </div>
+                        )}
+                      </article>
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
             ))}
           </tbody>
         </table>
