@@ -10,40 +10,10 @@ import {
 import { NetworkDashboard } from "./Home";
 import { DATA_URL } from "../components/lib/chart/data-url";
 import NamadaChart from "../components/Charts/Namada/NamadaChart";
+import ProposalParticipationChart from "../components/ProposalParticipationChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
-
-const blockchairPriceApi = DATA_URL.blockchairUrl;
-const browserFetch = window.fetch.bind(window);
-const fetch = (input: RequestInfo | URL, init?: RequestInit) => {
-  const requestedUrl = String(input);
-  const url = requestedUrl.includes("api.coingecko.com")
-    ? blockchairPriceApi
-    : requestedUrl;
-  return browserFetch(url, init).then(async (response) => {
-    if (url === blockchairPriceApi) {
-      const payload = (await response.clone().json()) as {
-        data?: {
-          market_price_usd?: number;
-          market_price_btc?: number;
-          market_cap_usd?: number;
-        };
-      };
-      const data = payload.data || {};
-      return new Response(
-        JSON.stringify({
-          namada: {
-            usd: data.market_price_usd,
-            btc: data.market_price_btc,
-            usd_market_cap: data.market_cap_usd,
-          },
-        }),
-        { status: response.status, headers: response.headers },
-      );
-    }
-    return response;
-  });
-};
+import { safeHttpsUrl } from "../lib/safe-url";
 
 type Validator = {
   Name?: string;
@@ -629,8 +599,8 @@ function ValidatorTable() {
                       <td>
                         <span className="table-validator">
                           <span className="validator-avatar">
-                            {validator.Avatar ? (
-                              <img src={validator.Avatar} alt="" />
+                            {safeHttpsUrl(validator.Avatar) ? (
+                              <img src={safeHttpsUrl(validator.Avatar)} alt="" />
                             ) : (
                               (validator.Name || "V").slice(0, 1)
                             )}
@@ -656,10 +626,16 @@ function ValidatorTable() {
                       <td>{validator.Max_Change || "—"}</td>
                       <td>{validator.Epoch || "—"}</td>
                       <td>
-                        {validator.Website ? (
-                          <span className="table-link">
+                        {safeHttpsUrl(validator.Website) ? (
+                          <a
+                            className="table-link"
+                            href={safeHttpsUrl(validator.Website)}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                          >
                             Visit <ArrowUpRight size={13} />
-                          </span>
+                          </a>
                         ) : (
                           "—"
                         )}
@@ -685,8 +661,8 @@ function ValidatorTable() {
                         <div className="validator-details">
                           <div className="validator-identity">
                             <div className="detail-avatar">
-                              {validator.Avatar ? (
-                                <img src={validator.Avatar} alt="" />
+                              {safeHttpsUrl(validator.Avatar) ? (
+                                <img src={safeHttpsUrl(validator.Avatar)} alt="" />
                               ) : (
                                 (validator.Name || "V").slice(0, 1)
                               )}
@@ -710,13 +686,13 @@ function ValidatorTable() {
                               </p>
                               <p>
                                 Website:{" "}
-                                {validator.Website ? (
+                                {safeHttpsUrl(validator.Website) ? (
                                   <a
-                                    href={validator.Website}
+                                    href={safeHttpsUrl(validator.Website)}
                                     target="_blank"
                                     rel="noreferrer"
                                   >
-                                    {validator.Website}
+                                    {safeHttpsUrl(validator.Website)}
                                   </a>
                                 ) : (
                                   <b>—</b>
@@ -846,10 +822,11 @@ export default function Dashboard() {
               <RewardsChart />
             </section>
           )}
+          {activeTab === "parameters" && <NetworkDashboard />}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
+          {activeTab === "proposals" && <ProposalParticipationChart />}
+          {activeTab === "validator" && <ValidatorTable />}
           {activeTab === "charts" && <SourceChartsWorkspace />}
-          <NetworkDashboard />
-          <ValidatorTable />
         </div>
       </main>
     </div>

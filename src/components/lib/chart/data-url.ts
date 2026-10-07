@@ -21,8 +21,7 @@ export const DATA_URL = {
   propsDetailsUrl: "/data/proposals/propsDetails.json",
   zechubUrl: "/data/zechub.json",
   protocol_parametersUrl: "/data/protocol_parameters.json",
-  propAddressesCounts:
-    "https://namada.zechub.wiki/data/proposals/propAddressesCounts.json",
+  propAddressesCounts: "/data/proposals/propAddressesCounts.json",
 } as const;
 
 export const DATE_URL = {
