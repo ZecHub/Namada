@@ -222,7 +222,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
       className="source-proposals-chart bg-white dark:bg-slate-900 px-4 py-6 md:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
+      <div className="flex flex-col items-start gap-4 mb-12 lg:flex-row lg:items-center lg:gap-6">
         <h2 className="flex-1 text-xl font-semibold">
           Proposal Voting Participation
         </h2>

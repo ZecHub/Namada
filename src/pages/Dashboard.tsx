@@ -827,7 +827,6 @@ export default function Dashboard() {
           </nav>
           {activeTab === "parameters" && <ProtocolParameters />}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
-          {activeTab === "proposals" && <ProposalParticipationChart />}
           {activeTab === "validator" && <ValidatorTable />}
           {activeTab === "charts" && <SourceChartsWorkspace />}
         </div>
