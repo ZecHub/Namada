@@ -59,18 +59,18 @@
 
 .dashboard-view[data-view="validator"] .dashboard-grid,
 .dashboard-view[data-view="validator"] .analytics-grid,
-.dashboardView[data-view="validator"] .validators-card {
+.dashboard-view[data-view="validator"] .validators-card {
     display: none
 }
 
-.dashboardView[data-view="charts"] .dashboard-grid,
-.dashboardView[data-view="charts"] .analytics-grid> :last-child,
-.dashboardView[data-view="charts"] .validators-card,
-.dashboardView[data-view="charts"] .validator-directory {
+.dashboard-view[data-view="charts"] .dashboard-grid,
+.dashboard-view[data-view="charts"] .analytics-grid> :last-child,
+.dashboard-view[data-view="charts"] .validators-card,
+.dashboard-view[data-view="charts"] .validator-directory {
     display: none
 }
 
-.dashboardView[data-view="charts"] .dashboard {
+.dashboard-view[data-view="charts"] .dashboard {
     padding-bottom: 0
 }
 

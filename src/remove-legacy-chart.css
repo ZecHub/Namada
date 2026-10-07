@@ -1,3 +1,1 @@
-.dashboard-view[data-view="charts"]>.dashboard {
-    display: none
-}
+/* Legacy chart hide removed. Tabs render their own panels. */
