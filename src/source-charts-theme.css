@@ -74,6 +74,29 @@
     outline-offset: 2px
 }
 
+.source-chart-select-content {
+    background: #172337 !important;
+    border: 1px solid #40516a !important;
+    color: #f6f8fb !important;
+    box-shadow: 0 14px 30px #00000066 !important
+}
+
+.source-chart-select-content [role="option"] {
+    color: #dce5f2 !important;
+    background: #172337 !important
+}
+
+.source-chart-select-content [role="option"]:hover,
+.source-chart-select-content [role="option"][data-highlighted] {
+    background: #35451c !important;
+    color: #f6f8fb !important
+}
+
+.source-chart-select-content [role="option"][data-state="checked"] {
+    background: #d8f36b !important;
+    color: #111a1b !important
+}
+
 .source-charts-workspace .recharts-cartesian-grid line {
     stroke: #344256;
     stroke-opacity: .65

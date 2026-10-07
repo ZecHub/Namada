@@ -123,7 +123,7 @@ export default function ShieldedTokenEcosystem(
             <SelectTrigger className="w-48 border dark:border-slate-700">
               <SelectValue placeholder="All Tokens" />
             </SelectTrigger>
-            <SelectContent className="border dark:border-slate-700">
+            <SelectContent className="source-chart-select-content border dark:border-slate-700">
               <SelectItem
                 className="hover:cursor-pointer bg-slate-50 dark:bg-slate-800 text-background"
                 value="all"

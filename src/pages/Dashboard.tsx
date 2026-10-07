@@ -841,6 +841,11 @@ export default function Dashboard() {
             ))}
           </nav>
           {activeTab === "parameters" && <ProtocolParameters />}
+          {activeTab === "parameters" && (
+            <section className="staking-economics section-wrap" aria-label="Staking economics">
+              <RewardsChart />
+            </section>
+          )}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
           {activeTab === "charts" && <SourceChartsWorkspace />}
           <NetworkDashboard />
