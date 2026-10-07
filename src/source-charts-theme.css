@@ -1,0 +1,105 @@
+.source-charts-workspace {
+    --chart-1: 270 75% 60%;
+    --chart-2: 45 93% 47%;
+    --chart-3: 84 81% 44%;
+    --chart-4: 217 91% 60%;
+    --chart-5: 142 71% 45%;
+    --chart-6: 190 78% 52%;
+    color: var(--ink)
+}
+
+.source-charts-workspace .rounded-lg.border.bg-card {
+    background: #020918;
+    border-color: #344256;
+    color: #f6f8fb
+}
+
+.source-charts-workspace .tabs-container > .rounded-lg.border.bg-card,
+.source-charts-workspace .tabs-container > .rounded-lg.border {
+    background: #020918;
+    border-color: #344256;
+    color: #f6f8fb
+}
+
+.source-charts-workspace .tabs-container > .rounded-lg.border > .p-6 {
+    padding: 24px
+}
+
+.source-charts-workspace .tabs-container .bg-slate-100 {
+    background: #1e2a3a;
+    border: 1px solid #344256;
+    border-radius: 6px;
+    gap: 5px;
+    margin-bottom: 28px;
+    padding: 5px
+}
+
+.source-charts-workspace .tabs-container .bg-slate-100 button {
+    color: #aeb8c7;
+    white-space: nowrap
+}
+
+.source-charts-workspace .tabs-container .bg-slate-100 button:hover {
+    background: #35451c;
+    color: #f6f8fb
+}
+
+.source-charts-workspace .tabs-container .bg-slate-100 button.bg-background {
+    background: #d8f36b;
+    border: 1px solid #efffa2;
+    color: #111a1b;
+    box-shadow: 0 0 0 2px #d8f36b2b, 0 6px 16px #d8f36b2e
+}
+
+.source-charts-workspace .tabs-container .rounded-lg.border.bg-card .rounded-lg.border {
+    background: #020918;
+    border-color: #344256
+}
+
+.source-charts-workspace .tabs-container h3,
+.source-charts-workspace .tabs-container label,
+.source-charts-workspace .tabs-container p {
+    color: #f6f8fb
+}
+
+.source-charts-workspace .tabs-container [role="combobox"] {
+    background: #172337;
+    border-color: #40516a;
+    color: #f6f8fb;
+    box-shadow: none
+}
+
+.source-charts-workspace .tabs-container [role="combobox"]:focus {
+    outline: 2px solid #d8f36b;
+    outline-offset: 2px
+}
+
+.source-charts-workspace .recharts-cartesian-grid line {
+    stroke: #344256;
+    stroke-opacity: .65
+}
+
+.source-charts-workspace .recharts-cartesian-axis-line,
+.source-charts-workspace .recharts-cartesian-axis-tick-line {
+    stroke: #52647e
+}
+
+.source-charts-workspace .recharts-text {
+    fill: #aeb8c7
+}
+
+.source-charts-workspace .recharts-tooltip-wrapper {
+    color: #f6f8fb
+}
+
+.source-charts-workspace .recharts-default-tooltip {
+    background: #172337 !important;
+    border: 1px solid #40516a !important;
+    color: #f6f8fb
+}
+
+@media(max-width:760px) {
+    .source-charts-workspace .tabs-container > .rounded-lg.border > .p-6 {
+        padding: 14px
+    }
+}

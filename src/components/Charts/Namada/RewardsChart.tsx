@@ -270,7 +270,7 @@ const RewardChart = (props: RewardChartProps) => {
       className="bg-white dark:bg-slate-900 px-4 py-6 imd:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
-      <div className="flex flex-col imd:flex-row  gap-4 mb-12 space-y-1.5 items-center">
+      <div className="flex flex-row imd:flex-col  gap-4 mb-12 space-y-1.5 items-center">
         <CardTitle className="flex-1 text-xl">
           Staked Ratio / Annual Rewards / Inflation
         </CardTitle>

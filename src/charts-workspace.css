@@ -101,8 +101,6 @@
 
 .chart-tabs button.active,
 .chart-tabs button:hover {
-    background: #020918;
-    color: #f6f8fb;
     box-shadow: inset 0 0 0 1px #344256
 }
 

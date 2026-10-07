@@ -2,15 +2,15 @@
     --ink: #f6f8fb;
     --muted: #aeb8c7;
     --line: #344256;
-    --lime: #218bff;
+    --lime: #d8f36b;
     --blue: #b8c0ce;
     --surface: #1e2a3a;
     --deep: #020918
 }
 
 .brand-mark {
-    color: #218bff;
-    border-color: #218bff
+    color: #d8f36b;
+    border-color: #d8f36b
 }
 
 .hero h1 span,
@@ -24,15 +24,15 @@
 .validator-row em svg,
 .table-link,
 .validator-table td a {
-    color: #218bff
+    color: #d8f36b
 }
 
 .button.primary,
 .category-scroll button.active,
 .category-scroll button:hover {
-    background: #218bff;
-    border-color: #218bff;
-    color: #fff
+    background: #d8f36b;
+    border-color: #d8f36b;
+    color: #111a1b
 }
 
 .button.secondary {
@@ -43,8 +43,8 @@
 .pulse,
 .live-dot,
 .status-pill i {
-    background: #218bff;
-    box-shadow: 0 0 0 5px #218bff18
+    background: #d8f36b;
+    box-shadow: 0 0 0 5px #d8f36b18
 }
 
 .hero-grid:after {
@@ -62,8 +62,7 @@
 }
 
 .dashboard-tabs button.active {
-    color: #fff;
-    border-bottom-color: #218bff
+    border-bottom-color: #d8f36b
 }
 
 .analytics-card,

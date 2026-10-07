@@ -9,7 +9,9 @@ import {
 } from "lucide-react";
 import { NetworkDashboard } from "./Home";
 import { DATA_URL } from "../components/lib/chart/data-url";
-import ProposalParticipationChart from "../components/ProposalParticipationChart";
+import NamadaChart from "../components/Charts/Namada/NamadaChart";
+import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
+import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 
 const blockchairPriceApi = DATA_URL.blockchairUrl;
 const browserFetch = window.fetch.bind(window);
@@ -62,16 +64,6 @@ type ProtocolData = {
   Proof_Of_Stake_Parmeters?: Record<string, unknown>[];
   IBC_Parameters?: Record<string, unknown>[];
 };
-type SupplyPoint = {
-  Date: string;
-  Native_Supply_NAM: string;
-  Total_Supply: {
-    id: string;
-    totalSupply: string;
-    shieldedSupply?: string;
-    transparentSupply?: string;
-  }[];
-};
 type ProposalSnapshot = {
   Last_committed_epoch?: number;
   Proposal?: {
@@ -82,14 +74,6 @@ type ProposalSnapshot = {
     End_Epoch: string;
     Activation_Epoch: string;
   }[];
-};
-type PriceSnapshot = {
-  namada?: {
-    usd?: number;
-    btc?: number;
-    usd_market_cap?: number;
-    usd_24h_change?: number;
-  };
 };
 type RewardPoint = {
   Date: string;
@@ -267,76 +251,157 @@ function ProtocolParameters() {
   );
 }
 
-function SupplyChart({ rows, value }: { rows: SupplyPoint[]; value: (row: SupplyPoint) => number }) {
-  const max = Math.max(...rows.map(value), 1);
-  const ticks = [max, Math.round(max * 0.75), Math.round(max * 0.5), Math.round(max * 0.25), 0];
-  return (
-    <>
-      <div className="axis-chart supply-axis-chart">
-        <div className="y-axis">{ticks.map((tick) => <span key={tick}>{tick.toLocaleString()}</span>)}</div>
-        <div className="plot-area">
-          <div className="grid-lines">{ticks.map((tick) => <i key={tick} />)}</div>
-          <div className="participation-bars">{rows.map((row, index) => { const amount = value(row); return <div className="participation-bar-column" key={row.Date}><div className="participation-bar" style={{ height: `${Math.max(2, amount / max * 100)}%` }} title={`${row.Date}: ${amount.toLocaleString()} NAM`} /><small>{row.Date.slice(0, 7)}</small><span className="sr-only">Data point {index + 1}</span></div>; })}</div>
-        </div>
-      </div>
-      <div className="axis-labels"><span>Date</span><span>NAM supply</span></div>
-    </>
-  );
-}
-
 function RewardsChart() {
   const [rows, setRows] = useState<RewardPoint[]>([]);
-  const [metric, setMetric] = useState<"Staked_Ratio" | "Annual_Staking_Rewards_Ratio" | "Inflation_Rate">("Annual_Staking_Rewards_Ratio");
+  const [metric, setMetric] = useState<
+    "Staked_Ratio" | "Annual_Staking_Rewards_Ratio" | "Inflation_Rate"
+  >("Annual_Staking_Rewards_Ratio");
   const [range, setRange] = useState<"14" | "30" | "90" | "all">("14");
   useEffect(() => {
-    fetch(DATA_URL.namadaRewardUrl).then((response) => response.json()).then(setRows).catch(() => setRows([]));
+    fetch(DATA_URL.namadaRewardUrl)
+      .then((response) => response.json())
+      .then(setRows)
+      .catch(() => setRows([]));
   }, []);
   const visible = range === "all" ? rows : rows.slice(-Number(range));
   const value = (row: RewardPoint) => Number(row[metric]) * 100;
   const max = Math.max(...visible.map(value), 1);
   const latest = rows[rows.length - 1];
-  const ticks = [max, Math.round(max * .75 * 100) / 100, Math.round(max * .5 * 100) / 100, Math.round(max * .25 * 100) / 100, 0];
-  const labels = { Staked_Ratio: "Staked ratio", Annual_Staking_Rewards_Ratio: "Annual staking rewards", Inflation_Rate: "Inflation rate" };
-  return <div className="reward-chart-card"><div className="reward-chart-heading"><div><span className="metric-label">Staking economics</span><h3>Staked ratio, rewards & inflation</h3></div><div className="reward-filters"><label>Metric <select value={metric} onChange={(event) => setMetric(event.target.value as typeof metric)}><option value="Annual_Staking_Rewards_Ratio">Annual rewards</option><option value="Staked_Ratio">Staked ratio</option><option value="Inflation_Rate">Inflation rate</option></select></label><label>Days <select value={range} onChange={(event) => setRange(event.target.value as typeof range)}><option value="14">Last 14 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="all">All history</option></select></label></div></div>{visible.length ? <><div className={`axis-chart reward-axis-chart${range === "all" ? " is-expanded" : ""}`}><div className="y-axis">{ticks.map((tick) => <span key={tick}>{tick.toFixed(2)}%</span>)}</div><div className="plot-area"><div className="grid-lines">{ticks.map((tick) => <i key={tick} />)}</div><div className="participation-bars">{visible.map((row) => <div className="participation-bar-column" key={row.Date}><div className="participation-bar" style={{ height: `${Math.max(2, value(row) / max * 100)}%` }} title={`${row.Date}: ${value(row).toFixed(3)}%`} /><small>{row.Date.slice(0, 7)}</small></div>)}</div></div></div><div className="axis-labels"><span>Date</span><span>{labels[metric]} (%)</span></div><div className="reward-summary"><div><span>Current {labels[metric].toLowerCase()}</span><b>{latest ? `${value(latest).toFixed(3)}%` : "—"}</b></div><div><span>Latest snapshot</span><b>{latest?.Date || "—"}</b></div><div><span>Data points</span><b>{rows.length}</b></div></div></> : <div className="participation-empty">Loading rewards data…</div>}</div>;
+  const ticks = [
+    max,
+    Math.round(max * 0.75 * 100) / 100,
+    Math.round(max * 0.5 * 100) / 100,
+    Math.round(max * 0.25 * 100) / 100,
+    0,
+  ];
+  const labels = {
+    Staked_Ratio: "Staked ratio",
+    Annual_Staking_Rewards_Ratio: "Annual staking rewards",
+    Inflation_Rate: "Inflation rate",
+  };
+  return (
+    <div className="reward-chart-card">
+      <div className="reward-chart-heading">
+        <div>
+          <span className="metric-label">Staking economics</span>
+          <h3>Staked ratio, rewards & inflation</h3>
+        </div>
+        <div className="reward-filters">
+          <label>
+            Metric{" "}
+            <select
+              value={metric}
+              onChange={(event) =>
+                setMetric(event.target.value as typeof metric)
+              }
+            >
+              <option value="Annual_Staking_Rewards_Ratio">
+                Annual rewards
+              </option>
+              <option value="Staked_Ratio">Staked ratio</option>
+              <option value="Inflation_Rate">Inflation rate</option>
+            </select>
+          </label>
+          <label>
+            Days{" "}
+            <select
+              value={range}
+              onChange={(event) => setRange(event.target.value as typeof range)}
+            >
+              <option value="14">Last 14 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="all">All history</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      {visible.length ? (
+        <>
+          <div
+            className={`axis-chart reward-axis-chart${range === "all" ? " is-expanded" : ""}`}
+          >
+            <div className="y-axis">
+              {ticks.map((tick) => (
+                <span key={tick}>{tick.toFixed(2)}%</span>
+              ))}
+            </div>
+            <div className="plot-area">
+              <div className="grid-lines">
+                {ticks.map((tick) => (
+                  <i key={tick} />
+                ))}
+              </div>
+              <div className="participation-bars">
+                {visible.map((row) => (
+                  <div className="participation-bar-column" key={row.Date}>
+                    <div
+                      className="participation-bar"
+                      style={{
+                        height: `${Math.max(2, (value(row) / max) * 100)}%`,
+                      }}
+                      title={`${row.Date}: ${value(row).toFixed(3)}%`}
+                    />
+                    <small>{row.Date.slice(0, 7)}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="axis-labels">
+            <span>Date</span>
+            <span>{labels[metric]} (%)</span>
+          </div>
+          <div className="reward-summary">
+            <div>
+              <span>Current {labels[metric].toLowerCase()}</span>
+              <b>{latest ? `${value(latest).toFixed(3)}%` : "—"}</b>
+            </div>
+            <div>
+              <span>Latest snapshot</span>
+              <b>{latest?.Date || "—"}</b>
+            </div>
+            <div>
+              <span>Data points</span>
+              <b>{rows.length}</b>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="participation-empty">Loading rewards data…</div>
+      )}
+    </div>
+  );
 }
 
-function ChartsWorkspace() {
-  const [price, setPrice] = useState<PriceSnapshot | null>(null);
-  const [supplyRows, setSupplyRows] = useState<SupplyPoint[]>([]);
-  const [chart, setChart] = useState("Total Supply");
-  const chartTabs = [
-    "Total Supply",
-    "Shielded Supply",
-    "Transparent Supply",
-    "Rewards",
-    "Proposal Voting",
-  ];
+function MarketMetrics() {
+  const [price, setPrice] = useState<{
+    namada?: { usd?: number; btc?: number; usd_market_cap?: number };
+  } | null>(null);
+  const [totalSupply, setTotalSupply] = useState(0);
+
   useEffect(() => {
     Promise.all([
       fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true&include_24hr_change=true",
+        "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true",
       ).then((response) => response.json()),
       fetch(DATA_URL.namadaSupplyUrl).then((response) => response.json()),
     ])
       .then(([market, supply]) => {
-        console.log("Fetched market data:", market);
+        const latest = supply[supply.length - 1];
+        const namada = latest?.Total_Supply?.find(
+          (token: { id: string }) => token.id === "Namada",
+        );
         setPrice(market);
-        setSupplyRows(supply);
+        setTotalSupply(namada?.totalSupply ? Number(namada.totalSupply) : 0);
       })
-      .catch(() => setSupplyRows([]));
+      .catch(() => {
+        setPrice(null);
+        setTotalSupply(0);
+      });
   }, []);
-  const latest = supplyRows[supplyRows.length - 1];
-  const namada = latest?.Total_Supply?.find((token) => token.id === "Namada");
+
   const usd = price?.namada?.usd;
-  const totalSupply = namada?.totalSupply ? Number(namada.totalSupply) : 0;
-  const chartValue = (row: SupplyPoint) => {
-    const token = row.Total_Supply?.find((item) => item.id === "Namada");
-    if (chart === "Shielded Supply") return Number(token?.shieldedSupply || 0);
-    if (chart === "Transparent Supply")
-      return Number(token?.transparentSupply || 0);
-    return Number(token?.totalSupply || 0);
-  };
-  const rows = supplyRows.slice(-12);
   return (
     <section className="charts-workspace section-wrap">
       <div className="metrics-heading">
@@ -368,65 +433,38 @@ function ChartsWorkspace() {
         <div>
           <span>Market price (USD)</span>
           <b>{usd ? `$${usd.toFixed(6)}` : "—"}</b>
-          <small>
-            {price?.namada?.usd_24h_change
-              ? `${price.namada.usd_24h_change.toFixed(2)}% 24h`
-              : "Market data loading"}
-          </small>
         </div>
         <div>
           <span>Market price (BTC)</span>
           <b>{price?.namada?.btc ? price.namada.btc.toFixed(10) : "—"}</b>
         </div>
       </div>
-      <div className="analytics-shell">
-        <div className="analytics-shell-heading">
-          <h3>Analytics charts</h3>
-          <a
-            href="https://www.coingecko.com/en/coins/namada"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open price source <ArrowUpRight size={14} />
-          </a>
-        </div>
-        <div className="chart-tabs" role="tablist">
-          {chartTabs.map((tab) => (
-            <button
-              key={tab}
-              className={chart === tab ? "active" : ""}
-              onClick={() => setChart(tab)}
-              role="tab"
-              aria-selected={chart === tab}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-        {chart === "Proposal Voting" ? (
-          <ProposalParticipationChart />
-        ) : (
-          <div className="chart-panel">
-            <div className="chart-panel-heading">
-              <div>
-                <span className="metric-label">{chart}</span>
-                <h3>
-                  {chart === "Total Supply"
-                    ? "Namada total supply"
-                    : `${chart} · NAM`}
-                </h3>
-              </div>
-              <span className="directory-note">
-                {rows.length ? `${rows.length} data points` : "Loading data…"}
-              </span>
-            </div>
-            {chart === "Rewards" ? (
-              <RewardsChart />
-            ) : <SupplyChart rows={rows} value={chartValue} />}
-          </div>
-        )}
-      </div>
     </section>
+  );
+}
+
+function SourceChartsWorkspace() {
+  const { divChartRef, handleSaveToPng } = useExportDashboardAsPNG();
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    getLastUpdatedDate(DATA_URL.shieldedUrl, controller.signal)
+      .then((date) => setLastUpdated(date ? new Date(date) : null))
+      .catch(() => setLastUpdated(null));
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <div className="source-charts-workspace">
+      <MarketMetrics />
+      <NamadaChart
+        lastUpdated={lastUpdated ?? new Date()}
+        divChartRef={divChartRef}
+        handleSaveToPng={handleSaveToPng}
+        showMetrics={false}
+      />
+    </div>
   );
 }
 
@@ -733,7 +771,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <header className="site-header dashboard-header">
-        <a className="brand" href="/" aria-label="Back to Namada ZecHub home">
+        <a className="brand" href="/" aria-label="Namada ZecHub dashboard">
           <span className="brand-mark">
             <Shield size={19} fill="currentColor" />
           </span>
@@ -741,22 +779,48 @@ export default function Dashboard() {
             ZecHub <em>/</em> Namada
           </span>
         </a>
-        <nav className={menuOpen ? "main-nav open" : "main-nav"} aria-label="Primary navigation">
-          <a href="/" onClick={() => setMenuOpen(false)}>Learn</a>
-          <a href="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</a>
-          <a href="/#participate" onClick={() => setMenuOpen(false)}>Participate</a>
-          <a href="/#build" onClick={() => setMenuOpen(false)}>Build</a>
-          <a href="https://zechub.wiki" target="_blank" rel="noreferrer">ZecHub <ArrowUpRight size={13} /></a>
+        <nav
+          className={menuOpen ? "main-nav open" : "main-nav"}
+          aria-label="Primary navigation"
+        >
+          <a href="/learn" onClick={() => setMenuOpen(false)}>
+            Learn
+          </a>
+          <a href="/" onClick={() => setMenuOpen(false)}>
+            Dashboard
+          </a>
+          <a href="/learn#participate" onClick={() => setMenuOpen(false)}>
+            Participate
+          </a>
+          <a href="/learn#build" onClick={() => setMenuOpen(false)}>
+            Build
+          </a>
+          <a href="https://zechub.wiki" target="_blank" rel="noreferrer">
+            ZecHub <ArrowUpRight size={13} />
+          </a>
         </nav>
         <div className="header-actions">
-          <a className="text-link" href="https://bounties.zechub.wiki" target="_blank" rel="noreferrer">Bounties <ArrowUpRight size={15} /></a>
-          <button className="menu-button" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
+          <a
+            className="text-link"
+            href="https://bounties.zechub.wiki"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Bounties <ArrowUpRight size={15} />
+          </a>
+          <button
+            className="menu-button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </button>
         </div>
       </header>
       <main className="dashboard-main">
         <div className="dashboard-intro section-wrap">
           <span className="section-kicker">Namada network data</span>
-          <h1>Dashboard</h1>
+          <h1>Namada Governance Dashboard</h1>
           <p>
             Supply, governance, protocol parameters, and validator snapshots for
             the Namada network.
@@ -778,7 +842,7 @@ export default function Dashboard() {
           </nav>
           {activeTab === "parameters" && <ProtocolParameters />}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
-          {activeTab === "charts" && <ChartsWorkspace />}
+          {activeTab === "charts" && <SourceChartsWorkspace />}
           <NetworkDashboard />
           <ValidatorTable />
         </div>
