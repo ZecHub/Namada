@@ -1,0 +1,486 @@
+/* Import AFTER your existing page stylesheet. Layout-only: existing theme is preserved. */
+.dashboard-page {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.dashboard-page *,
+.dashboard-page *::before,
+.dashboard-page *::after {
+  box-sizing: border-box;
+}
+.dashboard-page
+  :is(
+    .dashboard-main,
+    .dashboard-view,
+    .section-wrap,
+    .source-charts-workspace,
+    .staking-economics,
+    .reward-chart-card,
+    .parameters-grid,
+    .parameter-details-grid,
+    .metric-cards,
+    .parameter-card,
+    .parameter-rows,
+    .validator-details,
+    .detail-panels,
+    .dashboard-grid,
+    .analytics-grid,
+    .metrics-panel,
+    .chart-card,
+    .participation-chart-card
+  ) {
+  min-width: 0;
+  max-width: 100%;
+}
+.dashboard-page .section-wrap {
+  width: 100%;
+  padding-inline: 12px;
+}
+.dashboard-page .dashboard-intro h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.dashboard-page :is(h2, h3, p, code, .directory-note, .metric-cards b) {
+  overflow-wrap: anywhere;
+}
+.dashboard-page .dashboard-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding-inline: 12px;
+}
+.dashboard-page .brand {
+  min-width: 0;
+  font-size: 1rem;
+}
+.dashboard-page .brand > span:last-child {
+  min-width: 0;
+}
+.dashboard-page :is(.brand-mark, .validator-avatar, .detail-avatar) {
+  flex-shrink: 0;
+}
+.dashboard-page .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.dashboard-page .header-actions .text-link {
+  display: none;
+}
+.dashboard-page .menu-button {
+  display: inline-flex;
+}
+.dashboard-page :is(.menu-button, .expand-button) {
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard-page .main-nav {
+  display: none;
+  position: static;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.dashboard-page .main-nav.open {
+  display: flex;
+}
+.dashboard-page .main-nav a {
+  min-height: 44px;
+  padding-block: 12px;
+}
+.dashboard-page .dashboard-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-inline: 12px;
+}
+.dashboard-page .dashboard-tabs button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  min-height: 44px;
+}
+.dashboard-page
+  :is(
+    .parameters-heading,
+    .directory-heading,
+    .metrics-heading,
+    .reward-chart-heading,
+    .pagination,
+    .epoch-banner
+  ) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.dashboard-page
+  :is(
+    .parameters-heading,
+    .directory-heading,
+    .metrics-heading,
+    .reward-chart-heading
+  )
+  > * {
+  min-width: 0;
+}
+.dashboard-page .directory-note {
+  white-space: normal;
+}
+.dashboard-page
+  :is(
+    .parameters-grid,
+    .parameter-details-grid,
+    .metric-cards,
+    .detail-panels,
+    .dashboard-grid,
+    .analytics-grid
+  ) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.dashboard-page
+  :is(
+    .parameters-grid,
+    .parameter-details-grid,
+    .metric-cards,
+    .detail-panels,
+    .dashboard-grid,
+    .analytics-grid
+  )
+  > * {
+  min-width: 0;
+  max-width: 100%;
+  grid-column: auto;
+}
+.dashboard-page .parameter-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+.dashboard-page .parameter-row > * {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+.dashboard-page .parameter-details-grid :is(details, summary, code) {
+  min-width: 0;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.dashboard-page .parameter-details-grid summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dashboard-page :is(.proposals-table-wrap, .validator-table-wrap) {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.dashboard-page .proposals-table {
+  width: 100%;
+  min-width: 760px;
+}
+.dashboard-page .validator-table {
+  width: 100%;
+  min-width: 820px;
+}
+.dashboard-page :is(.proposals-table, .validator-table) th {
+  white-space: nowrap;
+}
+.dashboard-page .proposals-table code {
+  display: block;
+  max-width: 240px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.dashboard-page .table-validator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.dashboard-page .table-validator > span:last-child {
+  min-width: 0;
+}
+.dashboard-page .table-validator small {
+  display: block;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dashboard-page .validator-details {
+  width: min(100%, var(--validator-detail-width, 520px));
+}
+.dashboard-page .validator-identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+.dashboard-page .validator-identity > div:last-child {
+  min-width: 0;
+}
+.dashboard-page .detail-address code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.dashboard-page .pagination > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.dashboard-page .pagination button {
+  min-height: 44px;
+}
+.dashboard-page .reward-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.dashboard-page .reward-filters label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.dashboard-page .reward-filters select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 44px;
+}
+.dashboard-page .reward-chart-card {
+  padding: 12px;
+}
+.dashboard-page .reward-axis-chart,
+.dashboard-page .reward-axis-chart.is-expanded {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 240px;
+}
+.dashboard-page .reward-axis-chart .y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  font-size: 10px;
+  padding-bottom: 22px;
+}
+.dashboard-page .reward-axis-chart .plot-area {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+}
+.dashboard-page .reward-axis-chart .grid-lines {
+  position: absolute;
+  inset: 0 0 22px;
+  pointer-events: none;
+}
+.dashboard-page .reward-axis-chart .participation-bars {
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+.dashboard-page .reward-axis-chart .participation-bar-column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  height: calc(100% - 22px);
+}
+/* Dense ranges scroll INSIDE the plot, not the page. */
+.dashboard-page .reward-axis-chart[data-dense="true"] .participation-bars {
+  width: max-content;
+  min-width: 100%;
+}
+.dashboard-page
+  .reward-axis-chart[data-dense="true"]
+  .participation-bar-column {
+  flex: 1 0 10px;
+}
+.dashboard-page .reward-axis-chart .participation-bar {
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 0;
+}
+.dashboard-page .reward-axis-chart .participation-bar-column small {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  min-width: 0;
+  font-size: 9px;
+  line-height: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.dashboard-page .axis-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+}
+.dashboard-page .reward-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.dashboard-page .reward-summary > div {
+  min-width: 0;
+}
+.dashboard-page .reward-summary b {
+  overflow-wrap: anywhere;
+}
+/* Imported charts remain in a width-constrained, locally scrollable boundary. */
+.dashboard-page .responsive-chart-boundary {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.dashboard-page .responsive-chart-boundary > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.dashboard-page
+  .responsive-chart-boundary
+  :is(.recharts-responsive-container, canvas, svg) {
+  max-width: 100%;
+}
+@media (min-width: 365px) {
+  .dashboard-page .section-wrap {
+    padding-inline: 16px;
+  }
+  .dashboard-page .reward-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dashboard-page .reward-chart-card {
+    padding: 16px;
+  }
+}
+@media (min-width: 725px) {
+  .dashboard-page .section-wrap {
+    padding-inline: 24px;
+  }
+  .dashboard-page .dashboard-intro h1 {
+    font-size: 2.5rem;
+  }
+  .dashboard-page
+    :is(
+      .parameters-heading,
+      .directory-heading,
+      .metrics-heading,
+      .pagination
+    ) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .dashboard-page .epoch-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .dashboard-page
+    :is(
+      .parameters-grid,
+      .parameter-details-grid,
+      .metric-cards,
+      .detail-panels,
+      .dashboard-grid,
+      .analytics-grid
+    ) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dashboard-page .parameter-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+  }
+  .dashboard-page .parameter-row b {
+    text-align: end;
+  }
+  .dashboard-page .reward-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dashboard-page .reward-axis-chart {
+    height: 300px;
+  }
+  .dashboard-page .validator-details {
+    --validator-detail-width: 760px;
+  }
+  .dashboard-page .header-actions .text-link {
+    display: inline-flex;
+  }
+}
+@media (min-width: 976px) {
+  .dashboard-page .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .dashboard-page .main-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    gap: 16px;
+  }
+  .dashboard-page .menu-button {
+    display: none;
+  }
+  .dashboard-page .metric-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .dashboard-page .reward-chart-heading {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .dashboard-page .reward-filters {
+    width: auto;
+  }
+}
+@media (min-width: 1530px) {
+  .dashboard-page .parameters-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,185 @@
+/* ProposalParticipationChart — responsive fixes.
+   Append AFTER your existing stylesheet. Breakpoints: sam 365px, imd 725px, lg 976px. */
+
+.participation-chart,
+.participation-chart * {
+  box-sizing: border-box;
+}
+.participation-chart {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Heading: wraps instead of pushing the select off-screen */
+.participation-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 16px;
+}
+.participation-heading > div {
+  min-width: 0;
+}
+.participation-heading h3 {
+  overflow-wrap: anywhere;
+}
+.participation-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.participation-controls select {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Chart: y-axis fixed, plot shrinks; many bars scroll sideways instead of stretching the page */
+.axis-chart {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+.y-axis {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.plot-area {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.participation-bars {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  min-width: 100%;
+  width: max-content;
+  gap: 3px;
+}
+.participation-bar-column {
+  flex: 1 0 14px;
+  min-width: 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.participation-bar {
+  width: 100%;
+  max-width: 40px;
+}
+.participation-bar-column small {
+  font-size: 10px;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+
+/* Stats: 3 columns on desktop, 1 on phones */
+.participation-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.participation-stats > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.participation-empty {
+  overflow-wrap: anywhere;
+}
+.participation-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Tablet */
+@media (max-width: 975px) {
+  .participation-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .participation-stats > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones */
+@media (max-width: 724px) {
+  .participation-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .participation-controls {
+    width: 100%;
+  }
+  .participation-controls select {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  .axis-chart {
+    height: 220px;
+  }
+  .y-axis {
+    font-size: 10px;
+    padding-right: 6px;
+  }
+  .participation-bars {
+    gap: 2px;
+  }
+  .participation-bar-column {
+    flex-basis: 12px;
+    min-width: 12px;
+  }
+  /* show every other index label so they don't collide */
+  .participation-bar-column:nth-child(even) small {
+    visibility: hidden;
+  }
+  .axis-labels {
+    font-size: 11px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .participation-stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .participation-stats > div:last-child {
+    grid-column: auto;
+  }
+}
+
+/* Small phones */
+@media (max-width: 364px) {
+  .participation-controls label {
+    display: none;
+  }
+  .axis-chart {
+    height: 180px;
+  }
+  .participation-bar-column small {
+    font-size: 9px;
+  }
+  .participation-bar-column:not(:nth-child(5n + 1)) small {
+    visibility: hidden;
+  }
+}

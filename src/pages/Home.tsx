@@ -1,69 +1,775 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUpRight, BookOpen, CheckCircle2, ChevronRight, Code2, Coins, ExternalLink, Github, Globe2, Menu, Search, Server, Shield, SlidersHorizontal, Sparkles, Vote, WalletCards, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  Code2,
+  Coins,
+  ExternalLink,
+  Github,
+  Globe2,
+  Menu,
+  Search,
+  Server,
+  Shield,
+  SlidersHorizontal,
+  Sparkles,
+  Vote,
+  WalletCards,
+  X,
+} from "lucide-react";
 import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
 import { safeHttpsUrl } from "../lib/safe-url";
 
-type Guide = { title: string; description: string; category: string; tag: string; href: string; source: string; icon: typeof BookOpen; featured?: boolean };
+type Guide = {
+  title: string;
+  description: string;
+  category: string;
+  tag: string;
+  href: string;
+  source: string;
+  icon: typeof BookOpen;
+  featured?: boolean;
+};
 const officialDocs = "https://docs.namada.net";
-const zechubNamadaPrivacyUrl = "https://zechub.wiki/research/namada-privacy-and-best-practices";
-const zechubNamadaProtocolUrl = "https://zechub.wiki/privacy-tools/namada-protocol";
+const zechubNamadaPrivacyUrl =
+  "https://zechub.wiki/research/namada-privacy-and-best-practices";
+const zechubNamadaProtocolUrl =
+  "https://zechub.wiki/privacy-tools/namada-protocol";
 const supplyDataUrl = DATA_URL.namadaSupplyUrl;
 const proposalDataUrl = DATA_URL.propsDetailsUrl;
 const supplySourceUrl = DATE_URL.namadaSupplyUrl;
 const guides: Guide[] = [
-  { title: "Mainnet", description: "The live network, chain ID, current binaries, and the fastest way to join from the CLI.", category: "Foundations", tag: "Start here", href: `${officialDocs}/networks/mainnets`, source: "Namada docs · Mainnets", icon: Globe2, featured: true },
-  { title: "Wallets", description: "Choose between the filesystem wallet, Keychain extension, and Ledger hardware wallet.", category: "Use Namada", tag: "Beginner", href: `${officialDocs}/users/wallet`, source: "Namada docs · Wallet guide", icon: WalletCards, featured: true },
-  { title: "Keychain", description: "Create or import accounts, connect to Namadillo, and sign transactions safely in your browser.", category: "Use Namada", tag: "Beginner", href: `${officialDocs}/users/keychain`, source: "Namada docs · Keychain", icon: Shield, featured: true },
-  { title: "MASP", description: "Understand Namada’s multi-asset shielded pool, shielded addresses, and privacy rewards.", category: "Privacy", tag: "Core concept", href: `${officialDocs}/users/shielded-accounts`, source: "Namada docs · The MASP", icon: Sparkles },
-  { title: "Privacy best practices", description: "Practical guidance for using Namada’s shielded features while understanding where privacy protections end.", category: "Privacy", tag: "Read next", href: zechubNamadaPrivacyUrl, source: "ZecHub research · Privacy best practices", icon: Shield, featured: true },
-  { title: "Namada Protocol", description: "Get the protocol-level context behind Namada’s privacy tools, shielded pool, and ecosystem.", category: "Privacy", tag: "Reference", href: zechubNamadaProtocolUrl, source: "ZecHub · Namada Protocol", icon: BookOpen },
-  { title: "Staking", description: "Bond NAM, delegate to validators, claim rewards, and understand the two-epoch pipeline.", category: "Participate", tag: "Earn & secure", href: `${officialDocs}/users/delegators`, source: "Namada docs · Proof of stake", icon: Coins },
-  { title: "Governance", description: "Vote on protocol upgrades and social coordination with active bonded stake.", category: "Participate", tag: "On-chain", href: `${officialDocs}/users/governance`, source: "Namada docs · Governance", icon: Vote },
-  { title: "IBC", description: "Move assets across IBC-compatible chains and learn how shielded transfers work.", category: "Interchain", tag: "Multichain", href: `${officialDocs}/users/ibc/shielded-ibc`, source: "Namada docs · Shielded IBC", icon: Globe2 },
-  { title: "Run a validator", description: "Sync a full node, initialize a validator account, bond stake, and operate securely.", category: "Operators", tag: "Advanced", href: `${officialDocs}/operators/validators/validator-setup`, source: "Namada docs · Validator setup", icon: CheckCircle2 },
-  { title: "Validator actions", description: "Manage commission, metadata, consensus keys, rewards, jailing, and governance votes.", category: "Operators", tag: "Advanced", href: `${officialDocs}/operators/validators/validator-actions`, source: "Namada docs · Validator actions", icon: Shield },
-  { title: "Build with Namada", description: "Integrate the Rust SDK, indexer, interface, and frontend tooling into your project.", category: "Developers", tag: "Build", href: `${officialDocs}/integrating-with-namada`, source: "Namada docs · Integrations", icon: Code2 },
-  { title: "Namada SDK", description: "Construct, sign, and submit transactions with the Rust SDK in the Namada repository.", category: "Developers", tag: "Rust", href: `${officialDocs}/integrating-with-namada/sdk`, source: "Namada docs · SDK", icon: Code2 },
-  { title: "IBC relayers", description: "Operate Hermes, create channels, and keep clients alive between connected chains.", category: "Operators", tag: "Infrastructure", href: `${officialDocs}/operators/ibc`, source: "Namada docs · Relaying", icon: Globe2 },
+  {
+    title: "Mainnet",
+    description:
+      "The live network, chain ID, current binaries, and the fastest way to join from the CLI.",
+    category: "Foundations",
+    tag: "Start here",
+    href: `${officialDocs}/networks/mainnets`,
+    source: "Namada docs · Mainnets",
+    icon: Globe2,
+    featured: true,
+  },
+  {
+    title: "Wallets",
+    description:
+      "Choose between the filesystem wallet, Keychain extension, and Ledger hardware wallet.",
+    category: "Use Namada",
+    tag: "Beginner",
+    href: `${officialDocs}/users/wallet`,
+    source: "Namada docs · Wallet guide",
+    icon: WalletCards,
+    featured: true,
+  },
+  {
+    title: "Keychain",
+    description:
+      "Create or import accounts, connect to Namadillo, and sign transactions safely in your browser.",
+    category: "Use Namada",
+    tag: "Beginner",
+    href: `${officialDocs}/users/keychain`,
+    source: "Namada docs · Keychain",
+    icon: Shield,
+    featured: true,
+  },
+  {
+    title: "MASP",
+    description:
+      "Understand Namada’s multi-asset shielded pool, shielded addresses, and privacy rewards.",
+    category: "Privacy",
+    tag: "Core concept",
+    href: `${officialDocs}/users/shielded-accounts`,
+    source: "Namada docs · The MASP",
+    icon: Sparkles,
+  },
+  {
+    title: "Privacy best practices",
+    description:
+      "Practical guidance for using Namada’s shielded features while understanding where privacy protections end.",
+    category: "Privacy",
+    tag: "Read next",
+    href: zechubNamadaPrivacyUrl,
+    source: "ZecHub research · Privacy best practices",
+    icon: Shield,
+    featured: true,
+  },
+  {
+    title: "Namada Protocol",
+    description:
+      "Get the protocol-level context behind Namada’s privacy tools, shielded pool, and ecosystem.",
+    category: "Privacy",
+    tag: "Reference",
+    href: zechubNamadaProtocolUrl,
+    source: "ZecHub · Namada Protocol",
+    icon: BookOpen,
+  },
+  {
+    title: "Staking",
+    description:
+      "Bond NAM, delegate to validators, claim rewards, and understand the two-epoch pipeline.",
+    category: "Participate",
+    tag: "Earn & secure",
+    href: `${officialDocs}/users/delegators`,
+    source: "Namada docs · Proof of stake",
+    icon: Coins,
+  },
+  {
+    title: "Governance",
+    description:
+      "Vote on protocol upgrades and social coordination with active bonded stake.",
+    category: "Participate",
+    tag: "On-chain",
+    href: `${officialDocs}/users/governance`,
+    source: "Namada docs · Governance",
+    icon: Vote,
+  },
+  {
+    title: "IBC",
+    description:
+      "Move assets across IBC-compatible chains and learn how shielded transfers work.",
+    category: "Interchain",
+    tag: "Multichain",
+    href: `${officialDocs}/users/ibc/shielded-ibc`,
+    source: "Namada docs · Shielded IBC",
+    icon: Globe2,
+  },
+  {
+    title: "Run a validator",
+    description:
+      "Sync a full node, initialize a validator account, bond stake, and operate securely.",
+    category: "Operators",
+    tag: "Advanced",
+    href: `${officialDocs}/operators/validators/validator-setup`,
+    source: "Namada docs · Validator setup",
+    icon: CheckCircle2,
+  },
+  {
+    title: "Validator actions",
+    description:
+      "Manage commission, metadata, consensus keys, rewards, jailing, and governance votes.",
+    category: "Operators",
+    tag: "Advanced",
+    href: `${officialDocs}/operators/validators/validator-actions`,
+    source: "Namada docs · Validator actions",
+    icon: Shield,
+  },
+  {
+    title: "Build with Namada",
+    description:
+      "Integrate the Rust SDK, indexer, interface, and frontend tooling into your project.",
+    category: "Developers",
+    tag: "Build",
+    href: `${officialDocs}/integrating-with-namada`,
+    source: "Namada docs · Integrations",
+    icon: Code2,
+  },
+  {
+    title: "Namada SDK",
+    description:
+      "Construct, sign, and submit transactions with the Rust SDK in the Namada repository.",
+    category: "Developers",
+    tag: "Rust",
+    href: `${officialDocs}/integrating-with-namada/sdk`,
+    source: "Namada docs · SDK",
+    icon: Code2,
+  },
+  {
+    title: "IBC relayers",
+    description:
+      "Operate Hermes, create channels, and keep clients alive between connected chains.",
+    category: "Operators",
+    tag: "Infrastructure",
+    href: `${officialDocs}/operators/ibc`,
+    source: "Namada docs · Relaying",
+    icon: Globe2,
+  },
 ];
-const categories = ["All guides", "Foundations", "Use Namada", "Privacy", "Participate", "Interchain", "Operators", "Developers"];
+const categories = [
+  "All guides",
+  "Foundations",
+  "Use Namada",
+  "Privacy",
+  "Participate",
+  "Interchain",
+  "Operators",
+  "Developers",
+];
 
-function GuideCard({ guide }: { guide: Guide }) { const Icon = guide.icon; return <a className={`guide-card ${guide.featured ? "featured" : ""}`} href={guide.href} target="_blank" rel="noreferrer"><div className="card-top"><span className="icon-box"><Icon size={19} strokeWidth={1.8} /></span><span className="card-tag">{guide.tag}</span><ArrowUpRight size={17} className="arrow" /></div><h3>{guide.title}</h3><p>{guide.description}</p><div className="source"><CheckCircle2 size={14} /> <span>{guide.source}</span></div></a>; }
+function GuideCard({ guide }: { guide: Guide }) {
+  const Icon = guide.icon;
+  return (
+    <a
+      className={`guide-card ${guide.featured ? "featured" : ""}`}
+      href={guide.href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div className="card-top">
+        <span className="icon-box">
+          <Icon size={19} strokeWidth={1.8} />
+        </span>
+        <span className="card-tag">{guide.tag}</span>
+        <ArrowUpRight size={17} className="arrow" />
+      </div>
+      <h3>{guide.title}</h3>
+      <p>{guide.description}</p>
+      <div className="source">
+        <CheckCircle2 size={14} /> <span>{guide.source}</span>
+      </div>
+    </a>
+  );
+}
 
-type SupplyPoint = { Date: string; Native_Supply_NAM: string; Total_Supply: { id: string; totalSupply: string }[] };
-type Proposal = { id: number; Type: string; Content?: { title?: string; "discussions-to"?: string }; Start_Epoch: string; End_Epoch: string; Activation_Epoch: string; Status?: string };
-type Validator = { Name?: string; Address?: string; Commission?: string; Epoch?: string; Description?: string; Website?: string };
+type SupplyPoint = {
+  Date: string;
+  Native_Supply_NAM: string;
+  Total_Supply: { id: string; totalSupply: string }[];
+};
+type Proposal = {
+  id: number;
+  Type: string;
+  Content?: { title?: string; "discussions-to"?: string };
+  Start_Epoch: string;
+  End_Epoch: string;
+  Activation_Epoch: string;
+  Status?: string;
+};
+type Validator = {
+  Name?: string;
+  Address?: string;
+  Commission?: string;
+  Epoch?: string;
+  Description?: string;
+  Website?: string;
+};
 
 export function NetworkDashboard() {
-  const [supplyRows, setSupplyRows] = useState<SupplyPoint[]>([]); const [supply, setSupply] = useState<SupplyPoint | null>(null);
+  const [supplyRows, setSupplyRows] = useState<SupplyPoint[]>([]);
+  const [supply, setSupply] = useState<SupplyPoint | null>(null);
   const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [parameters, setParameters] = useState<Record<string, unknown> | null>(null); const [validators, setValidators] = useState<Validator[]>([]);
+  const [parameters, setParameters] = useState<Record<string, unknown> | null>(
+    null,
+  );
+  const [validators, setValidators] = useState<Validator[]>([]);
   const [error, setError] = useState(false);
   useEffect(() => {
-    Promise.all([fetch(supplyDataUrl).then((r) => r.json()), fetch(proposalDataUrl).then((r) => r.json()), fetch(DATA_URL.protocol_parametersUrl).then((r) => r.json()), fetch(DATA_URL.zechubUrl).then((r) => r.json())])
+    Promise.all([
+      fetch(supplyDataUrl).then((r) => r.json()),
+      fetch(proposalDataUrl).then((r) => r.json()),
+      fetch(DATA_URL.protocol_parametersUrl).then((r) => r.json()),
+      fetch(DATA_URL.zechubUrl).then((r) => r.json()),
+    ])
       .then(([supplyData, proposalRows, parameterRows, validatorRows]) => {
-        setSupplyRows(supplyData); setSupply(supplyData[supplyData.length - 1]);
-        const rows: Proposal[] = proposalRows.flatMap((row: { Proposal?: Proposal[] }) => row.Proposal ?? []);
-        setProposals(rows.sort((a: Proposal, b: Proposal) => b.id - a.id).slice(0, 4));
-        const parameterData = parameterRows[0]; setParameters({ ...parameterData.Governance_Parameters?.[0], ...parameterData.Proof_Of_Stake_Parmeters?.[0] }); setValidators(validatorRows);
+        setSupplyRows(supplyData);
+        setSupply(supplyData[supplyData.length - 1]);
+        const rows: Proposal[] = proposalRows.flatMap(
+          (row: { Proposal?: Proposal[] }) => row.Proposal ?? [],
+        );
+        setProposals(
+          rows.sort((a: Proposal, b: Proposal) => b.id - a.id).slice(0, 4),
+        );
+        const parameterData = parameterRows[0];
+        setParameters({
+          ...parameterData.Governance_Parameters?.[0],
+          ...parameterData.Proof_Of_Stake_Parmeters?.[0],
+        });
+        setValidators(validatorRows);
       })
       .catch(() => setError(true));
   }, []);
-  const namadaTotal = supply?.Total_Supply?.find((token) => token.id === "Namada")?.totalSupply;
-  const chartRows = supplyRows.slice(-10); const chartMax = Math.max(...chartRows.map((row) => Number(row.Native_Supply_NAM)), 1);
-  return <section className="dashboard section-wrap" id="dashboard"><div className="section-heading"><div><span className="section-kicker">Network pulse</span><h2>Namada dashboard</h2></div><div className="source-links"><a className="data-source-link" href="/data/namada_supply.json" target="_blank" rel="noreferrer">Supply data <ArrowUpRight size={14} /></a><a className="data-source-link" href="/data/proposals/propsDetails.json" target="_blank" rel="noreferrer">Proposal data <ArrowUpRight size={14} /></a></div></div><div className="dashboard-grid"><div className="metrics-panel"><div className="metric-label">NAM total supply <span className="live-dot" /> local snapshot</div><strong>{namadaTotal ? Number(namadaTotal).toLocaleString(undefined, { maximumFractionDigits: 0 }) : "—"}</strong><span className="metric-date">Updated {supply?.Date ?? "loading…"}</span><div className="metric-divider" /><div className="metric-label">Native supply</div><b>{supply?.Native_Supply_NAM ? `${Number(supply.Native_Supply_NAM).toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM` : "Loading…"}</b><span className="metric-date">Source: <a href={supplySourceUrl} target="_blank" rel="noreferrer">ZecHub Namada data</a></span></div><div className="proposals-panel"><div className="proposal-head"><div><div className="metric-label">Governance</div><h3>Recent proposals</h3></div><a href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">How governance works <ArrowUpRight size={14} /></a></div>{error && <p className="dashboard-error">Data snapshot unavailable. Check the source links.</p>}{proposals.map((proposal) => <a className="proposal-row" key={proposal.id} href={safeHttpsUrl(proposal.Content?.["discussions-to"], `${officialDocs}/users/governance`)} target="_blank" rel="noreferrer"><span className="proposal-id">#{proposal.id}</span><span className="proposal-title">{proposal.Content?.title || proposal.Type}</span><span className={`proposal-status ${proposal.Status === "ended" ? "ended" : "active"}`}>{proposal.Status || "tracked"}</span><ArrowUpRight size={15} /></a>)}{!proposals.length && !error && <p className="dashboard-loading">Loading proposals…</p>}</div></div><div className="analytics-grid"><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Chart</span><h3>NAM supply history</h3></span><BarIcon /></div><div className="bars" aria-label="NAM native supply history">{chartRows.map((row) => <div className="bar-column" key={row.Date}><div className="bar" style={{ height: `${Math.max(8, Number(row.Native_Supply_NAM) / chartMax * 100)}%` }} title={`${row.Date}: ${Number(row.Native_Supply_NAM).toLocaleString()} NAM`} /><small>{row.Date.slice(0, 5)}</small></div>)}</div></div><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Protocol</span><h3>Parameters</h3></span><SlidersHorizontal size={18} /></div><div className="parameter-list"><span><b>Proposal fund</b>{String(parameters?.Min_proposal_fund || "Loading…")}</span><span><b>Pipeline</b>{String(parameters?.Pipline_length || "Loading…")}</span><span><b>Validator slots</b>{String(parameters?.Max_consensus_validator_slots || "Loading…")}</span><span><b>Stake threshold</b>{String(parameters?.Validator_stake_threshold || "Loading…")}</span></div><a className="dashboard-link" href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">View governance docs <ArrowUpRight size={14} /></a></div></div><div className="validators-card"><div className="analytics-title"><span><span className="metric-label">Operators</span><h3>Validators</h3></span><Server size={18} /></div><div className="validator-list">{validators.map((validator) => <a className="validator-row" key={validator.Address} href={safeHttpsUrl(validator.Website, `${officialDocs}/operators/validators`)} target="_blank" rel="noreferrer"><span className="validator-avatar">{(validator.Name || "V").slice(0, 1)}</span><span><b>{validator.Name || "Validator"}</b><small>{validator.Description || "Namada network operator"}</small></span><em>{validator.Commission ? `${Number(validator.Commission) * 100}%` : "—"}<ArrowUpRight size={14} /></em></a>)}</div></div></section>;
+  const namadaTotal = supply?.Total_Supply?.find(
+    (token) => token.id === "Namada",
+  )?.totalSupply;
+  const chartRows = supplyRows.slice(-10);
+  const chartMax = Math.max(
+    ...chartRows.map((row) => Number(row.Native_Supply_NAM)),
+    1,
+  );
+  return (
+    <section className="dashboard section-wrap" id="dashboard">
+      <div className="section-heading">
+        <div>
+          <span className="section-kicker">Network pulse</span>
+          <h2>Namada dashboard</h2>
+        </div>
+        <div className="source-links">
+          <a
+            className="data-source-link"
+            href="/data/namada_supply.json"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Supply data <ArrowUpRight size={14} />
+          </a>
+          <a
+            className="data-source-link"
+            href="/data/proposals/propsDetails.json"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Proposal data <ArrowUpRight size={14} />
+          </a>
+        </div>
+      </div>
+      <div className="dashboard-grid">
+        <div className="metrics-panel">
+          <div className="metric-label">
+            NAM total supply <span className="live-dot" /> local snapshot
+          </div>
+          <strong>
+            {namadaTotal
+              ? Number(namadaTotal).toLocaleString(undefined, {
+                  maximumFractionDigits: 0,
+                })
+              : "—"}
+          </strong>
+          <span className="metric-date">
+            Updated {supply?.Date ?? "loading…"}
+          </span>
+          <div className="metric-divider" />
+          <div className="metric-label">Native supply</div>
+          <b>
+            {supply?.Native_Supply_NAM
+              ? `${Number(supply.Native_Supply_NAM).toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM`
+              : "Loading…"}
+          </b>
+          <span className="metric-date">
+            Source:{" "}
+            <a href={supplySourceUrl} target="_blank" rel="noreferrer">
+              ZecHub Namada data
+            </a>
+          </span>
+        </div>
+        <div className="proposals-panel">
+          <div className="proposal-head">
+            <div>
+              <div className="metric-label">Governance</div>
+              <h3>Recent proposals</h3>
+            </div>
+            <a
+              href={`${officialDocs}/users/governance`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              How governance works <ArrowUpRight size={14} />
+            </a>
+          </div>
+          {error && (
+            <p className="dashboard-error">
+              Data snapshot unavailable. Check the source links.
+            </p>
+          )}
+          {proposals.map((proposal) => (
+            <a
+              className="proposal-row"
+              key={proposal.id}
+              href={safeHttpsUrl(
+                proposal.Content?.["discussions-to"],
+                `${officialDocs}/users/governance`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="proposal-id">#{proposal.id}</span>
+              <span className="proposal-title">
+                {proposal.Content?.title || proposal.Type}
+              </span>
+              <span
+                className={`proposal-status ${proposal.Status === "ended" ? "ended" : "active"}`}
+              >
+                {proposal.Status || "tracked"}
+              </span>
+              <ArrowUpRight size={15} />
+            </a>
+          ))}
+          {!proposals.length && !error && (
+            <p className="dashboard-loading">Loading proposals…</p>
+          )}
+        </div>
+      </div>
+      <div className="analytics-grid">
+        <div className="analytics-card">
+          <div className="analytics-title">
+            <span>
+              <span className="metric-label">Chart</span>
+              <h3>NAM supply history</h3>
+            </span>
+            <BarIcon />
+          </div>
+          <div className="bars" aria-label="NAM native supply history">
+            {chartRows.map((row) => (
+              <div className="bar-column" key={row.Date}>
+                <div
+                  className="bar"
+                  style={{
+                    height: `${Math.max(8, (Number(row.Native_Supply_NAM) / chartMax) * 100)}%`,
+                  }}
+                  title={`${row.Date}: ${Number(row.Native_Supply_NAM).toLocaleString()} NAM`}
+                />
+                <small>{row.Date.slice(0, 5)}</small>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="analytics-card">
+          <div className="analytics-title">
+            <span>
+              <span className="metric-label">Protocol</span>
+              <h3>Parameters</h3>
+            </span>
+            <SlidersHorizontal size={18} />
+          </div>
+          <div className="parameter-list">
+            <span>
+              <b>Proposal fund</b>
+              {String(parameters?.Min_proposal_fund || "Loading…")}
+            </span>
+            <span>
+              <b>Pipeline</b>
+              {String(parameters?.Pipline_length || "Loading…")}
+            </span>
+            <span>
+              <b>Validator slots</b>
+              {String(parameters?.Max_consensus_validator_slots || "Loading…")}
+            </span>
+            <span>
+              <b>Stake threshold</b>
+              {String(parameters?.Validator_stake_threshold || "Loading…")}
+            </span>
+          </div>
+          <a
+            className="dashboard-link"
+            href={`${officialDocs}/users/governance`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View governance docs <ArrowUpRight size={14} />
+          </a>
+        </div>
+      </div>
+      <div className="validators-card">
+        <div className="analytics-title">
+          <span>
+            <span className="metric-label">Operators</span>
+            <h3>Validators</h3>
+          </span>
+          <Server size={18} />
+        </div>
+        <div className="validator-list">
+          {validators.map((validator) => (
+            <a
+              className="validator-row"
+              key={validator.Address}
+              href={safeHttpsUrl(
+                validator.Website,
+                `${officialDocs}/operators/validators`,
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="validator-avatar">
+                {(validator.Name || "V").slice(0, 1)}
+              </span>
+              <span>
+                <b>{validator.Name || "Validator"}</b>
+                <small>
+                  {validator.Description || "Namada network operator"}
+                </small>
+              </span>
+              <em>
+                {validator.Commission
+                  ? `${Number(validator.Commission) * 100}%`
+                  : "—"}
+                <ArrowUpRight size={14} />
+              </em>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function BarIcon() { return <span className="bar-icon"><i /><i /><i /></span>; }
+function BarIcon() {
+  return (
+    <span className="bar-icon">
+      <i />
+      <i />
+      <i />
+    </span>
+  );
+}
 
 export default function Home() {
-  const [query, setQuery] = useState(""); const [category, setCategory] = useState("All guides"); const [menuOpen, setMenuOpen] = useState(false);
-  const results = useMemo(() => guides.filter((guide) => { const text = `${guide.title} ${guide.description} ${guide.category} ${guide.tag}`.toLowerCase(); return (category === "All guides" || guide.category === category) && text.includes(query.toLowerCase()); }), [category, query]);
-  return <div className="app-shell"><header className="site-header"><a className="brand" href="/learn#top" aria-label="Namada ZecHub learning hub"><span className="brand-mark"><Shield size={19} fill="currentColor" /></span><span>ZecHub <em>/</em> Namada</span></a><nav className={menuOpen ? "main-nav open" : "main-nav"} aria-label="Primary navigation"><a href="#learn" onClick={() => setMenuOpen(false)}>Learn</a><a href="/" onClick={() => setMenuOpen(false)}>Dashboard</a><a href="#participate" onClick={() => setMenuOpen(false)}>Participate</a><a href="#build" onClick={() => setMenuOpen(false)}>Build</a><a href="https://zechub.wiki" target="_blank" rel="noreferrer">ZecHub <ExternalLink size={13} /></a></nav><div className="header-actions"><a className="text-link" href="https://bounties.zechub.wiki" target="_blank" rel="noreferrer">Bounties <ArrowUpRight size={15} /></a><button className="menu-button" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button></div></header>
-    <main id="top"><section className="hero"><div className="hero-grid" /><div className="hero-copy"><div className="eyebrow"><span className="pulse" /> Community-maintained learning hub</div><h1>Make privacy<br /><span>your default.</span></h1><p className="hero-lede">Everything you need to understand, use, secure, and build on Namada — curated by the ZecHub community.</p><div className="hero-actions"><a className="button primary" href="#learn">Start learning <ChevronRight size={17} /></a><a className="button secondary" href={officialDocs} target="_blank" rel="noreferrer">Read the docs <ArrowUpRight size={16} /></a></div></div><div className="hero-note"><span className="note-line" /><div><span>THE NAMADA PRIMITIVE</span><strong>Asset-agnostic<br />data protection.</strong><a href={`${officialDocs}/`} target="_blank" rel="noreferrer">Explore the protocol <ArrowUpRight size={14} /></a></div></div></section>
-      <section className="intro section-wrap"><div><span className="section-kicker">A better way in</span><h2>Find your path.</h2></div><p className="intro-copy">Namada is a proof-of-stake L1 with Zcash-like shielded transfers for any asset, IBC connectivity, and rewards for contributing to the shielded set.</p></section>
-      <section className="section-wrap learning" id="learn"><div className="section-heading"><div><span className="section-kicker">Explore the hub</span><h2>Learn Namada</h2></div><div className="search-wrap"><Search size={18} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search guides" aria-label="Search guides" /></div></div><div className="category-scroll" role="tablist" aria-label="Guide categories">{categories.map((item) => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)} role="tab" aria-selected={category === item}>{item}</button>)}</div><div className="guide-grid">{results.map((guide) => <GuideCard key={guide.title} guide={guide} />)}</div>{results.length === 0 && <div className="empty">No guides match “{query}”. Try another search.</div>}</section>
-      <section className="pathway section-wrap" id="participate"><div className="pathway-copy"><span className="section-kicker">Your next move</span><h2>Privacy is a<br /><span>team sport.</span></h2><p>Use your NAM, run infrastructure, contribute code, or help make the network easier to understand. There’s a place for you here.</p></div><div className="pathway-links"><a href={`${officialDocs}/users/delegators`} target="_blank" rel="noreferrer"><span>01</span><b>Stake & participate</b><ArrowUpRight /></a><a href={`${officialDocs}/operators/validators`} target="_blank" rel="noreferrer"><span>02</span><b>Operate the network</b><ArrowUpRight /></a><a href={`${officialDocs}/integrating-with-namada`} target="_blank" rel="noreferrer"><span>03</span><b>Build with Namada</b><ArrowUpRight /></a><a href="https://bounties.zechub.wiki" target="_blank" rel="noreferrer"><span>04</span><b>Find a bounty</b><ArrowUpRight /></a></div></section>
-      <section className="build-callout section-wrap" id="build"><div className="callout-icon"><Github size={25} /></div><div><span className="section-kicker">Open source, always</span><h2>Help keep this hub sharp.</h2><p>Docs change. Networks evolve. Share an edit, add a guide, or bring a question to the community.</p></div><a className="button secondary" href="https://github.com/ZecHub" target="_blank" rel="noreferrer">Contribute <ArrowUpRight size={16} /></a></section></main>
-    <footer className="site-footer section-wrap"><a className="brand" href="#top"><span className="brand-mark"><Shield size={16} fill="currentColor" /></span><span>ZecHub <em>/</em> Namada</span></a><span>Verified sources checked 07 Sep 2026</span><div><a href="https://zechub.wiki" target="_blank" rel="noreferrer">ZecHub</a><a href={officialDocs} target="_blank" rel="noreferrer">Official docs</a><a href="https://github.com/namada-net/namada" target="_blank" rel="noreferrer">GitHub</a></div></footer></div>;
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All guides");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const results = useMemo(
+    () =>
+      guides.filter((guide) => {
+        const text =
+          `${guide.title} ${guide.description} ${guide.category} ${guide.tag}`.toLowerCase();
+        return (
+          (category === "All guides" || guide.category === category) &&
+          text.includes(query.toLowerCase())
+        );
+      }),
+    [category, query],
+  );
+  return (
+    <div className="app-shell">
+      <header className="site-header">
+        <a
+          className="brand"
+          href="/learn#top"
+          aria-label="Namada ZecHub learning hub"
+        >
+          <span className="brand-mark">
+            <Shield size={19} fill="currentColor" />
+          </span>
+          <span>
+            ZecHub <em>/</em> Namada
+          </span>
+        </a>
+        <nav
+          className={menuOpen ? "main-nav open" : "main-nav"}
+          aria-label="Primary navigation"
+        >
+          <a href="#learn" onClick={() => setMenuOpen(false)}>
+            Learn
+          </a>
+          <a href="/" onClick={() => setMenuOpen(false)}>
+            Dashboard
+          </a>
+          <a href="#participate" onClick={() => setMenuOpen(false)}>
+            Participate
+          </a>
+          <a href="#build" onClick={() => setMenuOpen(false)}>
+            Build
+          </a>
+          <a href="https://zechub.wiki" target="_blank" rel="noreferrer">
+            ZecHub <ExternalLink size={13} />
+          </a>
+        </nav>
+        <div className="header-actions">
+          <a
+            className="text-link"
+            href="https://bounties.zechub.wiki"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Bounties <ArrowUpRight size={15} />
+          </a>
+          <button
+            className="menu-button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </header>
+      <main id="top">
+        <section className="hero">
+          <div className="hero-grid" />
+          <div className="hero-copy">
+            <div className="eyebrow">
+              <span className="pulse" /> Community-maintained learning hub
+            </div>
+            <h1>
+              Make privacy
+              <br />
+              <span>your default.</span>
+            </h1>
+            <p className="hero-lede">
+              Everything you need to understand, use, secure, and build on
+              Namada — curated by the ZecHub community.
+            </p>
+            <div className="hero-actions">
+              <a className="button primary" href="#learn">
+                Start learning <ChevronRight size={17} />
+              </a>
+              <a
+                className="button secondary"
+                href={officialDocs}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read the docs <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
+          <div className="hero-note">
+            <span className="note-line" />
+            <div>
+              <span>THE NAMADA PRIMITIVE</span>
+              <strong>
+                Asset-agnostic
+                <br />
+                data protection.
+              </strong>
+              <a href={`${officialDocs}/`} target="_blank" rel="noreferrer">
+                Explore the protocol <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </div>
+        </section>
+        <section className="intro section-wrap">
+          <div>
+            <span className="section-kicker">A better way in</span>
+            <h2>Find your path.</h2>
+          </div>
+          <p className="intro-copy">
+            Namada is a proof-of-stake L1 with Zcash-like shielded transfers for
+            any asset, IBC connectivity, and rewards for contributing to the
+            shielded set.
+          </p>
+        </section>
+        <section className="section-wrap learning" id="learn">
+          <div className="section-heading">
+            <div>
+              <span className="section-kicker">Explore the hub</span>
+              <h2>Learn Namada</h2>
+            </div>
+            <div className="search-wrap">
+              <Search size={18} />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search guides"
+                aria-label="Search guides"
+              />
+            </div>
+          </div>
+          <div
+            className="category-scroll"
+            role="tablist"
+            aria-label="Guide categories"
+          >
+            {categories.map((item) => (
+              <button
+                key={item}
+                className={category === item ? "active" : ""}
+                onClick={() => setCategory(item)}
+                role="tab"
+                aria-selected={category === item}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <div className="guide-grid">
+            {results.map((guide) => (
+              <GuideCard key={guide.title} guide={guide} />
+            ))}
+          </div>
+          {results.length === 0 && (
+            <div className="empty">
+              No guides match “{query}”. Try another search.
+            </div>
+          )}
+        </section>
+        <section className="pathway section-wrap" id="participate">
+          <div className="pathway-copy">
+            <span className="section-kicker">Your next move</span>
+            <h2>
+              Privacy is a<br />
+              <span>team sport.</span>
+            </h2>
+            <p>
+              Use your NAM, run infrastructure, contribute code, or help make
+              the network easier to understand. There’s a place for you here.
+            </p>
+          </div>
+          <div className="pathway-links">
+            <a
+              href={`${officialDocs}/users/delegators`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>01</span>
+              <b>Stake & participate</b>
+              <ArrowUpRight />
+            </a>
+            <a
+              href={`${officialDocs}/operators/validators`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>02</span>
+              <b>Operate the network</b>
+              <ArrowUpRight />
+            </a>
+            <a
+              href={`${officialDocs}/integrating-with-namada`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>03</span>
+              <b>Build with Namada</b>
+              <ArrowUpRight />
+            </a>
+            <a
+              href="https://bounties.zechub.wiki"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>04</span>
+              <b>Find a bounty</b>
+              <ArrowUpRight />
+            </a>
+          </div>
+        </section>
+        <section className="build-callout section-wrap" id="build">
+          <div className="callout-icon">
+            <Github size={25} />
+          </div>
+          <div>
+            <span className="section-kicker">Open source, always</span>
+            <h2>Help keep this hub sharp.</h2>
+            <p>
+              Docs change. Networks evolve. Share an edit, add a guide, or bring
+              a question to the community.
+            </p>
+          </div>
+          <a
+            className="button secondary"
+            href="https://github.com/ZecHub"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contribute <ArrowUpRight size={16} />
+          </a>
+        </section>
+      </main>
+      <footer className="site-footer section-wrap">
+        <a className="brand" href="#top">
+          <span className="brand-mark">
+            <Shield size={16} fill="currentColor" />
+          </span>
+          <span>
+            ZecHub <em>/</em> Namada
+          </span>
+        </a>
+        <span>Verified sources checked 07 Sep 2026</span>
+        <div>
+          <a href="https://zechub.wiki" target="_blank" rel="noreferrer">
+            ZecHub
+          </a>
+          <a href={officialDocs} target="_blank" rel="noreferrer">
+            Official docs
+          </a>
+          <a
+            href="https://github.com/namada-net/namada"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+      </footer>
+    </div>
+  );
 }

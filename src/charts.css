@@ -1,0 +1,266 @@
+/* ============================================================
+   Guide / Network dashboard — mobile responsiveness fixes
+   Breakpoints: sam 365px · imd 725px · md 768px · lg 976px
+   Append AFTER your existing stylesheet so these win.
+   ============================================================ */
+
+/* ---------- Global guards: nothing may exceed the viewport ---------- */
+.app-shell,
+.section-wrap,
+.dashboard,
+main {
+  max-width: 100%;
+  overflow-x: clip; /* kills horizontal page scroll from any stray child */
+}
+
+/* Grid children default to min-width:auto, which lets long content
+   (big numbers, charts) force the track wider than the screen. */
+.dashboard-grid > *,
+.analytics-grid > *,
+.guide-grid > *,
+.metrics-panel,
+.proposals-panel,
+.analytics-card,
+.validators-card {
+  min-width: 0;
+}
+
+/* Big metric numbers must wrap/shrink instead of pushing the panel out */
+.metrics-panel strong,
+.metrics-panel b {
+  display: block;
+  font-size: clamp(1.4rem, 6vw, 2.4rem);
+  overflow-wrap: anywhere;
+  line-height: 1.15;
+}
+
+/* =================== imd and below (<= 725px) =================== */
+@media (max-width: 725px) {
+  .section-wrap {
+    padding-inline: 16px;
+  }
+
+  /* Section headings: stack title above links/search */
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .source-links {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .search-wrap {
+    width: 100%;
+  }
+  .search-wrap input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Dashboard: one column, metrics first */
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .analytics-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  /* ---- The bar chart: the main overflow culprit ---- */
+  .analytics-card {
+    padding: 16px;
+  }
+  .bars {
+    /* Bars size to their track; the track scrolls if truly needed,
+       but with flex-basis 0 bars share the width evenly and never
+       expand the card. */
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+  }
+  .bar-column {
+    flex: 1 1 0; /* equal shares, no intrinsic minimum */
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 6px;
+  }
+  .bar {
+    width: 100%;
+    max-width: 28px;
+    min-height: 4px;
+    border-radius: 4px 4px 0 0;
+  }
+  .bar-column small {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+  }
+
+  /* Proposal rows: keep title flexible, never overflow */
+  .proposal-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+  }
+  .proposal-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Parameter list: one value per row */
+  .parameter-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .parameter-list span {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  /* Validator rows */
+  .validator-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+  .validator-row b,
+  .validator-row small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Guide cards: single column */
+  .guide-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Category chips scroll sideways instead of wrapping oddly */
+  .category-scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .category-scroll button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Hero: contain the oversized type and decorative grid */
+  .hero {
+    padding-inline: 16px;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 11vw, 3.5rem);
+    line-height: 1.05;
+  }
+  .hero h1 br,
+  .pathway-copy h2 br {
+    display: none; /* let text wrap naturally on narrow screens */
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .button {
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-note {
+    margin-top: 24px;
+  }
+
+  /* Pathway + build callout: stack */
+  .pathway {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .build-callout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .build-callout .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Footer stacks */
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .site-footer > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Mobile nav overlay must not exceed viewport */
+  .main-nav.open {
+    position: fixed;
+    inset: 64px 0 auto 0;
+    width: 100%;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+  }
+}
+
+/* =================== very small phones (<= 365px, sam) =================== */
+@media (max-width: 365px) {
+  .section-wrap {
+    padding-inline: 12px;
+  }
+  .bars {
+    height: 130px;
+    gap: 4px;
+  }
+  .bar-column small {
+    font-size: 9px;
+  }
+  .metrics-panel strong,
+  .metrics-panel b {
+    font-size: clamp(1.2rem, 7vw, 1.6rem);
+  }
+  .proposal-status {
+    display: none; /* status pill is secondary; keep id + title readable */
+  }
+}
+
+/* =================== tablet band (726px – 975px) =================== */
+@media (min-width: 726px) and (max-width: 975px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .analytics-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

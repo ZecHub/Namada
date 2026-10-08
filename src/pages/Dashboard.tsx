@@ -67,7 +67,12 @@ export function GovernanceProposals() {
         <span>Current epoch</span>
         <b>{snapshot?.Last_committed_epoch ?? "Loading…"}</b>
       </div>
-      <div className="proposals-table-wrap">
+      <div
+        className="proposals-table-wrap"
+        tabIndex={0}
+        role="region"
+        aria-label="Scrollable proposals table"
+      >
         <table className="proposals-table">
           <thead>
             <tr>
@@ -290,6 +295,7 @@ function RewardsChart() {
         <>
           <div
             className={`axis-chart reward-axis-chart${range === "all" ? " is-expanded" : ""}`}
+            data-dense={visible.length > 30}
           >
             <div className="y-axis">
               {ticks.map((tick) => (
@@ -428,12 +434,14 @@ function SourceChartsWorkspace() {
   return (
     <div className="source-charts-workspace">
       <MarketMetrics />
-      <NamadaChart
-        lastUpdated={lastUpdated ?? new Date()}
-        divChartRef={divChartRef}
-        handleSaveToPng={handleSaveToPng}
-        showMetrics={false}
-      />
+      <div className="responsive-chart-boundary">
+        <NamadaChart
+          lastUpdated={lastUpdated ?? new Date()}
+          divChartRef={divChartRef}
+          handleSaveToPng={handleSaveToPng}
+          showMetrics={false}
+        />
+      </div>
     </div>
   );
 }
@@ -475,7 +483,12 @@ function PaginatedGovernanceProposals() {
         <b>{epoch || "Loading…"}</b>
         <small>{proposals.length} proposals tracked</small>
       </div>
-      <div className="proposals-table-wrap">
+      <div
+        className="proposals-table-wrap"
+        tabIndex={0}
+        role="region"
+        aria-label="Scrollable proposals table"
+      >
         <table className="proposals-table">
           <thead>
             <tr>
@@ -562,7 +575,12 @@ function ValidatorTable() {
           expand
         </span>
       </div>
-      <div className="validator-table-wrap">
+      <div
+        className="validator-table-wrap"
+        tabIndex={0}
+        role="region"
+        aria-label="Scrollable validator table"
+      >
         <table className="validator-table">
           <thead>
             <tr>
@@ -600,7 +618,10 @@ function ValidatorTable() {
                         <span className="table-validator">
                           <span className="validator-avatar">
                             {safeHttpsUrl(validator.Avatar) ? (
-                              <img src={safeHttpsUrl(validator.Avatar)} alt="" />
+                              <img
+                                src={safeHttpsUrl(validator.Avatar)}
+                                alt=""
+                              />
                             ) : (
                               (validator.Name || "V").slice(0, 1)
                             )}
@@ -662,7 +683,10 @@ function ValidatorTable() {
                           <div className="validator-identity">
                             <div className="detail-avatar">
                               {safeHttpsUrl(validator.Avatar) ? (
-                                <img src={safeHttpsUrl(validator.Avatar)} alt="" />
+                                <img
+                                  src={safeHttpsUrl(validator.Avatar)}
+                                  alt=""
+                                />
                               ) : (
                                 (validator.Name || "V").slice(0, 1)
                               )}
@@ -786,6 +810,7 @@ export default function Dashboard() {
           </a>
           <button
             className="menu-button"
+            aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen(!menuOpen)}
           >
@@ -803,7 +828,11 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="dashboard-view" data-view={activeTab}>
-          <nav className="dashboard-tabs" aria-label="Dashboard sections">
+          <nav
+            className="dashboard-tabs"
+            role="tablist"
+            aria-label="Dashboard sections"
+          >
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -818,13 +847,24 @@ export default function Dashboard() {
           </nav>
           {activeTab === "parameters" && <ProtocolParameters />}
           {activeTab === "parameters" && (
-            <section className="staking-economics section-wrap" aria-label="Staking economics">
+            <section
+              className="staking-economics section-wrap"
+              aria-label="Staking economics"
+            >
               <RewardsChart />
             </section>
           )}
-          {activeTab === "parameters" && <NetworkDashboard />}
+          {activeTab === "parameters" && (
+            <div className="responsive-chart-boundary">
+              <NetworkDashboard />
+            </div>
+          )}
           {activeTab === "proposals" && <PaginatedGovernanceProposals />}
-          {activeTab === "proposals" && <ProposalParticipationChart />}
+          {activeTab === "proposals" && (
+            <div className="responsive-chart-boundary">
+              <ProposalParticipationChart />
+            </div>
+          )}
           {activeTab === "validator" && <ValidatorTable />}
           {activeTab === "charts" && <SourceChartsWorkspace />}
         </div>
