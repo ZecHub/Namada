@@ -366,18 +366,9 @@ function MarketMetrics() {
 
   useEffect(() => {
     Promise.all([
-      fetch(DATA_URL.blockchairUrl)
-        .then((response) => response.json())
-        .then((payload) => {
-          const data = payload.data || {};
-          return {
-            namada: {
-              usd: data.market_price_usd,
-              btc: data.market_price_btc,
-              usd_market_cap: data.market_cap_usd,
-            },
-          };
-        }),
+      fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true",
+      ).then((response) => response.json()),
       fetch(DATA_URL.namadaSupplyUrl).then((response) => response.json()),
     ])
       .then(([market, supply]) => {
@@ -403,7 +394,7 @@ function MarketMetrics() {
           <h2>Namada metrics</h2>
         </div>
         <span className="directory-note">
-          Price source: Blockchair Zcash API · supply source: Namada
+          Price source: CoinGecko · supply source: Namada
         </span>
       </div>
       <div className="metric-cards">
@@ -556,9 +547,9 @@ function PaginatedGovernanceProposals() {
                             <span className="section-kicker">Proposal {proposal.id}</span>
                             <h3>{proposal.Content?.title || proposal.Type}</h3>
                           </div>
-                          {proposal.Content?.["discussions-to"] && (
+                          {safeHttpsUrl(proposal.Content?.["discussions-to"]) && (
                             <a
-                              href={proposal.Content["discussions-to"]}
+                              href={safeHttpsUrl(proposal.Content?.["discussions-to"])}
                               target="_blank"
                               rel="noreferrer"
                               onClick={(event) => event.stopPropagation()}
