@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -14,6 +14,10 @@ import ProposalParticipationChart from "../components/ProposalParticipationChart
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
+import {
+  reconcileProposals,
+  type ProposalSnapshot,
+} from "../lib/proposal-reconciliation";
 
 type Validator = {
   Name?: string;
@@ -33,28 +37,6 @@ type ProtocolData = {
   Protocol_Parameters?: Record<string, unknown>[];
   Proof_Of_Stake_Parmeters?: Record<string, unknown>[];
   IBC_Parameters?: Record<string, unknown>[];
-};
-type ProposalSnapshot = {
-  Last_committed_epoch?: number;
-  Proposal?: {
-    id?: number;
-    Id?: number;
-    Type: string;
-    Author: string;
-    Start_Epoch: string;
-    End_Epoch: string;
-    Activation_Epoch: string;
-    Status?: string;
-    Data?: string;
-    Result?: string;
-    Content?: {
-      authors?: string;
-      details?: string;
-      "discussions-to"?: string;
-      motivation?: string;
-      title?: string;
-    };
-  }[];
 };
 type RewardPoint = {
   Date: string;
@@ -462,7 +444,12 @@ function SourceChartsWorkspace() {
 }
 
 function PaginatedGovernanceProposals() {
-  const [snapshots, setSnapshots] = useState<ProposalSnapshot[]>([]);
+  const [summarySnapshots, setSummarySnapshots] = useState<ProposalSnapshot[]>(
+    [],
+  );
+  const [detailSnapshots, setDetailSnapshots] = useState<ProposalSnapshot[]>(
+    [],
+  );
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const pageSize = 10;
@@ -471,26 +458,33 @@ function PaginatedGovernanceProposals() {
       fetch(DATA_URL.proposalsUrl).then((response) => response.json()),
       fetch(DATA_URL.propsDetailsUrl).then((response) => response.json()),
     ])
-      .then(([summary, details]: [ProposalSnapshot[], ProposalSnapshot[]]) =>
-        setSnapshots([...summary, ...details]),
-      )
-      .catch(() => setSnapshots([]));
+      .then(([summary, details]: [ProposalSnapshot[], ProposalSnapshot[]]) => {
+        setSummarySnapshots(summary);
+        setDetailSnapshots(details);
+      })
+      .catch(() => {
+        setSummarySnapshots([]);
+        setDetailSnapshots([]);
+      });
   }, []);
-  type NormalizedProposal = NonNullable<ProposalSnapshot["Proposal"]>[number] & {
-    id: number;
-  };
-  const proposalMap = new Map<number, NormalizedProposal>();
-  snapshots.forEach((snapshot) =>
-    snapshot.Proposal?.forEach((proposal) => {
-      const id = proposal.id ?? proposal.Id;
-      if (id !== undefined) proposalMap.set(id, { ...proposal, id });
-    }),
+  const { proposals, conflicts } = useMemo(
+    () =>
+      reconcileProposals([
+        { name: "summary", authority: 1, snapshots: summarySnapshots },
+        { name: "details", authority: 2, snapshots: detailSnapshots },
+      ]),
+    [summarySnapshots, detailSnapshots],
   );
-  const proposals = [...proposalMap.values()].sort((a, b) => b.id - a.id);
+  useEffect(() => {
+    if (conflicts.length && import.meta.env.DEV) {
+      console.warn("Conflicting governance proposal fields", conflicts);
+    }
+  }, [conflicts]);
   const pageCount = Math.max(1, Math.ceil(proposals.length / pageSize));
   const visible = proposals.slice((page - 1) * pageSize, page * pageSize);
   const epoch = Math.max(
-    ...snapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
+    ...summarySnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
+    ...detailSnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
     0,
   );
   return (
