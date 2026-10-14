@@ -1,730 +1,732 @@
 [
-    {
-        "Last_committed_epoch": 1503,
-        "Proposal": [
-            {
-                "Id": 1,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "authors": "Luminara",
-                    "details": "Namada mainnet has been running smoothly since Dec 3. As of Dec 11, 16.7% NAM has been staked. We (Luminara) think that Namada is ready for Phase 2: activate inflation for staking rewards and PGF. PoS max annual inflation rate = 5%; PoS target staked ratio = 40%; Kp gain parameter = 0.5; Kd gain parameter = 0.5; PGF annual inflation rate = 5%. PGF Steward inflation will be off for now. Our understanding is that this proposal was successfully tested on the Housefire fork (which is now in Phase 2) using this code: https://github.com/anoma/namada-governance-upgrades/blob/f1d19a5d4d28595ee73fe8fd15a9b4319bb171ff/phase2/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/phase-2-proposal-discussion/1297",
-                    "motivation": "We want to advance to Mainnet Phase 2 by activating inflation to reward stakers and to enable Public Goods Funding (PGF).",
-                    "title": "Phase 2: activate inflation for staking rewards and PGF"
-                },
-                "Start_Epoch": "34",
-                "End_Epoch": "48",
-                "Activation_Epoch": "49",
-                "Status": "ended",
-                "Data": "C4C00DF8AD4C5EFB76611555401236B696A5F4E367429B293B09A438679F8176",
-                "Result": "Prop 1 involved 8896 addresses with resuts: 8776 yays | 81 nays | 39 abstains"
-            },
-            {
-                "Id": 2,
-                "Type": "Default",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "authors": "Luminara",
-                    "details": "**PGF Donor Drop - Coin Center**\n\n\nNamada stakers and validators, I'm Gavin Birch 👋 (https://twitter.com/Ether_Gavin)\nSubmitted on behalf of Luminara, we are proposing that Namada support a Donor Drop for Coin Center.\n\n**tl;dr**\nInstead of directly donating $NAM tokens, we can use PGF to drive ETH donations to Coin Center by rewarding donors with NAM. Coin Center gets funding in ETH (instead of selling NAM), and donors get pre-market access to NAM.\n\nSo far our community likes this idea. Stakers, this is a **signalling** proposal to gauge your interest. We want Namada to use PGF to broaden the distribution of NAM, while driving donations to Coin Center's ethereum address: 0x15322B546e31F5Bfe144C4ae133A9Db6F0059fe3\n\n- **Compelling?** Please vote yay\n- **Disagree?** Please vote nay (and please post why in the forum topic!)\n- **Unsure?** Comment/question in the forum topic, or vote abstain\nRead on..\n\nForum topic: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338\n\nI'm pretty excited that this could be an elegant new token distribution mechanism/strategy, and I hope that other communities will copy it. Please see my amateurish diagram: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338/8\n\n**Key details**\n\n- ~3 weeks for the campaign and/or donation window\n\n- a follow-up PGF proposal to allocate 1,000,000 NAM to the donors\n\nThe mechanism isn't finalized yet, but it may involve a donation cap and time weighting like this (ignore the $ values!): https://www.online-python.com/4hLxJ2VQ7r\n\nAgain, this is only a signalling proposal; we will need to follow up with a PGF proposal with the list of donor tnam addresses so that Namada's PGF can distribute NAM to them. (What's neat is that this can be done before Phase 5.)\n\nIf you would like to be involved, any of these could help:\n\n1. respond on the forum topic with feedback (or advice) about the campaign and/or mechanism (https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338)\n2. tweet about or tell a friend\n3. help make a front-end page to see donations in real-time\n4. something else that we haven't thought about\n\nPGF shouldn't be boring--let's usher in the new wave 🌊\nThank you to all of the folks who have helped 🙌",
-                    "discussions-to": "https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338",
-                    "motivation": "Expand NAM distribution using world's first Donor Drop",
-                    "title": "Donor Drop: Coin Center campaign signalling"
-                },
-                "Start_Epoch": "54",
-                "End_Epoch": "66",
-                "Activation_Epoch": "67",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 2 involved 4035 addresses with resuts: 3877 yays | 87 nays | 71 abstains"
-            },
-            {
-                "Id": 3,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq7ksnfdfw4hr0gc9ldfm9s2dyhk5zy76qn85gfn",
-                "Content": {
-                    "authors": "Knowable",
-                    "details": "Namada’s target_staked_ratio is set to “0.4”. This means that **if more than 40% of the Namada token supply is staked, Namada’s staking inflation will begin decreasing towards zero.**\n\nSuch a dramatic change at such an early stage could dampen our momentum by prematurely causing validators to exit from Namada, while not necessarily decreasing stake.\n\nThe ratio has risen sharply over the past week or so, and **we now have ~36.4% of the NAM supply staked.** We think that the time to increase the target is now, and Knowable is proposing that the new target be 55%.\n\nThe only change from passing this proposal is that staking inflation (and thus, staking rewards) won’t begin decreasing if more than 40% of the NAM supply is staked. Instead, this will begin decreasing if more than 55% is staked.\n\nWe’re proposing that the target be 55% because engaged members of our community have signalled that:\na) they favour increasing the rate and\nb) they favour a target between 50% and 60%.\n\n- **Compelling?** Please vote yay\n- **Disagree?** Please vote nay (and please post why in the forum topic!)\n- **Unsure?** Comment/question in the forum topic, or vote abstain\n\nForum topic: https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387\n\nEngaged members of our community have also signalled that that this proposal would be a temporary fix, not a permanent solution, and we agree.\n\nWe should identify a more permanent solution, but we think that **we’ll need some observations after the Phases of Mainnet** to better understand and to discuss introducing a more informed solution.\n\nPlease review or ensure that someone capable has reviewed the wasm used for this proposal, and verify the hash: https://github.com/anoma/namada-governance-upgrades/blob/ce3a49eb93246aa81e6358e87d98f75bf69f5612/increase_target_staked_ratio/src/lib.rs\n\nThis proposal and wasm were successfully executed on Housefire as Prop3: https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387/6",
-                    "discussions-to": "https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387",
-                    "motivation": "Stave off staking inflation decreases so that staking rewards don't go to zero",
-                    "title": "Parameter change: Increase target_staked_ratio to 0.55"
-                },
-                "Start_Epoch": "104",
-                "End_Epoch": "128",
-                "Activation_Epoch": "129",
-                "Status": "ended",
-                "Data": "D5993E238BBE6F5BBB8DFE1FF0A4195D54EA023000404CFD5151C9D6C45A021C",
-                "Result": "Prop 3 involved 4420 addresses with resuts: 4303 yays | 76 nays | 41 abstains"
-            },
-            {
-                "Id": 4,
-                "Type": "Default",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Gathering social consensus to coordinate a software upgrade of namada nodes at block 894,000. This block is expected to occur in between 15:00 and 16:00 UTC on Thursday, Feb 13, 2025.",
-                    "discussions-to": "https://forum.namada.net/t/proposing-mainnet-software-upgrade-to-v1-1-1-at-block-894-000/1509",
-                    "title": "Coordinating mainnet software upgrade to namada v1.1.1 at height 894,000"
-                },
-                "Start_Epoch": "275",
-                "End_Epoch": "287",
-                "Activation_Epoch": "288",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 4 involved 1792 addresses with resuts: 1779 yays | 4 nays | 9 abstains"
-            },
-            {
-                "Id": 5,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to distribute 1,225,986 NAM in total to the 188 addresses that donated to Coin Center",
-                    "authors": "Gavin Birch (Luminara)",
-                    "created": "2025-02-12",
-                    "details": "This is a PGF (public goods funding) proposal to distribute a total of 1,225,986 NAM to the 188 Namada addresses listed here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=764951800&range=F2.\nThis proposal has been tested and successfully executed on the Housefire testnet: https://namada-explorer.sproutstake.space/test/proposals/6\n\n## Context\nGavin Birch has launched this proposal on behalf of Luminara 🔅\n\nWe previously launched Namada Prop2, and are grateful that voters signalled strong support for our proposed Donor Drop that targeted the amazing Coin Center team: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338\n\nThe Donor Drop is done, 🎉 many thanks to the many different kinds of participants 🙌\n\n## Details\nThe aim was to award 1m NAM, the lower boundary of this draft proposal: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338, but we are instead asking you to approve this proposal to distribute ~1.226m NAM. This is to reward donors whose donations were not reported during the Donor Drop tally, due to issues such as invalid/missing tnam addresses.\n\nThere are plausible reasons for why this happened, and we now have some learnings, and we'd still like to thank and welcome these participants to our community. Please see details here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=1986442751&range=A1\n\n**Note:**\n1. We've provided evidence for all corrected addresses with the exception of two, highlighted in red at the top of the spreadsheet. We'd like to give them the benefit of the doubt and reward them regardless. There were no competing claims on these two donations, totalling 6,666 NAM.\n\n2. There were four donations that attempted to participate but arrived some time after the Donor Drop ended. We are not asking that they be included in this proposal, and instead, I personally would like to thank and reward them once transfers are enabled in Phase 5.\n\n## History\nShortly after Prop2 passed, at least seven Namada community members independently and collaboratively got involved at different times and in different ways on a few potential Donor Drop app solutions. It was an incredible grassroots initiative in support of our first Donor Drop, with dedication that far exceeded my expectations 🔥\n\nWhen the Donor Drop window opened on Saturday, January 18, Coin Center’s ethereum address received nearly 200 donations in about 35 minutes, totalling 36.78 ETH, worth about $125k when the Donor Drop finished 👀\n\n## Mooaar Donor Drops\nThis will be a testament to Namada's novel technology, and we hope that others will use and improve upon the Donor Drop distribution mechanism & strategy. Please check out this forum post for the full summary of this campaign: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492",
-                    "discussions-to": "https://forum.namada.net/t/coin-center-donor-drop-allocations/1508",
-                    "motivation": "(see abstract)",
-                    "requires": "0",
-                    "title": "PGF - Coin Center Donor Drop allocations"
-                },
-                "Start_Epoch": "288",
-                "End_Epoch": "300",
-                "Activation_Epoch": "301",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 5 involved 1765 addresses with resuts: 1651 yays | 70 nays | 44 abstains"
-            },
-            {
-                "Id": 6,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to distribute total of 5,000 NAM missing from PGF Prop5",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-02-14",
-                    "details": "This is a PGF (public goods funding) proposal to distribute a total of 5,000 NAM to these two Namada addresses:\n1) tnam1qzkx2k6zxjcdxf5tz4ep55mj4ll2kq7wsyrd5k5u - 1,667 NAM\n2) tnam1qr649fhvu3f3mdaxs80mm7gsm5uyegsv4g596flz - 3,333 NAM\nIt won't be valid unless Prop5 is also approved.\n\n## Context\nGavin Birch has launched this proposal on behalf of Luminara 🔅\nWe also launched Namada Prop5: https://explorer75.org/namada/proposals/5\nHowever, if Prop5 is approved, two addresses will not receive their intended totals because of an interesting phenomenon: if the PGF proposal contains more than one entry for the same address *and* the same number of NAM, only one of the entries is actually enacted. Prop5 intentionally had one duplicate entry, which the protocol is ignoring, and the other duplicate is the incorrect tnam address (corrected in this proposal). It's a unique set of circumstances (ie. transfers disabled) that we ask you to approve this relatively small PGF proposal as a solution to the problem that arose from this issue: https://github.com/anoma/namada/issues/4380\n\n## Future\nWe recommend summing a total for each address in future, instead of multiple entries for the same address. Additionally, the duplication error could have been discovered with more thorough data analysis of the Housefire test proposal. Huge thanks to Zen 🦸 and Rigorous 🦸 for discovering and reporting this!",
-                    "discussions-to": "https://forum.namada.net/t/coin-center-donor-drop-allocations/1508/8",
-                    "motivation": "(see abstract)",
-                    "requires": "5",
-                    "title": "PGF - accompanying fix for Donor Drop Prop5"
-                },
-                "Start_Epoch": "296",
-                "End_Epoch": "308",
-                "Activation_Epoch": "309",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 6 involved 1805 addresses with resuts: 1760 yays | 29 nays | 16 abstains"
-            },
-            {
-                "Id": 7,
-                "Type": "PGF funding",
-                "Author": "tnam1q8sjkutd5kqwcc555wr77p9fjn66nuuqfuzzc3yc",
-                "Content": {
-                    "abstract": "PGF proposal to distribute total of 50,050 NAM so as to fund 13 Namada IBC relayer operators operations - 3,850 NAM each.",
-                    "authors": "Daniel (Mandragora)",
-                    "created": "2025-02-17",
-                    "details": "## Author\nDaniel from Mandragora validator is submitting this proposal.\n\n## Context\nAs Mandragora is leading IBC channels creation and maintenance for Namada’s mainnet (along with collaboration for supporters information collection with Cosmic Validator), I have detected a problem, but I found out a potential.\n\n## Problem\nWe have detected that indeed genesis accounts are needed to be used as relayer accounts, just like in Housefire testnet, but that could be problematic when it comes to mainnet.\n\n## Solution\nIt consists in funding supporters’ Namada relayer accounts via a PGF proposal - as a fee grant to support them and to avoid using genesis accounts as relayer accounts on mainnet. Retroactive Public Goods Funding (RPGF) mechanism lets to directly send them the fee grant from the PGF Treasury.\n\n## Proposed amount\nWe are proposing to distribute total of 50,050 NAM, i.e. 3,850 NAM to 13 IBC relayer operators.\n\n##Comments\nThese funds couldn’t be used for other purposes, and relayer accounts would be monitored from time to time.\n\n## IBC Relayer Operators\nThese are Mandragora, Cosmic Validator, Sproutstake, max-02, pro-nodes75, Architect Nodes, OriginStake, Stake&Relax, anodeofzen, ContributionDAO, ValidatorVN, Inter Blockchain Services and Citizen Web3.",
-                    "discussions-to": "https://forum.namada.net/t/fee-grant-via-rpgf-funding-to-support-ibc-relayer-operators-until-phase-5-of-mainnet/1527",
-                    "motivation": "(see abstract)",
-                    "requires": "",
-                    "title": "PGF - Fee grant to support Namada IBC relayer operators"
-                },
-                "Start_Epoch": "303",
-                "End_Epoch": "315",
-                "Activation_Epoch": "316",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 7 involved 1712 addresses with resuts: 1651 yays | 25 nays | 36 abstains"
-            },
-            {
-                "Id": 8,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Increase IBC rate limits (global mint and per-epoch throughput) for 6 different assets, allowing them to flow into and out of the Namada mainnet. Additionally, each of these assets is whitelisted for gas payment for any Namada transaction at a specific cost per gas unit. This proposal whitelists Osmosis, Cosmos Hub, Celestia, and the Stride liquid-staked versions of these tokens. These assets will also be able to flow into the Namada shielded pool.\n\nThe code attached to this proposal to execute can be viewed at: https://github.com/anoma/namada-governance-upgrades/blob/a4d6906a0dca2cbf4ddd55f066a0f09cc58aec26/phase3/src/lib.rs.\n\nThe details for each token, with their denomination strings, are:\n\nOSMO: transfer/channel-1/uosmo\nMint limit: 10,752,692 OSMO\nThroughput limit per epoch: 2,150,539 OSMO\nGas price: 10 uosmo / gas unit\n\nATOM: transfer/channel-2/uatom\nMint limit: 759,878 ATOM\nThroughput limit per epoch: 151,976 ATOM\nGas price: 1 uatom / gas unit\n\nTIA: transfer/channel-3/utia\nMint limit: 1,018,330 TIA\nThroughput limit per epoch: 203,666 TIA\nGas price: 1 utia / gas unit\n\nstOSMO: transfer/channel-0/stuosmo\nMint limit: 8,196,721 stOSMO\nThroughput limit per epoch: 1,639,344 stOSMO\nGas price: 10 stuosmo / gas unit\n\nstATOM: transfer/channel-0/stuatom\nMint limit: 512,821 stATOM\nThroughput limit per epoch: 102,564 stATOM\nGas price: 1 stuatom / gas unit\n\nstTIA: transfer/channel-0/stutia\nMint limit: 946,970 stTIA\nThroughput limit per epoch: 189,394 stTIA\nGas price: 1 stutia / gas unit\n",
-                    "discussions-to": "https://forum.namada.net/t/phase-3-proposal-discussion/1401",
-                    "motivation": "Start the long-awaited Phase 3 of Namada mainnet",
-                    "title": "Phase 3: enable the flow of non-native assets into Namada and the Shielded Pool"
-                },
-                "Start_Epoch": "314",
-                "End_Epoch": "331",
-                "Activation_Epoch": "332",
-                "Status": "ended",
-                "Data": "7D5DBA237C6DD79E4DA79C2FD00150A9E758ED2FB0474FA5B87EA770B7AEFDC7",
-                "Result": "Prop 8 involved 3473 addresses with resuts: 3439 yays | 13 nays | 21 abstains"
-            },
-            {
-                "Id": 9,
-                "Type": "PGF funding",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Give 5 NAM to each validator that is currently not jailed or deactivated (inactive) with a one-time retroactive PGF payment. Also give this amount to a couple accounts that wish to use the NAM to pay fees for initializing a validator.",
-                    "discussions-to": "https://forum.namada.net/t/drop-some-nam-to-validators-to-cover-more-tx-fees-until-phase-5/1534",
-                    "motivation": "We initially dropped 1 NAM to all validators at genesis, but some of them have run out of NAM to cover various tx fees. We should top them up and give them enough NAM that we don't have to worry about this happening again before Phase 5.",
-                    "title": "Give validators some more NAM to cover tx fees before Phase 5"
-                },
-                "Start_Epoch": "317",
-                "End_Epoch": "329",
-                "Activation_Epoch": "330",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 9 involved 2197 addresses with resuts: 2153 yays | 24 nays | 20 abstains"
-            },
-            {
-                "Id": 10,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "In anticipation of updating the claim-rewards tx wasm in the Namada on-chain storage, we first must increase the maximum allowed gas in a block. This must be done because the tx to initialize that proposal consumes about 4.3M gas units, whereas the current block maximum is 3M. This proposal increases the block maximum from 3M to 5M.\n\nThe code used to produce the attached WASM can be viewed here: https://github.com/anoma/namada-governance-upgrades/blob/b26aff300654a791b91d8ff40483d7d2f0bf9d5f/max_block_gas/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/two-proposals-to-update-the-claim-rewards-wasm-tx-on-chain/1548",
-                    "title": "Increase max block gas to 5M gas units"
-                },
-                "Start_Epoch": "318",
-                "End_Epoch": "330",
-                "Activation_Epoch": "331",
-                "Status": "ended",
-                "Data": "DB27ADA6B1F734008E4A3AF440F0666A441FDDAF2D8FF44CBC9B6D187949ECD1",
-                "Result": "Prop 10 involved 2204 addresses with resuts: 2169 yays | 9 nays | 26 abstains"
-            },
-            {
-                "Id": 11,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Updating the `claim-rewards` tx wasm in the on-chain storage. Now when this tx is executed, an event will be emitted that contains the number of reward tokens claimed. This data will then be able to be indexed and integrated for a variety of service providers. This proposal is enabled by the recent Proposal #10 that raised the maximum block gas.\n\nThe proposal code can be found at https://github.com/anoma/namada-governance-upgrades/blob/a9b40c048c4be587ac567bc65f59ffb5505b692d/update-tx-claim-rewards/src/lib.rs",
-                    "discussion-to": "https://forum.namada.net/t/two-proposals-to-update-the-claim-rewards-wasm-tx-on-chain/1548",
-                    "title": "Update the `claim-rewards` Tx WASM"
-                },
-                "Start_Epoch": "339",
-                "End_Epoch": "358",
-                "Activation_Epoch": "359",
-                "Status": "ended",
-                "Data": "9645D95D3ABF97421588E823BE3D36B568A9B048F888D01DE6B5ECA0C6C99A99",
-                "Result": "Prop 11 involved 3213 addresses with resuts: 3189 yays | 12 nays | 12 abstains"
-            },
-            {
-                "Id": 12,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to test distributing total of 340,005.318008 NAM",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-02-25",
-                    "details": "If voters approve this PGF (public goods funding) proposal, a total of 340,005.318008 NAM will be distributed to six (6) different Namada addresses:\n1) tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc - 237,192 NAM\n2) tnam1qq9v0nxltxzktl5mz59yc7k32m4yczt8uqrhtpjs - 74,000 NAM\n3) tnam1qqfvd2p3p204vnnr725cgq4u3lkjxqce6crgfpr5 - 13,800 NAM\n4) tnam1qrqgs5e67esl3yjdq3dccls0470ctcm6m5kx4cal - 5.318008 NAM\n5) tnam1qpyyq8ueltpa7kd9xq8twtymfq9886t4lsnterhs - 7,500 NAM\n6) tnam1qr4va7cr0ag7s7zl3j70qsr5v3m9jxu6ucdktf4z - 7,500 NAM\n\nThis proposal received strong community support (see replies): https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565\n and was tested and verified on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/12\n\n## Context\n\nTo our knowledge, the Donor Drop was the first of its kind: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492\n\nThe experience was made possible by some amazing folks that banded together to make an app to support the Donor Drop, an entirely grassroots effort. People were amazed at how successful the Donor Drop was, but were even more amazed at how engaged, dedicated, and talented our community is to be able to build and launch this app in ~3 weeks \n\n## Details\nIt would be great to help recognize these amazing contributors with\n\n✅ ~200k NAM for creating and supporting this Donor Drop app:\n- **Zen - 112,192 NAM** (56.1%) - tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\n- **Anon - 74,000 NAM** (37%) - tnam1qq9v0nxltxzktl5mz59yc7k32m4yczt8uqrhtpjs\n- **Bengt - 13,800 NAM** (6.9%) - tnam1qqfvd2p3p204vnnr725cgq4u3lkjxqce6crgfpr5\n- **Rigorous - 5.318008 NAM** (~0%) - tnam1qrqgs5e67esl3yjdq3dccls0470ctcm6m5kx4cal\n\nEven though Anselm and Jojoraky didn’t end up being involved beyond the beginning, we’re grateful for their engagement and efforts 🎉 and want to help thank them with 15k NAM \n\n✅ Bonus thank you of 15k NAM for early Donor Drop app attempts:\n- **Anselm - 7,500 NAM** - tnam1qpyyq8ueltpa7kd9xq8twtymfq9886t4lsnterhs\n- **Jojoraky - 7,500 NAM** - tnam1qr4va7cr0ag7s7zl3j70qsr5v3m9jxu6ucdktf4z\n\nZen recently *open-sourced his beautiful front-end,* 🤩 which can now be used to support future rounds 🎉\nHe is essentially giving it to our community. We’d like to ask voters to allocate an additional 125k NAM to Zen to help recognize him for giving our community (and the world) all of his front-end code 🎁\n\n✅ Free and open-source front-end software:\n- **Zen - 125,000 NAM** - tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\n\nWe’d like to thank TuDudes for hosting this Donor Drop app, but perhaps it makes more sense to do this in a dedicated PGF proposal, since TuDudes has done so much Namada infrastructure work 🔥\n\n## Keep it up!\nFront-end work in general is predicted to be the kind of work that Namada will need most in the coming months and foreseeable future.\n\nFolks worked insanely hard on this, of their own accord, with no hint of compensation. The beauty of how Namada’s PGF works is that we can effectively drive increases in Namada network ownership toward active contributors. Let’s get these folks some more Namada ownership 🎊 and keep the PGF culture rolling.",
-                    "discussions-to": "https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565",
-                    "motivation": "(see abstract)",
-                    "requires": "0",
-                    "title": "PGF - Donor Drop app creator allocations"
-                },
-                "Start_Epoch": "340",
-                "End_Epoch": "360",
-                "Activation_Epoch": "361",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 12 involved 2536 addresses with resuts: 2325 yays | 85 nays | 126 abstains"
-            },
-            {
-                "Id": 13,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "Signalling PGF proposal for Donor Drop 2, targeting Web3Privacy Now",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-03-04",
-                    "details": "**PGF Donor Drop - Web3Privacy Now**\n\n\n## Signalling Proposal\n\nHello 👋 I’m writing this on behalf of Luminara 🔅\nWe launched Namada Prop2 and Prop5: https://explorer75.org/namada/proposals/5\nVoters signalled strong support for the first Donor Drop, which targeted the amazing Coin Center team 🦸\n\nNow that the first Donor Drop is done, we’re proposing a second: **Web3Privacy Now 🎯**\n\nThis is a **signalling proposal.** With your support, Donor Drop Round Two (R2) will look similar to Round One, but will include improvements and feedback suggested by you 🫵\n\n## Namada, will you support this?\n\n* Estimated 900k - 1.2M NAM total from Namada PGF\n  * Aiming for 900k airdrop\n  * 25k NAM for the creator of the Donor Drop front-end\n  * 1.8% - 2.4% of the yearly PGF budget\n* Allocated to Web3Privacy Now donors (aiming to recognize ~47 ETH in donations)\n* Campaign estimated to last two weeks (Donor Drop window estimate ~3 days)\n* A follow-up rPGF proposal to distribute the NAM airdrop to donor addresses\n  * airdrop should land approx. two months after the governance proposal passes\n\nWeb3Privacy Now has an active group of builders, creators and policy advocates–they’ll be great partners, in addition to our own community efforts.\n\nNamada comms are prepped and ready to help with promotion, TuDudes is prepared to run our community-built Donor Drop app, and @almostFitz has an operations plan that he’s itching to launch 🔥🚀\n\nWhat's neat is that the Donor Drop can be done before Phase 5, with the airdrop happening after Phase 5.\n\n## Why Web3Privacy Now?\nWeb3Privacy Now has become a cultural epicenter for teams, communities, and individuals answering the call to return to cypherpunk roots–namely, digital privacy.\n\nW3PN hosts events (https://docs.web3privacy.info/events/), creates educational content(https://docs.web3privacy.info/research/privacy-guides/) and research reports (https://docs.web3privacy.info/research/), enagages in advocacy, and creates social initiatives that bind us together as a community–beyond Namada, within crypto. They were our co-organizers for the Shielding Summit (https://shieldingsummit.org/) in Brussels ♥\n\nCheck them out! and get involved (https://docs.web3privacy.info/get-involved/index)\n\n## Donor Drop History\nThe world’s first Donor Drop (https://forum.namada.net/t/namada-donor-drop-jan-18-15-00-utc/1465) was an experiment: **do public goods funding (PGF) more effectively using Namada’s novel PGF mechanism.**\n\nCoin Center was our donation target. Problem: orgs like Coin Center need runway, not a new token with no market. But there are people who *do* want a new pre-market token.\n\nSolution: the Namada community used Namada’s PGF technology to airdrop NAM to those who donated ETH to Coin Center 💡\n\nPeople were surprised at how successful Donor Drop R1 was:\n- https://x.com/mineZcash/status/1880637283159908732\n- https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492/3\n- https://x.com/NeerajKA/status/1881344835246051364\n- https://x.com/cwgoes/status/1880651442278858926\n\nThat’s because with hardly any promotion, ~200 donations were made to Coin Center in about 30 minutes, totalling 36.78 ETH (~$125k at that time). More recap here: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492\n\nAnd **we** were amazed at the grassroots community effort to build an app that supported the Donor Drop. In three weeks the app was done, and it was 🔥🤩\n\nThis is why we’d also like to include Zen’s Namada address in each subsequent proposal that we use this open-sourced Donor Drop front-end \n\nhttps://github.com/zenodeapp/donor-drop-frontend\n\n## Get involved\n\nWe want to improve on operational processes, our partner relationship, community involvement, promotional reach within aligned communities, and we want to create a repeatable flow for MOOARR Donor Drops. Want to be involved? Any of these could help:\n\n1. join the forum topic (https://forum.namada.net/t/signalling-donor-drop-round-two-web3privacy-now/1555) or Discord discussion (https://discord.com/channels/833618405537218590/1339662286436040854) with feedback (or advice) about the campaign and/or mechanism \n2. tweet or tell a friend\n3. something else that we haven't thought about\n\nPGF shouldn't be boring--let's usher in the new wave 🌊",
-                    "discussions-to": "https://forum.namada.net/t/signalling-donor-drop-round-two-web3privacy-now/1555",
-                    "motivation": "Donor Drop 2 signalling proposal",
-                    "requires": "0",
-                    "title": "PGF Signalling - Donor Drop 2: Web3Privacy Now"
-                },
-                "Start_Epoch": "364",
-                "End_Epoch": "380",
-                "Activation_Epoch": "381",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 13 involved 2090 addresses with resuts: 1902 yays | 112 nays | 76 abstains"
-            },
-            {
-                "Id": 14,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to distribute total of 2,050,000 NAM",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-04-01",
-                    "details": "**This is a PGF (public goods funding) proposal asking voters to distribute a total of 2.05m NAM to the five (5) Namada addresses listed below,** in recognition of the Namada community builders.\n\nThis proposal was tested and reviewed after being executed on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/19\n\n## Specifics\n\n✅ [Free and open-source](https://forum.namada.net/t/discussion-pgf-priorities-for-software-in-namada/1501) Namada software:\n\n* **Daniel / Mandragora - 750,000 NAM** - `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n- Namada indexing software, [Undexer](https://github.com/hackbg/undexer) -> [OSS licence](https://github.com/hackbg/undexer/blob/v4/LICENSE)\n\n- Namada IBC decoding library, [Fadroma](https://forum.namada.net/t/decoding-of-ibc-transaction-types-is-now-supported/1244) -> [OSS licence](https://github.com/hackbg/fadroma/blob/v2/LICENSE)\n\n✅ Dedicated Namada explorer services:\n\n* **ProNodes - [Explorer75](https://explorer75.org/) - 300,000 NAM** - `tnam1qqd2ys42y2t5vgdtdx6epstnkykvjedxxsuc6lry`\n\n* **Bitszn - [Valopers](https://namada.valopers.com/) - 300,000 NAM** - `tnam1qzt4klml5za7zn05rx569s5hfcr4nfl8zc3d4fwu`\n\n* **Daniel / Mandragora - [Shielded Live](https://shielded.live/) - 250,000 NAM** - `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* **[Coverlet Namada Explorer Beta](https://namada.coverlet.io/) - 250,000 NAM** - `tnam1qqsrhr894nnupdyu2fqrg290pyxd50pq5vrj8xtf`\n\n* **[Sproutstake Namada Explorer](https://namada-explorer.sproutstake.space/) - 200,000 NAM** - `tnam1qrfyg27adsuege6ef94rek5d6cvjcs2afyw9nrhq`\n\nThese tnam addresses have been lifted from user profiles, Discord and/or the forum. If you use their services / software, you can tip them anytime! @shurinov @alx @Daniel @Leon @Oneplus\n\n## Criteria\n\nIf software is useful and being used by our community, **open sourcing it under an unrestrictive licence is kind of a big deal.** It's essentially giving the Namada community your work. I posted a bit about that here in https://forum.namada.net/t/discussion-pgf-priorities-for-software-in-namada/1501.\n\n### Table stakes\n\nNamada's explorer services are not (yet) open source, so accuracy and reliability should be table stakes for consideration. The Namada community is totally dependent upon service providers to run the service and and to fix the issues, especially accuracy issues that may misinform Namada users and other stakeholders.\n\nThere should also be a standard for what the service provides. It can be tempting to re-use a project across many Cosmos projects, for example, which can be fine if it's adding new value. Since Namada has a unique code-base, it can be hard to re-use code for querying and transacting, but we anticipate that a service worth recognizing will offer more advanced functionality than the very basics of network exploring, or the very basics of Namada transactions, especially if it's a service offering beyond Namada. As our ecosystem matures, this standard should also mature.\n\nFor example, a niche service that provides shielded pool metrics and statistics is noteworthy if launched and running now, because this information is otherwise not easily accessible in a palatable way. Now imagine if these metrics were already fully integrated into the explorer services three months ago--launching such an app in this more mature ecosystem would not be adding new value.\n\n### Differentiators\n\nOther key considerations we made for this proposal involved\n\n**impact**\n\n- how useful has this service / software been to those who use and/or contribute to Namada? how useful is it likely to be going forward?\n\n**advanced features**\n\n- is there something niche that's particularly useful? ie. solves a specific problem\n\n- is the entire set of features particularly useful? ie. a \"one-stop shop\" for a particular kind of activity\n\n**timing & activity**\n\n- how early and long-running is this service / software?\n\n- is functionality improving? do improvements reflect the needs of users and/or contributors or other stakeholders?\n\n## Context\n\nThree weeks ago we called for what are essentially the first set of Namada Builder nominations:\n\nhttps://forum.namada.net/t/nominations-call-for-namada-apps-tools-and-services/1583\n\nAt this early stage of Namada, builders have primarily advanced Namada explorer code and services, critical to the Namada experience and ever-more important as we advance through Phases 4 and 5.\n\nThese builders have dedicated their valuable attention and efforts to Namada, most of which did so before Namada was widely known, and are the earliest builders in our ecosystem.\n\n## A bet on Namada's future\n\nEarly stage builders in Namada have made risky bets, especially given the uncertainties around when Namada would launch. I remember saying I couldn't be part of our family vacation a few months before June 2023 because \"Namada mainnet may be launching\" 😅\n\nRetroactive public goods funding is not just recognition--it's also a signal:\n\n1) we're betting on a shared future with these builders\n\n2) there's an opportunity for newcomers to attain a meaningful Namada position\n\nIt could be that some of Namada's most important contributors haven't even joined yet.\n\nNamada PGF is a unique opportunity to drive Namada ownership toward **active** contributors, which benefits everyone invested in Namada's success. Let’s get these folks some more Namada ownership 🎊 and keep the PGF culture rolling.\n\nWe're keeping an eye out for up-and-coming builders!",
-                    "discussions-to": "https://forum.namada.net/t/namada-builder-allocations-round-1-2-05m-nam/1623",
-                    "motivation": "(see abstract)",
-                    "requires": "0",
-                    "title": "PGF - Namada Builder Allocations"
-                },
-                "Start_Epoch": "477",
-                "End_Epoch": "497",
-                "Activation_Epoch": "498",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 14 involved 1581 addresses with resuts: 1469 yays | 49 nays | 63 abstains"
-            },
-            {
-                "Id": 15,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "Change max_proposal_period parameter from 84 to 260 epochs",
-                    "authors": "Gavin Birch (Knowable)",
-                    "created": "2025-04-07",
-                    "details": "## Proposal\n\nThis is a proposal to change `max_proposal_period` parameter to `260`.\n\nThe Rust code used to make the wasm is here: <https://github.com/Luminara-Hub/govproposals/blob/main/testnet_max_proposal_period.rs>\n\n@brentstone (Heliax) has reviewed this code, @spork.Knowable has tested it--first locally and then we (Knowable) successfully tested the parameter change on the Housefire testnet: <https://explorer75.org/namada-housefire/proposals/23>\n\n## Context\n\nLast week, I started [a discussion post](https://forum.namada.net/t/discuss-increasing-max-proposal-period-to-260/1637) about updating the max_proposal_period parameter to 260.\n\nLuminara committed to making a PGF proposal for the latest [Donor Drop allocations](https://forum.namada.net/t/web3privacy-now-donor-drop-allocations/1633) that waits a 60-day grace period before executing and distributing the allocations, but were not able to do so because `max_proposal_period` is 84 epochs (21 days), and 260 epochs (65 days) are needed. We (Knowable) would like to increase `max_proposal_period` to `260`--not just for Luminara to fulfill their commitment, but also for the betterment of Namada at large.\n\n## History\n\nWhen Knowable [proposed the mainnet parameters](https://forum.namada.net/t/mainnet-parameter-discussions-knowables-proposal/753), we chose 84 epochs (21 days) because that's the longest we could imagine the community needing for a governance proposal. We hadn't anticipated that there could be novel ways of using enactment delays to distribute PGF.\n\nThe benefit of increasing this parameter is that we could make a commitment in an up-front governance proposal, while having more control over delaying the proposal execution timing.\n\n## Potential issue\n\nSomeone could make a governance proposal with a very long voting period\n\n- this seems unlikely--at least until it's worth 2000 NAM to advertise something using a governance proposal\n\n- a future solution could be a new `max_proposal_voting_period` parameter to complement the existing `min_proposal_voting_period`, and then we could constrain the voting period without constraining the enactment delay\n\nThere have been no concerns from the folks in the Validator Circle, 🟡 the replies on the forum post, and in messages with @brentstone and @cwgoes from Heliax.",
-                    "discussions-to": "https://forum.namada.net/t/change-max-proposal-period-parameter-to-260/1643",
-                    "motivation": "Longer governance proposal periods (thus, longer enactment delays) enable novel ways of using governance to distribute PGF.",
-                    "requires": "0",
-                    "title": "Change max_proposal_period to 260 epochs"
-                },
-                "Start_Epoch": "501",
-                "End_Epoch": "519",
-                "Activation_Epoch": "520",
-                "Status": "ended",
-                "Data": "E3881118E55CDE3377140C0548DEE178DC1BE62D222608DC44F7A742A1D2D329",
-                "Result": "Prop 15 involved 1570 addresses with resuts: 1536 yays | 14 nays | 20 abstains"
-            },
-            {
-                "Id": 16,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to distribute, after 50 days, 930,202 NAM in total to 242 addresses: 241 Web3Privacy Now donors and the front-end creator",
-                    "authors": "Gavin Birch (Luminara)",
-                    "created": "2025-03-31",
-                    "details": "This is a PGF (public goods funding) proposal to distribute a total of 930,202 NAM\n\n1. 905,202 NAM to the 241 Namada addresses listed here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=102995741#gid=102995741&range=A1 \n\n2. 25,000 NAM to Zenode tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\n\nZenode is the creator of the Donor Drop front-end: https://github.com/zenodeapp/donor-drop-frontend \n\nWe had several (missing) tnam addresses that were updated (please see the evidence provided here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=1821879449#gid=1821879449&range=A1).\nThere were two participants that went over their maximum, and one that donated to Coin Center instead–Luminara 🔅 intends to reward these donations instead of requesting that from voters.\n\nIf approved, this proposal will then take 50 days to execute and thus recipients will not receive their allocations until 50 days after the proposal passes. We are proposing a reduced delay from the original 60-day delay period because this proposal launched 10 days late, because it first required parameter change (see Prop15).\n\n ## History\n\nWe (Luminara 🔅) launched Namada Prop13 (https://explorer75.org/namada/proposals/13), and are grateful that voters signalled support for a Donor Drop targeting the amazing Web3PrivacyNow team (https://web3privacy.info/) with additional support for Donor Drop front-end creator, Zenode.\n\nAttracting donations to the Web3Privacy Now team was an amazing opportunity. This is a team unrivalled in our space for pushing forward digital privacy and cypherpunk values: https://x.com/web3privacy/status/1901949939590021311 \n\nWe were proud to use the newly open sourced, community built Donor Drop front-end to support the user experience: https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565 \n\nThis was an incredible undertaking that has enabled the Donor Drop experience that we’ve come to love \n\nWhen the Donor Drop window opened on Saturday, March 22, Web3Privacy Now’s ethereum address (https://etherscan.io/address/0xb8fbd9a43cc0ceb3d9ddd58b752979a77e6f0c1d) received nearly 300 donations in about 75 minutes, totalling 52 ETH, worth about $100k when the Donor Drop finished 👀\n\n ## Future\n\nWe’re excited to have again demonstrated this new way of attracting new community members while supporting impactful teams like Web3Privacy Now and Coin Center (https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492).\n\nKeep an eye out for future Donor Drops after Namada Mainnet Phase 5 👀\n\nhttps://x.com/web3privacy/status/1903498584156156060 \n\nPlease check out this forum post for almostFitz's summary of this campaign: https://forum.namada.net/t/donor-drop-progress-50-3-eth-donated-to-web3privacy-now/1628 \n\nThanks to the many different kinds of participants 🙌 our second Donor Drop was a success 🎉 Special thanks to almostFitz for organizing this 🔆",
-                    "discussions-to": "https://forum.namada.net/t/web3privacy-now-donor-drop-allocations/1633",
-                    "motivation": "(see abstract)",
-                    "requires": "0",
-                    "title": "PGF - Web3Privacy Now Donor Drop allocations"
-                },
-                "Start_Epoch": "522",
-                "End_Epoch": "546",
-                "Activation_Epoch": "746",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 16 involved 1630 addresses with resuts: 1551 yays | 41 nays | 38 abstains"
-            },
-            {
-                "Id": 17,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "PGF proposal to distribute total of 945,000 NAM to Discord mods",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-04-22",
-                    "details": "Hello! 👋 I’m writing this on behalf of Luminara 🔅\n\n## Proposal\n\nThis is a Public Goods Funding (PGF) proposal to allocate **945,000 NAM** in total to the Namada Discord moderators:\n\n* 180k NAM -- 0xGolden | deNodes `tnam1qz7mggh56wlljs0wfgkxj6r9xe36cacfkgnr99kc`\n\n* 180k NAM -- Tree `tnam1qpyrs8q9qzupca4gdalmwevkmdsyxenswq5xvstm`\n\n* 180k NAM -- kelpie `tnam1qqqdr4y4zymc3ctsthpy0fcezdn4jvjl6ye073k0`\n\n* 90k NAM -- Hoan Wu `tnam1qpnyherlyqel5x5xqyfqngpqymyeqrf5fgqvxc38`\n\n* 90k NAM -- Daniel | Mandragora `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* 90k NAM -- sirouk | TuDudes `tnam1qq0t2s4dmqvxqwl25fm3eyckgekgftggfg9nfe5h`\n\n* 90k NAM -- TG `tnam1qq0ph5svjjspkaz2ntw49j2zq8855237qcfuupjt`\n\n* 45k NAM -- M | CryptoSJ `tnam1qpj9aye7zd86pgfpjh2pnal3yjzrfkff2s6n5fq4`\n\nThis proposal code was tested successfully on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/25\n\n##Context\n\nThe people with mod roles in our Discord have stayed alert through quiet times, and helped us to weather storms through seasons of chaos. It’s been a long haul, and these folks have helped us chug along; 🚂 some since January 2023, others since January 2024.\n\nMods were not included in the genesis proposal, but we think that this PGF proposal offers an opportunity to close that loop with gratitude and good faith.\n\n## History\n\nModeration hasn’t been a formal role in Namada. There was no understanding or agreement that mod privileges would come with compensation, and expectations were either left unspoken or were inconsistent across time, project phases, and responsible individuals.\n\nHowever, moderation *is* often compensated in other crypto communities, and some of these contributors moderate other crypto communities professionally. Others jumped in purely out of care and commitment to Namada’s early days. But all have supported our community through both calm and chaotic seasons. 🎢\n\nWhile we haven’t treated this as a job, we do believe this is the right moment to recognize and thank them. This proposal acknowledges that ambiguity, and aims to resolve it cleanly.\n\n## Future\n\nThis isn’t about setting precedent. We believe moderation in our community, going forward, should not be transactional. Instead of moderators as enforcers or outsourced roles, we hope to encourage stewardship: welcoming newcomers, encouraging healthy dialogue, and supporting autonomy with the help of bots and tools to handle spam.\n\nThis proposal will allow us to close the chapter on early moderation efforts with clarity, appreciation, and fairness, and move into our next chapter with stronger alignment.\n\n## Thanks\n\nThank you to @ke1pie, who has been instrumental in patiently carrying this forward for many months, and thank you to everyone who helped keep the lights on 💡",
-                    "discussions-to": "https://forum.namada.net/t/discord-mod-allocations-945k-nam/1651",
-                    "motivation": "Recognize early Discord mods & settle any past expectations",
-                    "requires": "0",
-                    "title": "PGF - Discord Mod Allocations - 945k NAM"
-                },
-                "Start_Epoch": "568",
-                "End_Epoch": "592",
-                "Activation_Epoch": "593",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 17 involved 1455 addresses with resuts: 561 yays | 843 nays | 51 abstains"
-            },
-            {
-                "Id": 18,
-                "Type": "PGF funding",
-                "Author": "tnam1qq58gs03fscgfuexy972wz70qawlk0ahguexglsg",
-                "Content": {
-                    "abstract": "Corrected PGF proposal to distribute total of 945,000 NAM to Discord mods",
-                    "authors": "Gavin Birch (Luminara 🔅)",
-                    "created": "2025-04-24",
-                    "details": "**This is a corrected proposal to replace Prop17--please vote 'nay' on Prop17.**\n\nHello! 👋 I’m writing this on behalf of Luminara 🔅\n\n## Proposal\n\nThis is a Public Goods Funding (PGF) proposal to allocate **945,000 NAM** in total to the Namada Discord moderators:\n\n* 180k NAM -- 0xGolden | deNodes `tnam1qz7mggh56wlljs0wfgkxj6r9xe36cacfkgnr99kc`\n\n* 180k NAM -- Tree `tnam1qpyrs8q9qzupca4gdalmwevkmdsyxenswq5xvstm`\n\n* 180k NAM -- kelpie `tnam1qqqdr4y4zymc3ctsthpy0fcezdn4jvjl6ye073k0`\n\n* 90k NAM -- Hoan Wu `tnam1qpnyherlyqel5x5xqyfqngpqymyeqrf5fgqvxc38`\n\n* 90k NAM -- Daniel | Mandragora `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* 90k NAM -- sirouk | TuDudes `tnam1qq0t2s4dmqvxqwl25fm3eyckgekgftggfg9nfe5h`\n\n* 90k NAM -- TG `tnam1qq0ph5svjjspkaz2ntw49j2zq8855237qcfuupjt`\n\n* 45k NAM -- M | CryptoSJ `tnam1qpj9aye7zd86pgfpjh2pnal3yjzrfkff2s6n5fq4`\n\nThis proposal code was tested successfully on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/25\n\n## Context\n\nThe people with mod roles in our Discord have stayed alert through quiet times, and helped us to weather storms through seasons of chaos. It’s been a long haul, and these folks have helped us chug along; 🚂 some since January 2023, others since January 2024.\n\nMods were not included in the genesis proposal, but we think that this PGF proposal offers an opportunity to close that loop with gratitude and good faith.\n\n## History\n\nModeration hasn’t been a formal role in Namada. There was no understanding or agreement that mod privileges would come with compensation, and expectations were either left unspoken or were inconsistent across time, project phases, and responsible individuals.\n\nHowever, moderation *is* often compensated in other crypto communities, and some of these contributors moderate other crypto communities professionally. Others jumped in purely out of care and commitment to Namada’s early days. But all have supported our community through both calm and chaotic seasons. 🎢\n\nWhile we haven’t treated this as a job, we do believe this is the right moment to recognize and thank them. This proposal acknowledges that ambiguity, and aims to resolve it cleanly.\n\n## Future\n\nThis isn’t about setting precedent. We believe moderation in our community, going forward, should not be transactional. Instead of moderators as enforcers or outsourced roles, we hope to encourage stewardship: welcoming newcomers, encouraging healthy dialogue, and supporting autonomy with the help of bots and tools to handle spam.\n\nThis proposal will allow us to close the chapter on early moderation efforts with clarity, appreciation, and fairness, and move into our next chapter with stronger alignment.\n\n## Thanks\n\nThank you to @ke1pie, who has been instrumental in patiently carrying this forward for many months, and thank you to everyone who helped keep the lights on 💡",
-                    "discussions-to": "https://forum.namada.net/t/discord-mod-allocations-945k-nam/1651",
-                    "motivation": "Recognize early Discord mods & settle any past expectations",
-                    "requires": "0",
-                    "title": "Corrected - PGF - Discord Mod Allocations - 945k NAM"
-                },
-                "Start_Epoch": "568",
-                "End_Epoch": "592",
-                "Activation_Epoch": "593",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 18 involved 1621 addresses with resuts: 1424 yays | 121 nays | 76 abstains"
-            },
-            {
-                "Id": 19,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "authors": "Veil",
-                    "details": "This proposal seeks to add support for four new assets - USDC (via Noble), UM (Penumbra), NYM (Nym), and NTRN (Neutron) - to Namada's MASP and transparent platform. These assets were selected based on community feedback, ecosystem alignment, and ease of integration. Specifically, this proposal includes setting appropriate IBC rate limits and allowing these assets to be used for gas payment.\n\nThe code used to produced the attached WASM can be found at: https://github.com/anoma/namada-governance-upgrades/blob/cccbb06948f258ceae935806ec17019f8838879e/phase3/src/lib.rs \n\nTo summarize, the rate limit and gas parameters set for each token are:\n\nUSDC:\nGlobal mint limit: 5M\nPer-epoch limit: 1M\nGas price: 3 uusdc / gas unit\n\nUM:\nGlobal mint limit: 5M\nPer-epoch limit: 1M\nGas price: 10 upenumbra / gas unit\n\nNYM:\nGlobal mint limit: 10M\nPer-epoch limit: 2M\nGas price: 50 unym / gas unit\n\nNTRN:\nGlobal mint limit: 10M\nPer-epoch limit: 2M\nGas price: 20 untrn / gas unit",
-                    "discussions-to": "https://forum.namada.net/t/proposal-add-support-for-usdc-usdy-um-nym-ntrn/1648",
-                    "title": "Whitelisting USDC, UM, NYM, and NTRN for Namada"
-                },
-                "Start_Epoch": "598",
-                "End_Epoch": "621",
-                "Activation_Epoch": "622",
-                "Status": "ended",
-                "Data": "DB46BB1F2F048D4B3431A53E708224238D828F418F7B3B1A6505FCE7BBEB9FD7",
-                "Result": "Prop 19 involved 1836 addresses with resuts: 1794 yays | 18 nays | 24 abstains"
-            },
-            {
-                "Id": 20,
-                "Type": "Default",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "authors": "Veil",
-                    "details": "To make Namada the composable privacy layer of the multichain, we will need to expand the set of ecosystems we support.\n\nProposal\nThis is a proposal asking voters to signal preference for Wormhole to be Namada's first new bridge integration.\n\nContext\nNamada's core protocol is developed and maintained by Heliax, and Heliax is currently deciding their engineering resource priorities. Over the weekend, I created a forum post to discuss the need for a bridge integration - specifically, to begin with a Wormhole integration. @cwgoes and @brentstone have publicly supported the idea, and if voters agree with this direction, Heliax is ready to provide technical resources when needed.\n\nHistory\nVeil is aligned with Namada's mission to support a broad range of assets in order to expand access to composable privacy - being as meaningfully useful for as many uses as possible. We've previously submitted two asset support proposals and plan to propose many more. Integrating Wormhole would significantly grow the universe of assets and chains we can bring into the shielded set, unlocking new opportunities for privacy adoption across ecosystems.\n\nPotential Issue\nAs noted in Namada Discord conversations, Wormhole suffered an exploit in early 2022, resulting in a ~$320M loss. However, the protocol has since facilitated tens of billions in volume and has become the default bridging solution for many new chains. While the exploit was significant, depositors were made whole. Wormhole's continued adoption, resilience and track record since, have made it (in our view) the most reliable and forward-compatible option available today. We're confident that Wormhole’s maturity and battle-tested infrastructure benefit from the Lindy effect and position it well for supporting Namada's growth.\n\nAdditional Note\nWhile this integration is a top priority, it does not preclude or exclude future integrations such as IBC Eureka.",
-                    "discussions-to": "https://forum.namada.net/t/prioritize-building-out-a-wormhole-integration/1652",
-                    "title": "Signalling - Support for Wormhole as Namada’s First New Bridge Integration"
-                },
-                "Start_Epoch": "607",
-                "End_Epoch": "645",
-                "Activation_Epoch": "646",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 20 involved 2083 addresses with resuts: 2029 yays | 23 nays | 31 abstains"
-            },
-            {
-                "Id": 21,
-                "Type": "Default",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Gathering social consensus to coordinate a software upgrade of namada nodes at block 2,176,000. This block is expected to occur at about 15:00 UTC on Tuesday, May 27, 2025.",
-                    "discussions-to": "https://forum.namada.net/t/coordinating-the-pre-phase-4-hard-fork-upgrade-to-namada-v101/1670",
-                    "title": "Signalling: coordinating mainnet software upgrade to namada v101.0.0 at height 2,176,000"
-                },
-                "Start_Epoch": "667",
-                "End_Epoch": "680",
-                "Activation_Epoch": "681",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 21 involved 2389 addresses with resuts: 2370 yays | 11 nays | 8 abstains"
-            },
-            {
-                "Id": 22,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "authors": "Veil",
-                    "details": "This proposal is to enable shielding rewards for an initial set of seven assets: Cosmos Hub (ATOM), Osmosis (OSMO), Celestia (TIA), the Stride liquid-staked versions of these tokens, and Noble’s USDC. Alongside this activation, it will set initial starting points for several key configurable parameters, including the maximum inflation rate, token deposit targets, Proportional Gain, and Derivative Gain.\n\nIt should be clearly noted that these values are just initial settings, and they are fully configurable. The community can revisit and adjust these parameters through governance at any point in the future as needed.\n\nThe proposal code that generated the attached wasm can be found here: https://github.com/anoma/namada-governance-upgrades/blob/5a69808c8b42f7f89b4344150f8db3078d8a6ba5/phase4/src/lib.rs.\n\nThe proportional and derivate gain values are set to 50 and 85, respectively, for each token. The maximum annual inflation rate for USDC is set to 1.8%, while the annual inflation rate for all other tokens is set to 0.9%. The target pool amounts for each token are as follows:\n\nUSDC: 2.2M\nOSMO: 8.7M\nATOM: 421K\nTIA: 781K\nstOSMO: 625K\nstATOM: 27K\nstTIA: 70K",
-                    "discussions-to": "https://forum.namada.net/t/phase-4-proposal-discussion/1604",
-                    "title": "Phase 4: enable shielding rewards"
-                },
-                "Start_Epoch": "709",
-                "End_Epoch": "734",
-                "Activation_Epoch": "735",
-                "Status": "ended",
-                "Data": "24BF5C40B7C41A13EB1A7694CA60E31B8E99E70D80C1BBC46BCEA731AD1A8B93",
-                "Result": "Prop 22 involved 2664 addresses with resuts: 1933 yays | 680 nays | 51 abstains"
-            },
-            {
-                "Id": 23,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "The tx_claim_rewards must be updated to allow some select users with many redelegations to claim their rewards from specific validators. Currently, these claims enter a code path that iterates asymptotically and does not complete before the tx times out.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/6da3b4b1835ae531589bcef65602bf3a803e1de3/update-tx-claim-rewards-2/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-update-tx-claim-rewards/1704",
-                    "title": "Update the claim-rewards tx in on-chain storage ahead of Phase 5"
-                },
-                "Start_Epoch": "740",
-                "End_Epoch": "754",
-                "Activation_Epoch": "755",
-                "Status": "ended",
-                "Data": "94B466692129203AF0D794E9F0CA83143A69587F6771413FB24345EAA5AA8989",
-                "Result": "Prop 23 involved 2100 addresses with resuts: 2073 yays | 13 nays | 14 abstains"
-            },
-            {
-                "Id": 24,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "The tx_transfer must be updated to prevent very large batch transfers.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/390cf675a603c251186e255686637a450109e629/update-tx-transfer/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
-                    "discussions-to": "https://forum.namada.net/t/update-tx-transfer/1706",
-                    "title": "Update the transfer tx in on-chain storage ahead of Phase 5"
-                },
-                "Start_Epoch": "744",
-                "End_Epoch": "756",
-                "Activation_Epoch": "757",
-                "Status": "ended",
-                "Data": "D915550A5FAE3DBA36FEB204F03799D9690A0512B0CDF2A7B833A7829E18758D",
-                "Result": "Prop 24 involved 2520 addresses with resuts: 2497 yays | 12 nays | 11 abstains"
-            },
-            {
-                "Id": 25,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Flipping the switch to turn on internal native token (NAM) transfers within Namada. This enables transparent transfers, shielded transfers, shielding, and unshielding of NAM within Namada.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/31e492c3cef25db6dc0dec0a005080d5ce2ace48/phase5a/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-begin-phase-5-enable-internal-nam-transfers/1707",
-                    "title": "Begin Phase 5: enable internal NAM transfers within Namada"
-                },
-                "Start_Epoch": "753",
-                "End_Epoch": "765",
-                "Activation_Epoch": "766",
-                "Status": "ended",
-                "Data": "C60D2B2158EBB5B0B964F0529FDB2B3D07CE7292D0918C08100700692C964499",
-                "Result": "Prop 25 involved 4347 addresses with resuts: 4317 yays | 15 nays | 15 abstains"
-            },
-            {
-                "Id": 26,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "Turning on IBC transfers for the native token NAM. This allows NAM to be transferred out of Namada over IBC and back into Namada the same way. The per-epoch throughput limit is set to 20M NAM.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/ea7e6f6d413a4f8399cb995e782b4aadbe6dda4f/phase5b/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-enable-ibc-transfers-of-nam-phase-5b/1727",
-                    "title": "Phase 5 IBC transfers for NAM"
-                },
-                "Start_Epoch": "783",
-                "End_Epoch": "795",
-                "Activation_Epoch": "796",
-                "Status": "ended",
-                "Data": "96BAB710E635BCB0874F01FAFDCDC4E34150758C54B4D684A36038E5F4494DF4",
-                "Result": "Prop 26 involved 3641 addresses with resuts: 3611 yays | 17 nays | 13 abstains"
-            },
-            {
-                "Id": 27,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
-                "Content": {
-                    "details": "This proposal is a follow-up to the failed Proposal #22, which was voted down due to concerns about the values in storage for certain `precision` keys and their associated MASP data. This proposal updates these values to more safely ensure that shielded inflation is actually minted once enabled, given arbitrary amounts of tokens in the shielded pool.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/374a2a919e4119f2cb99e417926a3ef2bb3c8ea4/pre-phase4/src/lib.rs.\n\nSee the forum discussion for more details.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-migration-before-enabling-shielded-rewards-phase-4/1776",
-                    "title": "Migrate shielded data ahead of shielded rewards (Phase 4)"
-                },
-                "Start_Epoch": "825",
-                "End_Epoch": "842",
-                "Activation_Epoch": "843",
-                "Status": "ended",
-                "Data": "58C2E1B7362765E7248388A299FB112F89B70970A7ADC0B801A0E2785BCF5976",
-                "Result": "Prop 27 involved 1103 addresses with resuts: 1093 yays | 6 nays | 4 abstains"
-            },
-            {
-                "Id": 28,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "abstract": "",
-                    "authors": "Veil",
-                    "created": "2025-07-08T10:47:03.580431",
-                    "details": "This proposal is to enable shielding rewards for an initial set of seven assets: Cosmos Hub (ATOM), Osmosis (OSMO), Celestia (TIA), the Stride liquid-staked versions of these tokens, and Noble’s USDC. Alongside this activation, it will set initial starting points for several key configurable parameters, including the maximum inflation rate, token deposit targets, Proportional Gain, and Derivative Gain.\n\nIt should be clearly noted that these values are just initial settings, and they are fully configurable. The community can revisit and adjust these parameters through governance at any point in the future as needed.",
-                    "discussions-to": "https://forum.namada.net/t/phase-4-proposal-discussion/1604",
-                    "license": "SPQR",
-                    "motivation": "",
-                    "requires": "",
-                    "title": "Phase 4: enable shielding rewards"
-                },
-                "Start_Epoch": "873",
-                "End_Epoch": "891",
-                "Activation_Epoch": "892",
-                "Status": "ended",
-                "Data": "795BB46859CC225E3E347F1A6CB1DE0784F3658BDE1A779DC2E115A52CD666E2",
-                "Result": "Prop 28 involved 1000 addresses with resuts: 993 yays | 2 nays | 5 abstains"
-            },
-            {
-                "Id": 29,
-                "Type": "PGF funding",
-                "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
-                "Content": {
-                    "abstract": "Proposing a one-year, cPGF validator subsidy to support 166 active validators.\nThe goal is to extend operator runway, sustain diversity, and prepare for a more targeted meritocratic reward model.",
-                    "authors": "Gavin Birch (Luminara)",
-                    "created": "2025-07-25T23:51:00.000Z",
-                    "details": "This is a Continuous Public Goods Funding (cPGF) proposal to use ~0.67% of the annual PGF budget to allocate NAM to the current active set of Namada validators for year. If approved, **every epoch, 30.1369863 NAM** will be allocated to each tnam address of the **166 active validators**. Assuming this set of cPGF token \"streams\" will end in one year, the **total amount of NAM per validator will be 44,000 NAM**.\n\n#### Notes\n1. While this is part of the PGF budget, the PGF budget does not inflate the NAM supply until it is allocated. If approved, this will introduce 0.67% supply inflation over the year.\n2. There is [not yet a built-in way to end cPGF](https://github.com/namada-net/namada/issues/4104), so a follow-up PGF proposal will be needed to stop this cPGF after one year; exact date to be determined at proposal launch.\n\n#### Recipient List\nhttps://github.com/Luminara-Hub/govproposals/commit/9f2f88579aa96572e5414b560cb1e96a92eb9169\n\n(Github because the list exceeds governance proposal limit) \n\n#### Exclusions\n- Unit 410 [2]\ttnam1q9vnysn3jj9l3rnucr0zt4jpuy224wdl7c0gezrj\n- Shutdown 1st july — Please Redelegate\ttnam1qyj7mwkpc9tg4mljg76wxshwq2rxlskx7c0tlx4c\n- ValidityOps#2\ttnam1q98jzz306gldxvtg5quwnej4zvna6pgnquk2t4dc\n- [ZKV](https://x.com/zkv_xyz/status/1943628922362503411)\ttnam1qxr8n7u36jcf82d0ccp0flshpwhz3d3xjv5ryn44\n- EquinoxDao (jailed > 10 days)\ttnam1q9zemh43mx2dwtlsrfgjanzzut3j5lepaq7uacug\n- Infraspear (jailed > 10 days)\ttnam1qx03fx58wtm6e2g5yt4uu9jpy702h4pjuy9a7653\n\n\n## Context\nMost staking inflation (~95%) goes to passive delegators, versus active validators with immediate operating costs.\n\nWe have a relatively large, diverse set of validators. Namada doesn't need to ensure a particularly large set of validators, but it would be helpful to have more time to continue to enable, surface and reward high-value-add validators so that they remain active. \n\nDirect support is a much more capital-efficient way to increase validator operator runway than by increasing staking inflation. The goal is to extend operator runway to sustain diversity in preparation for a more targeted, meritocratic rewards model.\n\n## Future\nIf this proposal passes, there should be a proposal to end this subsidy after one year (Luminara intends to do this). There may also be intermediary proposal(s) to remove subsidies from inactive validators.\n\nAs a community, Namada should always be improving our collective ability to effectively target and reward active, value-add participants to sustain Namada's roadmap and mission-momentum.",
-                    "discussions-to": "https://forum.namada.net/t/namada-validator-cpgf-1-year-subsidy-0-67-inflation/1819",
-                    "motivation": "Sustain the current validator set to surface and reward high-value-add validators.",
-                    "requires": "0",
-                    "title": "cPGF - Namada Validator 1-Year Subsidy - 0.67% inflation"
-                },
-                "Start_Epoch": "955",
-                "End_Epoch": "979",
-                "Activation_Epoch": "980",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 29 involved 889 addresses with resuts: 842 yays | 9 nays | 38 abstains"
-            },
-            {
-                "Id": 30,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
-                "Content": {
-                    "details": "This proposal contains to code to update the `tx_withdraw` wasm in storage. With this new update, any withdraw tx will emit an event that contains the withdrawn NAM token amount. This is similar to the update executed for `tx_claim_rewards` in Prop #11. Please see the forum post linked in `discussions-to` below for more details.\n\nThe proposal code used to generate the WASM within this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/b3221f02b26ab5c7e08cef4496930b0f632ca4f0/update-tx-withdraw/src/lib.rs.\n\nThe new tx_withdraw wasm itself was generated with the changes within: https://github.com/namada-net/namada/pull/4778",
-                    "discussions-to": "https://forum.namada.net/t/proposal-update-tx-withdraw-on-chain-with-events/1848",
-                    "title": "Update tx_withdraw wasm on-chain"
-                },
-                "Start_Epoch": "1073",
-                "End_Epoch": "1097",
-                "Activation_Epoch": "1098",
-                "Status": "ended",
-                "Data": "E3FBA2A2D8C42894822020628F8D27B6857EDC5A5373A2B327DBCE1A2AA0DC2D",
-                "Result": "Prop 30 involved 335 addresses with resuts: 332 yays | 2 nays | 1 abstains"
-            },
-            {
-                "Id": 31,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "details": "This proposal reduces staking inflation from 5% to 2.75% and lowers the target staking ratio from 55% to 45%. The goal is to eliminate unnecessary dilution now that security thresholds are met, while freeing issuance to incentivize privacy usage through Shielded Rewards. By rebalancing inflation toward real adoption, this change reduces wasteful issuance and strengthens the long-term sustainability of the network.\n\nThe file used to produce the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/9ea5c5a6d8d29a2866e83f73ece069d4658cd822/increase_target_staked_ratio/src/lib.rs",
-                    "title": "Reduce staking inflation from 5% to 2.75%"
-                },
-                "Start_Epoch": "1154",
-                "End_Epoch": "1173",
-                "Activation_Epoch": "1174",
-                "Status": "ended",
-                "Data": "B21D4872EF9BA948874D53EC5F175EDE3CA4AA10F52C42E7AF099D78A86BF890",
-                "Result": "Prop 31 involved 304 addresses with resuts: 291 yays | 11 nays | 2 abstains"
-            },
-            {
-                "Id": 32,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "details": "This proposal updates the Multi-Asset Shielded Pool incentive mechanism by recalibrating the Proportional Gain (p_gain_nom) and Derivative Gain (d_gain_nom) values for incentivized assets. These changes aim to ensure that shielded pool rewards respond more predictably, correcting cases where adjustments were too slow or too fast.\n\nIn addition, we propose reducing Shielded Set Reward (SSR) targets across assets to better align inflation incentives with observed usage and privacy needs. This calibration narrows the scope of incentives to the most active pools while reducing inflation costs on underutilized assets.\n\nThe file used to produce the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/5fad42152f631607a7763352f230040629f7d3e4/phase4/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/adjust-the-masp-gain-and-ssr-target-values/1847",
-                    "title": "Update Shielded Inflation: MASP Gain Calibration & SSR Target Adjustments"
-                },
-                "Start_Epoch": "1154",
-                "End_Epoch": "1173",
-                "Activation_Epoch": "1174",
-                "Status": "ended",
-                "Data": "EEF0B745190917D5C64E1F042E0F8EB9BD062D54522B84C42957F1194D989DD2",
-                "Result": "Prop 32 involved 302 addresses with resuts: 291 yays | 7 nays | 4 abstains"
-            },
-            {
-                "Id": 33,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "authors": "Veil",
-                    "details": "This proposal looks to add support for USDN (Noble’s native yield-bearing stablecoin) to Namada’s Multi-Asset Shielded Pool (MASP), whitelist USDN as a gas token, and set initial rate-limit parameters. Adding USDN would make it the first yield-bearing stable asset in the MASP, enabling shielded deposits that generate real yield and expanding the economic functionality of shielded assets. Whitelisting USDN for gas ensures a seamless user experience, allowing transactions to be paid directly in USDN. The initial parameters are a 5M global mint limit, 1M per-epoch limit, and a gas price of 1 uusdn per gas unit.\n\nThe proposal code used to generate the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/3a4a42da8bb230678b9396daa77c5eef97704d96/phase3/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/proposal-to-add-usdn-support-to-the-masp/1871",
-                    "title": "Add USDN support to the MASP, whitelist USDN as a gas token, and establish initial rate-limit parameters."
-                },
-                "Start_Epoch": "1281",
-                "End_Epoch": "1312",
-                "Activation_Epoch": "1313",
-                "Status": "ended",
-                "Data": "B03AF811B89788007959A66B9E8547D576D66ADB8172FCD10A3B2B923CDF6D0B",
-                "Result": "Prop 33 involved 352 addresses with resuts: 341 yays | 9 nays | 2 abstains"
-            },
-            {
-                "Id": 34,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
-                "Content": {
-                    "details": "This proposal seeks to increase the values of two different gas parameters in the protocol:\n1. Max block gas: 5M --> 10M\n2. Masp fee payment gas limit: 100k --> 300k\n\nIncreasing these values will help to prepare for IBC Eureka support and to relieve certain unshielding difficulties for some users.\n\nThe code used to generate the attached WASM can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/3075750b50e24144178f3f9531d8771a955d17eb/update_gas_params/src/lib.rs\n\nPlease see the forum discussion for more details and specific motivation.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-increase-two-gas-related-protocol-parameters/1880",
-                    "title": "Update two gas parameter values"
-                },
-                "Start_Epoch": "1289",
-                "End_Epoch": "1309",
-                "Activation_Epoch": "1310",
-                "Status": "ended",
-                "Data": "286644C8096E0520C84624736BB0349681FB17B5677EB3BAB267463B4DFF4811",
-                "Result": "Prop 34 involved 288 addresses with resuts: 280 yays | 5 nays | 3 abstains"
-            },
-            {
-                "Id": 35,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
-                "Content": {
-                    "details": "This proposal aims to unblock further development of the Polaris integration from the future mainnet upgrade to v201.0.X. This is accomplished by manually whitelisting many tokens over the Osmosis IBC channel in a nearly-permissionless manner. After the upgrade, it will be possible for a short governance proposal to whitelist a whole channel permissionlessly.\n\nThe full list of whitelisted assets can be viewed directly as commented in the Rust code used to generate the attached wasm, which can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/2f5636aeeb26e8ac6922b3eaefeb91f9544d64fb/proposals/mainnet/manual-whitelist-polaris/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/proposal-whitelist-tokens-manually-for-polaris-integration/1883",
-                    "title": "Whitelist tokens over the Osmosis IBC channel for Polaris integration."
-                },
-                "Start_Epoch": "1324",
-                "End_Epoch": "1349",
-                "Activation_Epoch": "1350",
-                "Status": "ended",
-                "Data": "F8CAF64BA1131A59882E859D39D4272230BC643C6D696F24A2241BAB5F06F880",
-                "Result": "Prop 35 involved 311 addresses with resuts: 311 yays | 0 nays | 0 abstains"
-            },
-            {
-                "Id": 36,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
-                "Content": {
-                    "authors": "Veil",
-                    "details": "This proposal looks to reduce Shielded Set Reward (SSR) incentives by setting the max_reward_rate parameter of each of the following six tokens to 0: ATOM, OSMO, TIA, stATOM, stOSMO, and stTIA. The goal is to simplify the incentive landscape and ensure Namada’s resources remain focused on current and upcoming product–market fit (PMF) initiatives. Maintaining USDC incentives preserves a stable capital base and supports the asset that has demonstrated the most consistent organic usage, while also creating room to introduce and test new assets aligned with emerging use cases. This proposal does not impact the function of the PID controller as it relates to USDC incentives. In short, it aims to give the community a near-clean slate to support the next phase of experimentation and product alignment.\n\nThe code used to generate the wasm attached to this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/eab5a1b3f6ddb24ea5fac2a56addcb753dd511b9/proposals/mainnet/turn-off-shielded-inflation/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/adjusting-shielded-set-rewards-to-align-with-pmf-experiments/1889",
-                    "title": "Adjust Shielded Set Rewards to Align with PMF Experiments."
-                },
-                "Start_Epoch": "1364",
-                "End_Epoch": "1388",
-                "Activation_Epoch": "1389",
-                "Status": "ended",
-                "Data": "72DF5BEF3E5924A447A8085E5DAD2608E3C7A3596812B6F05F88684C5C36021A",
-                "Result": "Prop 36 involved 275 addresses with resuts: 242 yays | 28 nays | 5 abstains"
-            },
-            {
-                "Id": 37,
-                "Type": "Default",
-                "Author": "tnam1qzq9cw0xp6h6w78qhy78k9w3ju8dfdq6quwqshk5",
-                "Content": {
-                    "abstract": "",
-                    "authors": "Knowable",
-                    "created": "2025-11-25T21:47:00.000Z",
-                    "details": "The last major Housefire testnet upgrade was on September 9. Core maintainers have been prepared to upgrade for over two months, and the Namada community and key partners have been eagerly awaiting the Namada mainnet upgrade. Timing is everything, and Knowable is proposing that we wait no longer.\n\n## Proposing v201.0.7 upgrade at Block 4514500\n\nThis is a proposal to upgrade Namada mainnet to v201.0.7 at Block Height 4514500.\n\nWe selected 4514500 to target 17:15 UTC Tue Dec 2, but since block times may vary, this is just an estimate.\n\n## What’s New ✨\n\nNamada’s last major upgrade being v101.0.0 in late May. A lot has happened since then. [v201.0.7](https://github.com/namada-net/namada/releases/tag/v201.0.7) is ready to deliver some big unlocks, particularly:\n\n- permissionless IBC assets needed by Osmosis and Polaris\n- transaction-level fee capture needed by Borderless Private USDC\n- support for Ethereum assets via Cosmos Hub and IBC Eureka needed by Namadillo for shielded swaps\n- shielded sync & proof generation optimizations\n- general bug fixes for overall reliability\n\nThis upgrade will pave the path for the next major upgrade, which will give us a few more big unlocks.\n\n## Onward 🚀\n\nThere has been unprecedented excitement around the privacy narrative, and Namada has some [clear paths to PMF](https://forum.namada.net/t/a-new-phase-for-namada-product-market-fit-pmf/1884). There’s a growing interest from new stakeholders who are prepared to rally behind Namada alongside a dedicated community of long-time supporters. This upgrade will give Polaris what they need to use Namada to deliver their privacy-centric roadmap, the means for Namada to capture meaningful shielded pool revenue, and so much more.\n\nLet’s continue pursuing the [mission and vision](https://forum.namada.net/t/the-namada-mission/275) we created together 🔥\n\n-------\n\n## Instructions \n\nHere are the steps:\n\nBuild tag `v201.0.7` from source AHEAD OF TIME!\n\n```\ngit checkout v201.0.7\nmake build\n```\n\nSchedule your node to stop at height 4514500 with the current binaries:\n\n```\nnamadan ledger run-until --block-height 4514500 --halt\n```\n\nOnce we reach the upgrade height, restart your node with namadan v201.0.7:\n\n```\nnamadan ledger run\n```\n\nThat should be all! Thanks, looking forward to this important upgrade.",
-                    "discussions-to": "https://forum.namada.net/t/signalling-upgrade-to-v201-0-7-at-block-4514500/1899/1",
-                    "motivation": "Major upgrade",
-                    "requires": "0",
-                    "title": "Signalling - Upgrade to v201.0.7 at Block 4514500"
-                },
-                "Start_Epoch": "1429",
-                "End_Epoch": "1453",
-                "Activation_Epoch": "1454",
-                "Status": "ended",
-                "Data": "",
-                "Result": "Prop 37 involved 308 addresses with resuts: 303 yays | 4 nays | 1 abstains"
-            },
-            {
-                "Id": 38,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
-                "Content": {
-                    "details": "We must increase the values of the `max_tx_bytes` and `max_proposal_bytes` parameters to allow for the larger proposals that will be needed for IBC Eureka activation. Please see the discussion on the Namada forum for more details.\n\nThe proposal code used to generate the wasm attached to this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/6dd327f4b95154aba44b595798ec0e04ce1d8ea6/proposals/mainnet/update-params-pre-ibc-eureka/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/mainnet-update-two-protocol-parameters-for-ibc-eureka-activation/1906",
-                    "title": "Update two protocol parameters needed for IBC Eureka activation"
-                },
-                "Start_Epoch": "1452",
-                "End_Epoch": "1464",
-                "Activation_Epoch": "1465",
-                "Status": "ended",
-                "Data": "51C29AC1D380438F184D7ED3053825B5F5A2529FAA11ECB84E2D68B3BB0AB213",
-                "Result": "Prop 38 involved 204 addresses with resuts: 203 yays | 0 nays | 1 abstains"
-            },
-            {
-                "Id": 39,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
-                "Content": {
-                    "details": "This proposal updates the on-chain wasm tx for IBC transfers. Particularly, this IBC tx update will allow Polaris to complete their Namada integration and will also allow IBC Eureka assets to flow into Namada. Please see the forum discussion for more details.\n\nThe code used to generate the attached wasm file can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/8ce6288a26ba694f317d04a5a3977d641ef993af/proposals/template/update-wasm/src/lib.rs",
-                    "discussions-to": "https://forum.namada.net/t/mainnet-update-tx-ibc-wasm-for-v201-0-7/1910",
-                    "title": "Update tx_ibc.wasm for mainnet v201.0.7"
-                },
-                "Start_Epoch": "1466",
-                "End_Epoch": "1478",
-                "Activation_Epoch": "1479",
-                "Status": "ended",
-                "Data": "DF1529DE727D8DD777A28073A29393D3BC6EA516D6C1912BBD1E1A1D4A200624",
-                "Result": "Prop 39 involved 222 addresses with resuts: 218 yays | 0 nays | 4 abstains"
-            },
-            {
-                "Id": 40,
-                "Type": "Default with Wasm",
-                "Author": "tnam1qyf80vw4e8aa2efuk4jsg9lpwxrntsj2dql4tssa",
-                "Content": {
-                    "abstract": "Change pgf_inflation_rate parameter from 0.05 to 0.00",
-                    "authors": "CryptoDruide (For Luminara)",
-                    "created": "2025-12-05T19:30:00.000Z",
-                    "details": "Inflation is a cost for Namada, so if we must use it, we should use it intentionally.\nAs of Dec 2, the PGF treasury can use up to 41.8m NAM, which provides a solid runway for Namada’s journey to sustainability.\n\nWe propose to turn off PGF treasury inflation, which is currently set at 5%.\nIf this proposal passes, and if we count the PGF account minting allowance as a direct inflation, total network inflation will be reduced from 8.64% to 3.64%.\n\nPGF data overview\nTo date, approximately 5.5 million NAM have been distributed to fund diverse contributors and contributions within the Namada ecosystem.\n\nThe PGF account currently has a mint allowance of approximately 41.8 million NAM.\n\nThese amounts represent a total PGF inflation of approximately 4.42% of the effective supply.\n\nMore data on the PGF account and the funded contributions is available here:\nhttps://v2.explorer75.org/namada/pgf\n\nWhy this proposal?\nInflation is a cost. As soon as new tokens are minted and allocated, they introduce dilution for NAM holders.\n\nWe value the long-term sustainability and credibility of NAM, and we want to communicate this clearly to the ecosystem and its holders.\n\nInflation mechanisms need control and should be used only when it adds value, supports meaningful contributions, and strengthens Namada and its community.\n\nWe believe that the PGF account currently has sufficient runway for the coming months, making continued inflation unnecessary at this time.\n\nThe future fees collected from shielded pool usage are expected to fund the future of our ecosystem in a more sustainable way.",
-                    "discussions-to": "https://forum.namada.net/t/proposal-to-turn-off-pgf-treasury-inflation/1908",
-                    "motivation": "We believe the PGF treasury has a solid runway for Namada’s journey to sustainability. We want a healthy NAM economy and aim to avoid inflation that is unnecessary at this time.",
-                    "requires": "0",
-                    "title": "Turn off PGF treasury inflation"
-                },
-                "Start_Epoch": "1468",
-                "End_Epoch": "1488",
-                "Activation_Epoch": "1489",
-                "Status": "ended",
-                "Data": "19D0D1464F39F4859FEAA57670FDD372E0214D3F7E8257EC600B98E8D8FFAC43",
-                "Result": "Prop 40 involved 223 addresses with resuts: 214 yays | 0 nays | 9 abstains"
-            }
-        ]
-    }
+  {
+    "Last_committed_epoch": 2663,
+    "Proposal": [
+      {
+        "Id": 1,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "authors": "Luminara",
+          "details": "Namada mainnet has been running smoothly since Dec 3. As of Dec 11, 16.7% NAM has been staked. We (Luminara) think that Namada is ready for Phase 2: activate inflation for staking rewards and PGF. PoS max annual inflation rate = 5%; PoS target staked ratio = 40%; Kp gain parameter = 0.5; Kd gain parameter = 0.5; PGF annual inflation rate = 5%. PGF Steward inflation will be off for now. Our understanding is that this proposal was successfully tested on the Housefire fork (which is now in Phase 2) using this code: https://github.com/anoma/namada-governance-upgrades/blob/f1d19a5d4d28595ee73fe8fd15a9b4319bb171ff/phase2/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/phase-2-proposal-discussion/1297",
+          "motivation": "We want to advance to Mainnet Phase 2 by activating inflation to reward stakers and to enable Public Goods Funding (PGF).",
+          "title": "Phase 2: activate inflation for staking rewards and PGF"
+        },
+        "Start_Epoch": "34",
+        "End_Epoch": "48",
+        "Activation_Epoch": "49",
+        "Status": "ended",
+        "Data": "Hash: C4C00DF8AD4C5EFB76611555401236B696A5F4E367429B293B09A438679F8176",
+        "Result": "Prop 1 involved 8896 addresses with results: 8776 yays | 81 nays | 39 abstains"
+      },
+      {
+        "Id": 2,
+        "Type": "Default",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "authors": "Luminara",
+          "details": "**PGF Donor Drop - Coin Center**\n\n\nNamada stakers and validators, I'm Gavin Birch 👋 (https://twitter.com/Ether_Gavin)\nSubmitted on behalf of Luminara, we are proposing that Namada support a Donor Drop for Coin Center.\n\n**tl;dr**\nInstead of directly donating $NAM tokens, we can use PGF to drive ETH donations to Coin Center by rewarding donors with NAM. Coin Center gets funding in ETH (instead of selling NAM), and donors get pre-market access to NAM.\n\nSo far our community likes this idea. Stakers, this is a **signalling** proposal to gauge your interest. We want Namada to use PGF to broaden the distribution of NAM, while driving donations to Coin Center's ethereum address: 0x15322B546e31F5Bfe144C4ae133A9Db6F0059fe3\n\n- **Compelling?** Please vote yay\n- **Disagree?** Please vote nay (and please post why in the forum topic!)\n- **Unsure?** Comment/question in the forum topic, or vote abstain\nRead on..\n\nForum topic: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338\n\nI'm pretty excited that this could be an elegant new token distribution mechanism/strategy, and I hope that other communities will copy it. Please see my amateurish diagram: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338/8\n\n**Key details**\n\n- ~3 weeks for the campaign and/or donation window\n\n- a follow-up PGF proposal to allocate 1,000,000 NAM to the donors\n\nThe mechanism isn't finalized yet, but it may involve a donation cap and time weighting like this (ignore the $ values!): https://www.online-python.com/4hLxJ2VQ7r\n\nAgain, this is only a signalling proposal; we will need to follow up with a PGF proposal with the list of donor tnam addresses so that Namada's PGF can distribute NAM to them. (What's neat is that this can be done before Phase 5.)\n\nIf you would like to be involved, any of these could help:\n\n1. respond on the forum topic with feedback (or advice) about the campaign and/or mechanism (https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338)\n2. tweet about or tell a friend\n3. help make a front-end page to see donations in real-time\n4. something else that we haven't thought about\n\nPGF shouldn't be boring--let's usher in the new wave 🌊\nThank you to all of the folks who have helped 🙌",
+          "discussions-to": "https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338",
+          "motivation": "Expand NAM distribution using world's first Donor Drop",
+          "title": "Donor Drop: Coin Center campaign signalling"
+        },
+        "Start_Epoch": "54",
+        "End_Epoch": "66",
+        "Activation_Epoch": "67",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 2 involved 4035 addresses with results: 3877 yays | 87 nays | 71 abstains"
+      },
+      {
+        "Id": 3,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq7ksnfdfw4hr0gc9ldfm9s2dyhk5zy76qn85gfn",
+        "Content": {
+          "authors": "Knowable",
+          "details": "Namada’s target_staked_ratio is set to “0.4”. This means that **if more than 40% of the Namada token supply is staked, Namada’s staking inflation will begin decreasing towards zero.**\n\nSuch a dramatic change at such an early stage could dampen our momentum by prematurely causing validators to exit from Namada, while not necessarily decreasing stake.\n\nThe ratio has risen sharply over the past week or so, and **we now have ~36.4% of the NAM supply staked.** We think that the time to increase the target is now, and Knowable is proposing that the new target be 55%.\n\nThe only change from passing this proposal is that staking inflation (and thus, staking rewards) won’t begin decreasing if more than 40% of the NAM supply is staked. Instead, this will begin decreasing if more than 55% is staked.\n\nWe’re proposing that the target be 55% because engaged members of our community have signalled that:\na) they favour increasing the rate and\nb) they favour a target between 50% and 60%.\n\n- **Compelling?** Please vote yay\n- **Disagree?** Please vote nay (and please post why in the forum topic!)\n- **Unsure?** Comment/question in the forum topic, or vote abstain\n\nForum topic: https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387\n\nEngaged members of our community have also signalled that that this proposal would be a temporary fix, not a permanent solution, and we agree.\n\nWe should identify a more permanent solution, but we think that **we’ll need some observations after the Phases of Mainnet** to better understand and to discuss introducing a more informed solution.\n\nPlease review or ensure that someone capable has reviewed the wasm used for this proposal, and verify the hash: https://github.com/anoma/namada-governance-upgrades/blob/ce3a49eb93246aa81e6358e87d98f75bf69f5612/increase_target_staked_ratio/src/lib.rs\n\nThis proposal and wasm were successfully executed on Housefire as Prop3: https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387/6",
+          "discussions-to": "https://forum.namada.net/t/proposal-increase-target-staked-ratio-from-40-to-55/1387",
+          "motivation": "Stave off staking inflation decreases so that staking rewards don't go to zero",
+          "title": "Parameter change: Increase target_staked_ratio to 0.55"
+        },
+        "Start_Epoch": "104",
+        "End_Epoch": "128",
+        "Activation_Epoch": "129",
+        "Status": "ended",
+        "Data": "Hash: D5993E238BBE6F5BBB8DFE1FF0A4195D54EA023000404CFD5151C9D6C45A021C",
+        "Result": "Prop 3 involved 4420 addresses with results: 4303 yays | 76 nays | 41 abstains"
+      },
+      {
+        "Id": 4,
+        "Type": "Default",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Gathering social consensus to coordinate a software upgrade of namada nodes at block 894,000. This block is expected to occur in between 15:00 and 16:00 UTC on Thursday, Feb 13, 2025.",
+          "discussions-to": "https://forum.namada.net/t/proposing-mainnet-software-upgrade-to-v1-1-1-at-block-894-000/1509",
+          "title": "Coordinating mainnet software upgrade to namada v1.1.1 at height 894,000"
+        },
+        "Start_Epoch": "275",
+        "End_Epoch": "287",
+        "Activation_Epoch": "288",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 4 involved 1792 addresses with results: 1779 yays | 4 nays | 9 abstains"
+      },
+      {
+        "Id": 5,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "PGF proposal to distribute 1,225,986 NAM in total to the 188 addresses that donated to Coin Center",
+          "authors": "Gavin Birch (Luminara)",
+          "created": "2025-02-12",
+          "details": "This is a PGF (public goods funding) proposal to distribute a total of 1,225,986 NAM to the 188 Namada addresses listed here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=764951800&range=F2.\nThis proposal has been tested and successfully executed on the Housefire testnet: https://namada-explorer.sproutstake.space/test/proposals/6\n\n## Context\nGavin Birch has launched this proposal on behalf of Luminara 🔅\n\nWe previously launched Namada Prop2, and are grateful that voters signalled strong support for our proposed Donor Drop that targeted the amazing Coin Center team: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338\n\nThe Donor Drop is done, 🎉 many thanks to the many different kinds of participants 🙌\n\n## Details\nThe aim was to award 1m NAM, the lower boundary of this draft proposal: https://forum.namada.net/t/draft-signalling-proposal-will-you-support-an-airdrop-campaign-using-namadas-pgf/1338, but we are instead asking you to approve this proposal to distribute ~1.226m NAM. This is to reward donors whose donations were not reported during the Donor Drop tally, due to issues such as invalid/missing tnam addresses.\n\nThere are plausible reasons for why this happened, and we now have some learnings, and we'd still like to thank and welcome these participants to our community. Please see details here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=1986442751&range=A1\n\n**Note:**\n1. We've provided evidence for all corrected addresses with the exception of two, highlighted in red at the top of the spreadsheet. We'd like to give them the benefit of the doubt and reward them regardless. There were no competing claims on these two donations, totalling 6,666 NAM.\n\n2. There were four donations that attempted to participate but arrived some time after the Donor Drop ended. We are not asking that they be included in this proposal, and instead, I personally would like to thank and reward them once transfers are enabled in Phase 5.\n\n## History\nShortly after Prop2 passed, at least seven Namada community members independently and collaboratively got involved at different times and in different ways on a few potential Donor Drop app solutions. It was an incredible grassroots initiative in support of our first Donor Drop, with dedication that far exceeded my expectations 🔥\n\nWhen the Donor Drop window opened on Saturday, January 18, Coin Center’s ethereum address received nearly 200 donations in about 35 minutes, totalling 36.78 ETH, worth about $125k when the Donor Drop finished 👀\n\n## Mooaar Donor Drops\nThis will be a testament to Namada's novel technology, and we hope that others will use and improve upon the Donor Drop distribution mechanism & strategy. Please check out this forum post for the full summary of this campaign: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492",
+          "discussions-to": "https://forum.namada.net/t/coin-center-donor-drop-allocations/1508",
+          "motivation": "(see abstract)",
+          "requires": "0",
+          "title": "PGF - Coin Center Donor Drop allocations"
+        },
+        "Start_Epoch": "288",
+        "End_Epoch": "300",
+        "Activation_Epoch": "301",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 5 involved 1765 addresses with results: 1651 yays | 70 nays | 44 abstains"
+      },
+      {
+        "Id": 6,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "PGF proposal to distribute total of 5,000 NAM missing from PGF Prop5",
+          "authors": "Gavin Birch (Luminara 🔅)",
+          "created": "2025-02-14",
+          "details": "This is a PGF (public goods funding) proposal to distribute a total of 5,000 NAM to these two Namada addresses:\n1) tnam1qzkx2k6zxjcdxf5tz4ep55mj4ll2kq7wsyrd5k5u - 1,667 NAM\n2) tnam1qr649fhvu3f3mdaxs80mm7gsm5uyegsv4g596flz - 3,333 NAM\nIt won't be valid unless Prop5 is also approved.\n\n## Context\nGavin Birch has launched this proposal on behalf of Luminara 🔅\nWe also launched Namada Prop5: https://explorer75.org/namada/proposals/5\nHowever, if Prop5 is approved, two addresses will not receive their intended totals because of an interesting phenomenon: if the PGF proposal contains more than one entry for the same address *and* the same number of NAM, only one of the entries is actually enacted. Prop5 intentionally had one duplicate entry, which the protocol is ignoring, and the other duplicate is the incorrect tnam address (corrected in this proposal). It's a unique set of circumstances (ie. transfers disabled) that we ask you to approve this relatively small PGF proposal as a solution to the problem that arose from this issue: https://github.com/anoma/namada/issues/4380\n\n## Future\nWe recommend summing a total for each address in future, instead of multiple entries for the same address. Additionally, the duplication error could have been discovered with more thorough data analysis of the Housefire test proposal. Huge thanks to Zen 🦸 and Rigorous 🦸 for discovering and reporting this!",
+          "discussions-to": "https://forum.namada.net/t/coin-center-donor-drop-allocations/1508/8",
+          "motivation": "(see abstract)",
+          "requires": "5",
+          "title": "PGF - accompanying fix for Donor Drop Prop5"
+        },
+        "Start_Epoch": "296",
+        "End_Epoch": "308",
+        "Activation_Epoch": "309",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 6 involved 1805 addresses with results: 1760 yays | 29 nays | 16 abstains"
+      },
+      {
+        "Id": 7,
+        "Type": "PGF funding",
+        "Author": "tnam1q8sjkutd5kqwcc555wr77p9fjn66nuuqfuzzc3yc",
+        "Content": {
+          "abstract": "PGF proposal to distribute total of 50,050 NAM so as to fund 13 Namada IBC relayer operators operations - 3,850 NAM each.",
+          "authors": "Daniel (Mandragora)",
+          "created": "2025-02-17",
+          "details": "## Author\nDaniel from Mandragora validator is submitting this proposal.\n\n## Context\nAs Mandragora is leading IBC channels creation and maintenance for Namada’s mainnet (along with collaboration for supporters information collection with Cosmic Validator), I have detected a problem, but I found out a potential.\n\n## Problem\nWe have detected that indeed genesis accounts are needed to be used as relayer accounts, just like in Housefire testnet, but that could be problematic when it comes to mainnet.\n\n## Solution\nIt consists in funding supporters’ Namada relayer accounts via a PGF proposal - as a fee grant to support them and to avoid using genesis accounts as relayer accounts on mainnet. Retroactive Public Goods Funding (RPGF) mechanism lets to directly send them the fee grant from the PGF Treasury.\n\n## Proposed amount\nWe are proposing to distribute total of 50,050 NAM, i.e. 3,850 NAM to 13 IBC relayer operators.\n\n##Comments\nThese funds couldn’t be used for other purposes, and relayer accounts would be monitored from time to time.\n\n## IBC Relayer Operators\nThese are Mandragora, Cosmic Validator, Sproutstake, max-02, pro-nodes75, Architect Nodes, OriginStake, Stake&Relax, anodeofzen, ContributionDAO, ValidatorVN, Inter Blockchain Services and Citizen Web3.",
+          "discussions-to": "https://forum.namada.net/t/fee-grant-via-rpgf-funding-to-support-ibc-relayer-operators-until-phase-5-of-mainnet/1527",
+          "motivation": "(see abstract)",
+          "requires": "",
+          "title": "PGF - Fee grant to support Namada IBC relayer operators"
+        },
+        "Start_Epoch": "303",
+        "End_Epoch": "315",
+        "Activation_Epoch": "316",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 7 involved 1712 addresses with results: 1651 yays | 25 nays | 36 abstains"
+      },
+      {
+        "Id": 8,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Increase IBC rate limits (global mint and per-epoch throughput) for 6 different assets, allowing them to flow into and out of the Namada mainnet. Additionally, each of these assets is whitelisted for gas payment for any Namada transaction at a specific cost per gas unit. This proposal whitelists Osmosis, Cosmos Hub, Celestia, and the Stride liquid-staked versions of these tokens. These assets will also be able to flow into the Namada shielded pool.\n\nThe code attached to this proposal to execute can be viewed at: https://github.com/anoma/namada-governance-upgrades/blob/a4d6906a0dca2cbf4ddd55f066a0f09cc58aec26/phase3/src/lib.rs.\n\nThe details for each token, with their denomination strings, are:\n\nOSMO: transfer/channel-1/uosmo\nMint limit: 10,752,692 OSMO\nThroughput limit per epoch: 2,150,539 OSMO\nGas price: 10 uosmo / gas unit\n\nATOM: transfer/channel-2/uatom\nMint limit: 759,878 ATOM\nThroughput limit per epoch: 151,976 ATOM\nGas price: 1 uatom / gas unit\n\nTIA: transfer/channel-3/utia\nMint limit: 1,018,330 TIA\nThroughput limit per epoch: 203,666 TIA\nGas price: 1 utia / gas unit\n\nstOSMO: transfer/channel-0/stuosmo\nMint limit: 8,196,721 stOSMO\nThroughput limit per epoch: 1,639,344 stOSMO\nGas price: 10 stuosmo / gas unit\n\nstATOM: transfer/channel-0/stuatom\nMint limit: 512,821 stATOM\nThroughput limit per epoch: 102,564 stATOM\nGas price: 1 stuatom / gas unit\n\nstTIA: transfer/channel-0/stutia\nMint limit: 946,970 stTIA\nThroughput limit per epoch: 189,394 stTIA\nGas price: 1 stutia / gas unit\n",
+          "discussions-to": "https://forum.namada.net/t/phase-3-proposal-discussion/1401",
+          "motivation": "Start the long-awaited Phase 3 of Namada mainnet",
+          "title": "Phase 3: enable the flow of non-native assets into Namada and the Shielded Pool"
+        },
+        "Start_Epoch": "314",
+        "End_Epoch": "331",
+        "Activation_Epoch": "332",
+        "Status": "ended",
+        "Data": "Hash: 7D5DBA237C6DD79E4DA79C2FD00150A9E758ED2FB0474FA5B87EA770B7AEFDC7",
+        "Result": "Prop 8 involved 3473 addresses with results: 3439 yays | 13 nays | 21 abstains"
+      },
+      {
+        "Id": 9,
+        "Type": "PGF funding",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Give 5 NAM to each validator that is currently not jailed or deactivated (inactive) with a one-time retroactive PGF payment. Also give this amount to a couple accounts that wish to use the NAM to pay fees for initializing a validator.",
+          "discussions-to": "https://forum.namada.net/t/drop-some-nam-to-validators-to-cover-more-tx-fees-until-phase-5/1534",
+          "motivation": "We initially dropped 1 NAM to all validators at genesis, but some of them have run out of NAM to cover various tx fees. We should top them up and give them enough NAM that we don't have to worry about this happening again before Phase 5.",
+          "title": "Give validators some more NAM to cover tx fees before Phase 5"
+        },
+        "Start_Epoch": "317",
+        "End_Epoch": "329",
+        "Activation_Epoch": "330",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 9 involved 2197 addresses with results: 2153 yays | 24 nays | 20 abstains"
+      },
+      {
+        "Id": 10,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "In anticipation of updating the claim-rewards tx wasm in the Namada on-chain storage, we first must increase the maximum allowed gas in a block. This must be done because the tx to initialize that proposal consumes about 4.3M gas units, whereas the current block maximum is 3M. This proposal increases the block maximum from 3M to 5M.\n\nThe code used to produce the attached WASM can be viewed here: https://github.com/anoma/namada-governance-upgrades/blob/b26aff300654a791b91d8ff40483d7d2f0bf9d5f/max_block_gas/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/two-proposals-to-update-the-claim-rewards-wasm-tx-on-chain/1548",
+          "title": "Increase max block gas to 5M gas units"
+        },
+        "Start_Epoch": "318",
+        "End_Epoch": "330",
+        "Activation_Epoch": "331",
+        "Status": "ended",
+        "Data": "Hash: DB27ADA6B1F734008E4A3AF440F0666A441FDDAF2D8FF44CBC9B6D187949ECD1",
+        "Result": "Prop 10 involved 2204 addresses with results: 2169 yays | 9 nays | 26 abstains"
+      },
+      {
+        "Id": 11,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Updating the `claim-rewards` tx wasm in the on-chain storage. Now when this tx is executed, an event will be emitted that contains the number of reward tokens claimed. This data will then be able to be indexed and integrated for a variety of service providers. This proposal is enabled by the recent Proposal #10 that raised the maximum block gas.\n\nThe proposal code can be found at https://github.com/anoma/namada-governance-upgrades/blob/a9b40c048c4be587ac567bc65f59ffb5505b692d/update-tx-claim-rewards/src/lib.rs",
+          "discussion-to": "https://forum.namada.net/t/two-proposals-to-update-the-claim-rewards-wasm-tx-on-chain/1548",
+          "title": "Update the `claim-rewards` Tx WASM"
+        },
+        "Start_Epoch": "339",
+        "End_Epoch": "358",
+        "Activation_Epoch": "359",
+        "Status": "ended",
+        "Data": "Hash: 9645D95D3ABF97421588E823BE3D36B568A9B048F888D01DE6B5ECA0C6C99A99",
+        "Result": "Prop 11 involved 3213 addresses with results: 3189 yays | 12 nays | 12 abstains"
+      },
+      {
+        "Id": 12,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": "{\"abstract\": \"PGF proposal to test distributing total of 340,005.318008 NAM\", \"authors\": \"Gavin Birch (Luminara 🔅)\", \"created\": \"2025-02-25\", \"details\": \"If voters approve this PGF (public goods funding) proposal, a total of 340,005.318008 NAM will be distributed to six (6) different Namada addresses:\\n1) tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc - 237,192 NAM\\n2) tnam1qq9v0nxltxzktl5mz59yc7k32m4yczt8uqrhtpjs - 74,000 NAM\\n3) tnam1qqfvd2p3p204vnnr725cgq4u3lkjxqce6crgfpr5 - 13,800 NAM\\n4) tnam1qrqgs5e67esl3yjdq3dccls0470ctcm6m5kx4cal - 5.318008 NAM\\n5) tnam1qpyyq8ueltpa7kd9xq8twtymfq9886t4lsnterhs - 7,500 NAM\\n6) tnam1qr4va7cr0ag7s7zl3j70qsr5v3m9jxu6ucdktf4z - 7,500 NAM\\n\\nThis proposal received strong community support (see replies): https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565\\n and was tested and verified on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/12\\n\\n## Context\\n\\nTo our knowledge, the Donor Drop was the first of its kind: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492\\n\\nThe experience was made possible by some amazing folks that banded together to make an app to support the Donor Drop, an entirely grassroots effort. People were amazed at how successful the Donor Drop was, but were even more amazed at how engaged, dedicated, and talented our community is to be able to build and launch this app in ~3 weeks ❤\\u{fe0f}\\n\\n## Details\\nIt would be great to help recognize these amazing contributors with\\n\\n✅ ~200k NAM for creating and supporting this Donor Drop app:\\n- **Zen - 112,192 NAM** (56.1%) - tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\\n- **Anon - 74,000 NAM** (37%) - tnam1qq9v0nxltxzktl5mz59yc7k32m4yczt8uqrhtpjs\\n- **Bengt - 13,800 NAM** (6.9%) - tnam1qqfvd2p3p204vnnr725cgq4u3lkjxqce6crgfpr5\\n- **Rigorous - 5.318008 NAM** (~0%) - tnam1qrqgs5e67esl3yjdq3dccls0470ctcm6m5kx4cal\\n\\nEven though Anselm and Jojoraky didn’t end up being involved beyond the beginning, we’re grateful for their engagement and efforts 🎉 and want to help thank them with 15k NAM ❤\\u{fe0f}\\n\\n✅ Bonus thank you of 15k NAM for early Donor Drop app attempts:\\n- **Anselm - 7,500 NAM** - tnam1qpyyq8ueltpa7kd9xq8twtymfq9886t4lsnterhs\\n- **Jojoraky - 7,500 NAM** - tnam1qr4va7cr0ag7s7zl3j70qsr5v3m9jxu6ucdktf4z\\n\\nZen recently *open-sourced his beautiful front-end,* 🤩 which can now be used to support future rounds 🎉\\nHe is essentially giving it to our community. We’d like to ask voters to allocate an additional 125k NAM to Zen to help recognize him for giving our community (and the world) all of his front-end code 🎁\\n\\n✅ Free and open-source front-end software:\\n- **Zen - 125,000 NAM** - tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\\n\\nWe’d like to thank TuDudes for hosting this Donor Drop app, but perhaps it makes more sense to do this in a dedicated PGF proposal, since TuDudes has done so much Namada infrastructure work 🔥\\n\\n## Keep it up!\\nFront-end work in general is predicted to be the kind of work that Namada will need most in the coming months and foreseeable future.\\n\\nFolks worked insanely hard on this, of their own accord, with no hint of compensation. The beauty of how Namada’s PGF works is that we can effectively drive increases in Namada network ownership toward active contributors. Let’s get these folks some more Namada ownership 🎊 and keep the PGF culture rolling.\", \"discussions-to\": \"https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565\", \"motivation\": \"(see abstract)\", \"requires\": \"0\", \"title\": \"PGF - Donor Drop app creator allocations\"}",
+        "Start_Epoch": "340",
+        "End_Epoch": "360",
+        "Activation_Epoch": "361",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 12 involved 2536 addresses with results: 2325 yays | 85 nays | 126 abstains"
+      },
+      {
+        "Id": 13,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": "{\"abstract\": \"Signalling PGF proposal for Donor Drop 2, targeting Web3Privacy Now\", \"authors\": \"Gavin Birch (Luminara 🔅)\", \"created\": \"2025-03-04\", \"details\": \"**PGF Donor Drop - Web3Privacy Now**\\n\\n\\n## Signalling Proposal\\n\\nHello 👋 I’m writing this on behalf of Luminara 🔅\\nWe launched Namada Prop2 and Prop5: https://explorer75.org/namada/proposals/5\\nVoters signalled strong support for the first Donor Drop, which targeted the amazing Coin Center team 🦸\\n\\nNow that the first Donor Drop is done, we’re proposing a second: **Web3Privacy Now 🎯**\\n\\nThis is a **signalling proposal.** With your support, Donor Drop Round Two (R2) will look similar to Round One, but will include improvements and feedback suggested by you 🫵\\n\\n## Namada, will you support this?\\n\\n* Estimated 900k - 1.2M NAM total from Namada PGF\\n  * Aiming for 900k airdrop\\n  * 25k NAM for the creator of the Donor Drop front-end\\n  * 1.8% - 2.4% of the yearly PGF budget\\n* Allocated to Web3Privacy Now donors (aiming to recognize ~47 ETH in donations)\\n* Campaign estimated to last two weeks (Donor Drop window estimate ~3 days)\\n* A follow-up rPGF proposal to distribute the NAM airdrop to donor addresses\\n  * airdrop should land approx. two months after the governance proposal passes\\n\\nWeb3Privacy Now has an active group of builders, creators and policy advocates–they’ll be great partners, in addition to our own community efforts.\\n\\nNamada comms are prepped and ready to help with promotion, TuDudes is prepared to run our community-built Donor Drop app, and @almostFitz has an operations plan that he’s itching to launch 🔥🚀\\n\\nWhat's neat is that the Donor Drop can be done before Phase 5, with the airdrop happening after Phase 5.\\n\\n## Why Web3Privacy Now?\\nWeb3Privacy Now has become a cultural epicenter for teams, communities, and individuals answering the call to return to cypherpunk roots–namely, digital privacy.\\n\\nW3PN hosts events (https://docs.web3privacy.info/events/), creates educational content(https://docs.web3privacy.info/research/privacy-guides/) and research reports (https://docs.web3privacy.info/research/), enagages in advocacy, and creates social initiatives that bind us together as a community–beyond Namada, within crypto. They were our co-organizers for the Shielding Summit (https://shieldingsummit.org/) in Brussels ♥\\u{fe0f}\\n\\nCheck them out! and get involved (https://docs.web3privacy.info/get-involved/index)\\n\\n## Donor Drop History\\nThe world’s first Donor Drop (https://forum.namada.net/t/namada-donor-drop-jan-18-15-00-utc/1465) was an experiment: **do public goods funding (PGF) more effectively using Namada’s novel PGF mechanism.**\\n\\nCoin Center was our donation target. Problem: orgs like Coin Center need runway, not a new token with no market. But there are people who *do* want a new pre-market token.\\n\\nSolution: the Namada community used Namada’s PGF technology to airdrop NAM to those who donated ETH to Coin Center 💡\\n\\nPeople were surprised at how successful Donor Drop R1 was:\\n- https://x.com/mineZcash/status/1880637283159908732\\n- https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492/3\\n- https://x.com/NeerajKA/status/1881344835246051364\\n- https://x.com/cwgoes/status/1880651442278858926\\n\\nThat’s because with hardly any promotion, ~200 donations were made to Coin Center in about 30 minutes, totalling 36.78 ETH (~$125k at that time). More recap here: https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492\\n\\nAnd **we** were amazed at the grassroots community effort to build an app that supported the Donor Drop. In three weeks the app was done, and it was 🔥🤩\\n\\nThis is why we’d also like to include Zen’s Namada address in each subsequent proposal that we use this open-sourced Donor Drop front-end ❤\\u{fe0f}\\n\\nhttps://github.com/zenodeapp/donor-drop-frontend\\n\\n## Get involved\\n\\nWe want to improve on operational processes, our partner relationship, community involvement, promotional reach within aligned communities, and we want to create a repeatable flow for MOOARR Donor Drops. Want to be involved? Any of these could help:\\n\\n1. join the forum topic (https://forum.namada.net/t/signalling-donor-drop-round-two-web3privacy-now/1555) or Discord discussion (https://discord.com/channels/833618405537218590/1339662286436040854) with feedback (or advice) about the campaign and/or mechanism \\n2. tweet or tell a friend\\n3. something else that we haven't thought about\\n\\nPGF shouldn't be boring--let's usher in the new wave 🌊\", \"discussions-to\": \"https://forum.namada.net/t/signalling-donor-drop-round-two-web3privacy-now/1555\", \"motivation\": \"Donor Drop 2 signalling proposal\", \"requires\": \"0\", \"title\": \"PGF Signalling - Donor Drop 2: Web3Privacy Now\"}",
+        "Start_Epoch": "364",
+        "End_Epoch": "380",
+        "Activation_Epoch": "381",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 13 involved 2090 addresses with results: 1902 yays | 112 nays | 76 abstains"
+      },
+      {
+        "Id": 14,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "PGF proposal to distribute total of 2,050,000 NAM",
+          "authors": "Gavin Birch (Luminara 🔅)",
+          "created": "2025-04-01",
+          "details": "**This is a PGF (public goods funding) proposal asking voters to distribute a total of 2.05m NAM to the five (5) Namada addresses listed below,** in recognition of the Namada community builders.\n\nThis proposal was tested and reviewed after being executed on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/19\n\n## Specifics\n\n✅ [Free and open-source](https://forum.namada.net/t/discussion-pgf-priorities-for-software-in-namada/1501) Namada software:\n\n* **Daniel / Mandragora - 750,000 NAM** - `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n- Namada indexing software, [Undexer](https://github.com/hackbg/undexer) -> [OSS licence](https://github.com/hackbg/undexer/blob/v4/LICENSE)\n\n- Namada IBC decoding library, [Fadroma](https://forum.namada.net/t/decoding-of-ibc-transaction-types-is-now-supported/1244) -> [OSS licence](https://github.com/hackbg/fadroma/blob/v2/LICENSE)\n\n✅ Dedicated Namada explorer services:\n\n* **ProNodes - [Explorer75](https://explorer75.org/) - 300,000 NAM** - `tnam1qqd2ys42y2t5vgdtdx6epstnkykvjedxxsuc6lry`\n\n* **Bitszn - [Valopers](https://namada.valopers.com/) - 300,000 NAM** - `tnam1qzt4klml5za7zn05rx569s5hfcr4nfl8zc3d4fwu`\n\n* **Daniel / Mandragora - [Shielded Live](https://shielded.live/) - 250,000 NAM** - `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* **[Coverlet Namada Explorer Beta](https://namada.coverlet.io/) - 250,000 NAM** - `tnam1qqsrhr894nnupdyu2fqrg290pyxd50pq5vrj8xtf`\n\n* **[Sproutstake Namada Explorer](https://namada-explorer.sproutstake.space/) - 200,000 NAM** - `tnam1qrfyg27adsuege6ef94rek5d6cvjcs2afyw9nrhq`\n\nThese tnam addresses have been lifted from user profiles, Discord and/or the forum. If you use their services / software, you can tip them anytime! @shurinov @alx @Daniel @Leon @Oneplus\n\n## Criteria\n\nIf software is useful and being used by our community, **open sourcing it under an unrestrictive licence is kind of a big deal.** It's essentially giving the Namada community your work. I posted a bit about that here in https://forum.namada.net/t/discussion-pgf-priorities-for-software-in-namada/1501.\n\n### Table stakes\n\nNamada's explorer services are not (yet) open source, so accuracy and reliability should be table stakes for consideration. The Namada community is totally dependent upon service providers to run the service and and to fix the issues, especially accuracy issues that may misinform Namada users and other stakeholders.\n\nThere should also be a standard for what the service provides. It can be tempting to re-use a project across many Cosmos projects, for example, which can be fine if it's adding new value. Since Namada has a unique code-base, it can be hard to re-use code for querying and transacting, but we anticipate that a service worth recognizing will offer more advanced functionality than the very basics of network exploring, or the very basics of Namada transactions, especially if it's a service offering beyond Namada. As our ecosystem matures, this standard should also mature.\n\nFor example, a niche service that provides shielded pool metrics and statistics is noteworthy if launched and running now, because this information is otherwise not easily accessible in a palatable way. Now imagine if these metrics were already fully integrated into the explorer services three months ago--launching such an app in this more mature ecosystem would not be adding new value.\n\n### Differentiators\n\nOther key considerations we made for this proposal involved\n\n**impact**\n\n- how useful has this service / software been to those who use and/or contribute to Namada? how useful is it likely to be going forward?\n\n**advanced features**\n\n- is there something niche that's particularly useful? ie. solves a specific problem\n\n- is the entire set of features particularly useful? ie. a \"one-stop shop\" for a particular kind of activity\n\n**timing & activity**\n\n- how early and long-running is this service / software?\n\n- is functionality improving? do improvements reflect the needs of users and/or contributors or other stakeholders?\n\n## Context\n\nThree weeks ago we called for what are essentially the first set of Namada Builder nominations:\n\nhttps://forum.namada.net/t/nominations-call-for-namada-apps-tools-and-services/1583\n\nAt this early stage of Namada, builders have primarily advanced Namada explorer code and services, critical to the Namada experience and ever-more important as we advance through Phases 4 and 5.\n\nThese builders have dedicated their valuable attention and efforts to Namada, most of which did so before Namada was widely known, and are the earliest builders in our ecosystem.\n\n## A bet on Namada's future\n\nEarly stage builders in Namada have made risky bets, especially given the uncertainties around when Namada would launch. I remember saying I couldn't be part of our family vacation a few months before June 2023 because \"Namada mainnet may be launching\" 😅\n\nRetroactive public goods funding is not just recognition--it's also a signal:\n\n1) we're betting on a shared future with these builders\n\n2) there's an opportunity for newcomers to attain a meaningful Namada position\n\nIt could be that some of Namada's most important contributors haven't even joined yet.\n\nNamada PGF is a unique opportunity to drive Namada ownership toward **active** contributors, which benefits everyone invested in Namada's success. Let’s get these folks some more Namada ownership 🎊 and keep the PGF culture rolling.\n\nWe're keeping an eye out for up-and-coming builders!",
+          "discussions-to": "https://forum.namada.net/t/namada-builder-allocations-round-1-2-05m-nam/1623",
+          "motivation": "(see abstract)",
+          "requires": "0",
+          "title": "PGF - Namada Builder Allocations"
+        },
+        "Start_Epoch": "477",
+        "End_Epoch": "497",
+        "Activation_Epoch": "498",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 14 involved 1581 addresses with results: 1469 yays | 49 nays | 63 abstains"
+      },
+      {
+        "Id": 15,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "Change max_proposal_period parameter from 84 to 260 epochs",
+          "authors": "Gavin Birch (Knowable)",
+          "created": "2025-04-07",
+          "details": "## Proposal\n\nThis is a proposal to change `max_proposal_period` parameter to `260`.\n\nThe Rust code used to make the wasm is here: <https://github.com/Luminara-Hub/govproposals/blob/main/testnet_max_proposal_period.rs>\n\n@brentstone (Heliax) has reviewed this code, @spork.Knowable has tested it--first locally and then we (Knowable) successfully tested the parameter change on the Housefire testnet: <https://explorer75.org/namada-housefire/proposals/23>\n\n## Context\n\nLast week, I started [a discussion post](https://forum.namada.net/t/discuss-increasing-max-proposal-period-to-260/1637) about updating the max_proposal_period parameter to 260.\n\nLuminara committed to making a PGF proposal for the latest [Donor Drop allocations](https://forum.namada.net/t/web3privacy-now-donor-drop-allocations/1633) that waits a 60-day grace period before executing and distributing the allocations, but were not able to do so because `max_proposal_period` is 84 epochs (21 days), and 260 epochs (65 days) are needed. We (Knowable) would like to increase `max_proposal_period` to `260`--not just for Luminara to fulfill their commitment, but also for the betterment of Namada at large.\n\n## History\n\nWhen Knowable [proposed the mainnet parameters](https://forum.namada.net/t/mainnet-parameter-discussions-knowables-proposal/753), we chose 84 epochs (21 days) because that's the longest we could imagine the community needing for a governance proposal. We hadn't anticipated that there could be novel ways of using enactment delays to distribute PGF.\n\nThe benefit of increasing this parameter is that we could make a commitment in an up-front governance proposal, while having more control over delaying the proposal execution timing.\n\n## Potential issue\n\nSomeone could make a governance proposal with a very long voting period\n\n- this seems unlikely--at least until it's worth 2000 NAM to advertise something using a governance proposal\n\n- a future solution could be a new `max_proposal_voting_period` parameter to complement the existing `min_proposal_voting_period`, and then we could constrain the voting period without constraining the enactment delay\n\nThere have been no concerns from the folks in the Validator Circle, 🟡 the replies on the forum post, and in messages with @brentstone and @cwgoes from Heliax.",
+          "discussions-to": "https://forum.namada.net/t/change-max-proposal-period-parameter-to-260/1643",
+          "motivation": "Longer governance proposal periods (thus, longer enactment delays) enable novel ways of using governance to distribute PGF.",
+          "requires": "0",
+          "title": "Change max_proposal_period to 260 epochs"
+        },
+        "Start_Epoch": "501",
+        "End_Epoch": "519",
+        "Activation_Epoch": "520",
+        "Status": "ended",
+        "Data": "Hash: E3881118E55CDE3377140C0548DEE178DC1BE62D222608DC44F7A742A1D2D329",
+        "Result": "Prop 15 involved 1570 addresses with results: 1536 yays | 14 nays | 20 abstains"
+      },
+      {
+        "Id": 16,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": "{\"abstract\": \"PGF proposal to distribute, after 50 days, 930,202 NAM in total to 242 addresses: 241 Web3Privacy Now donors and the front-end creator\", \"authors\": \"Gavin Birch (Luminara)\", \"created\": \"2025-03-31\", \"details\": \"This is a PGF (public goods funding) proposal to distribute a total of 930,202 NAM\\n\\n1. 905,202 NAM to the 241 Namada addresses listed here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=102995741#gid=102995741&range=A1 \\n\\n2. 25,000 NAM to Zenode tnam1qzpl026lpzugcukkrjam6n48vl9ycmp4zqdmrwvc\\n\\nZenode is the creator of the Donor Drop front-end: https://github.com/zenodeapp/donor-drop-frontend \\n\\nWe had several (missing) tnam addresses that were updated (please see the evidence provided here: https://docs.google.com/spreadsheets/d/1uMGqq1BtPlNP25DnCGmkw78DFFEW2le9BG0GgfueRAI/edit?gid=1821879449#gid=1821879449&range=A1).\\nThere were two participants that went over their maximum, and one that donated to Coin Center instead–Luminara 🔅 intends to reward these donations instead of requesting that from voters.\\n\\nIf approved, this proposal will then take 50 days to execute and thus recipients will not receive their allocations until 50 days after the proposal passes. We are proposing a reduced delay from the original 60-day delay period because this proposal launched 10 days late, because it first required parameter change (see Prop15).\\n\\n ## History\\n\\nWe (Luminara 🔅) launched Namada Prop13 (https://explorer75.org/namada/proposals/13), and are grateful that voters signalled support for a Donor Drop targeting the amazing Web3PrivacyNow team (https://web3privacy.info/) with additional support for Donor Drop front-end creator, Zenode.\\n\\nAttracting donations to the Web3Privacy Now team was an amazing opportunity. This is a team unrivalled in our space for pushing forward digital privacy and cypherpunk values: https://x.com/web3privacy/status/1901949939590021311 \\n\\nWe were proud to use the newly open sourced, community built Donor Drop front-end to support the user experience: https://forum.namada.net/t/donor-drop-app-creator-allocations-340k-nam/1565 \\n\\nThis was an incredible undertaking that has enabled the Donor Drop experience that we’ve come to love ❤\\u{fe0f}\\n\\nWhen the Donor Drop window opened on Saturday, March 22, Web3Privacy Now’s ethereum address (https://etherscan.io/address/0xb8fbd9a43cc0ceb3d9ddd58b752979a77e6f0c1d) received nearly 300 donations in about 75 minutes, totalling 52 ETH, worth about $100k when the Donor Drop finished 👀\\n\\n ## Future\\n\\nWe’re excited to have again demonstrated this new way of attracting new community members while supporting impactful teams like Web3Privacy Now and Coin Center (https://forum.namada.net/t/donor-drop-success-36-78-eth-donated-to-coin-center/1492).\\n\\nKeep an eye out for future Donor Drops after Namada Mainnet Phase 5 👀\\n\\nhttps://x.com/web3privacy/status/1903498584156156060 \\n\\nPlease check out this forum post for almostFitz's summary of this campaign: https://forum.namada.net/t/donor-drop-progress-50-3-eth-donated-to-web3privacy-now/1628 \\n\\nThanks to the many different kinds of participants 🙌 our second Donor Drop was a success 🎉 Special thanks to almostFitz for organizing this 🔆\", \"discussions-to\": \"https://forum.namada.net/t/web3privacy-now-donor-drop-allocations/1633\", \"motivation\": \"(see abstract)\", \"requires\": \"0\", \"title\": \"PGF - Web3Privacy Now Donor Drop allocations\"}",
+        "Start_Epoch": "522",
+        "End_Epoch": "546",
+        "Activation_Epoch": "746",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 16 involved 1630 addresses with results: 1551 yays | 41 nays | 38 abstains"
+      },
+      {
+        "Id": 17,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "PGF proposal to distribute total of 945,000 NAM to Discord mods",
+          "authors": "Gavin Birch (Luminara 🔅)",
+          "created": "2025-04-22",
+          "details": "Hello! 👋 I’m writing this on behalf of Luminara 🔅\n\n## Proposal\n\nThis is a Public Goods Funding (PGF) proposal to allocate **945,000 NAM** in total to the Namada Discord moderators:\n\n* 180k NAM -- 0xGolden | deNodes `tnam1qz7mggh56wlljs0wfgkxj6r9xe36cacfkgnr99kc`\n\n* 180k NAM -- Tree `tnam1qpyrs8q9qzupca4gdalmwevkmdsyxenswq5xvstm`\n\n* 180k NAM -- kelpie `tnam1qqqdr4y4zymc3ctsthpy0fcezdn4jvjl6ye073k0`\n\n* 90k NAM -- Hoan Wu `tnam1qpnyherlyqel5x5xqyfqngpqymyeqrf5fgqvxc38`\n\n* 90k NAM -- Daniel | Mandragora `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* 90k NAM -- sirouk | TuDudes `tnam1qq0t2s4dmqvxqwl25fm3eyckgekgftggfg9nfe5h`\n\n* 90k NAM -- TG `tnam1qq0ph5svjjspkaz2ntw49j2zq8855237qcfuupjt`\n\n* 45k NAM -- M | CryptoSJ `tnam1qpj9aye7zd86pgfpjh2pnal3yjzrfkff2s6n5fq4`\n\nThis proposal code was tested successfully on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/25\n\n##Context\n\nThe people with mod roles in our Discord have stayed alert through quiet times, and helped us to weather storms through seasons of chaos. It’s been a long haul, and these folks have helped us chug along; 🚂 some since January 2023, others since January 2024.\n\nMods were not included in the genesis proposal, but we think that this PGF proposal offers an opportunity to close that loop with gratitude and good faith.\n\n## History\n\nModeration hasn’t been a formal role in Namada. There was no understanding or agreement that mod privileges would come with compensation, and expectations were either left unspoken or were inconsistent across time, project phases, and responsible individuals.\n\nHowever, moderation *is* often compensated in other crypto communities, and some of these contributors moderate other crypto communities professionally. Others jumped in purely out of care and commitment to Namada’s early days. But all have supported our community through both calm and chaotic seasons. 🎢\n\nWhile we haven’t treated this as a job, we do believe this is the right moment to recognize and thank them. This proposal acknowledges that ambiguity, and aims to resolve it cleanly.\n\n## Future\n\nThis isn’t about setting precedent. We believe moderation in our community, going forward, should not be transactional. Instead of moderators as enforcers or outsourced roles, we hope to encourage stewardship: welcoming newcomers, encouraging healthy dialogue, and supporting autonomy with the help of bots and tools to handle spam.\n\nThis proposal will allow us to close the chapter on early moderation efforts with clarity, appreciation, and fairness, and move into our next chapter with stronger alignment.\n\n## Thanks\n\nThank you to @ke1pie, who has been instrumental in patiently carrying this forward for many months, and thank you to everyone who helped keep the lights on 💡",
+          "discussions-to": "https://forum.namada.net/t/discord-mod-allocations-945k-nam/1651",
+          "motivation": "Recognize early Discord mods & settle any past expectations",
+          "requires": "0",
+          "title": "PGF - Discord Mod Allocations - 945k NAM"
+        },
+        "Start_Epoch": "568",
+        "End_Epoch": "592",
+        "Activation_Epoch": "593",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 17 involved 1455 addresses with results: 561 yays | 843 nays | 51 abstains"
+      },
+      {
+        "Id": 18,
+        "Type": "PGF funding",
+        "Author": "tnam1qq58gs03fscgfuexy972wz70qawlk0ahguexglsg",
+        "Content": {
+          "abstract": "Corrected PGF proposal to distribute total of 945,000 NAM to Discord mods",
+          "authors": "Gavin Birch (Luminara 🔅)",
+          "created": "2025-04-24",
+          "details": "**This is a corrected proposal to replace Prop17--please vote 'nay' on Prop17.**\n\nHello! 👋 I’m writing this on behalf of Luminara 🔅\n\n## Proposal\n\nThis is a Public Goods Funding (PGF) proposal to allocate **945,000 NAM** in total to the Namada Discord moderators:\n\n* 180k NAM -- 0xGolden | deNodes `tnam1qz7mggh56wlljs0wfgkxj6r9xe36cacfkgnr99kc`\n\n* 180k NAM -- Tree `tnam1qpyrs8q9qzupca4gdalmwevkmdsyxenswq5xvstm`\n\n* 180k NAM -- kelpie `tnam1qqqdr4y4zymc3ctsthpy0fcezdn4jvjl6ye073k0`\n\n* 90k NAM -- Hoan Wu `tnam1qpnyherlyqel5x5xqyfqngpqymyeqrf5fgqvxc38`\n\n* 90k NAM -- Daniel | Mandragora `tnam1qzcgkzmddnru8w07zntd6wpywd8vptdgpu8mz44a`\n\n* 90k NAM -- sirouk | TuDudes `tnam1qq0t2s4dmqvxqwl25fm3eyckgekgftggfg9nfe5h`\n\n* 90k NAM -- TG `tnam1qq0ph5svjjspkaz2ntw49j2zq8855237qcfuupjt`\n\n* 45k NAM -- M | CryptoSJ `tnam1qpj9aye7zd86pgfpjh2pnal3yjzrfkff2s6n5fq4`\n\nThis proposal code was tested successfully on the Housefire testnet: https://explorer75.org/namada-housefire/proposals/25\n\n## Context\n\nThe people with mod roles in our Discord have stayed alert through quiet times, and helped us to weather storms through seasons of chaos. It’s been a long haul, and these folks have helped us chug along; 🚂 some since January 2023, others since January 2024.\n\nMods were not included in the genesis proposal, but we think that this PGF proposal offers an opportunity to close that loop with gratitude and good faith.\n\n## History\n\nModeration hasn’t been a formal role in Namada. There was no understanding or agreement that mod privileges would come with compensation, and expectations were either left unspoken or were inconsistent across time, project phases, and responsible individuals.\n\nHowever, moderation *is* often compensated in other crypto communities, and some of these contributors moderate other crypto communities professionally. Others jumped in purely out of care and commitment to Namada’s early days. But all have supported our community through both calm and chaotic seasons. 🎢\n\nWhile we haven’t treated this as a job, we do believe this is the right moment to recognize and thank them. This proposal acknowledges that ambiguity, and aims to resolve it cleanly.\n\n## Future\n\nThis isn’t about setting precedent. We believe moderation in our community, going forward, should not be transactional. Instead of moderators as enforcers or outsourced roles, we hope to encourage stewardship: welcoming newcomers, encouraging healthy dialogue, and supporting autonomy with the help of bots and tools to handle spam.\n\nThis proposal will allow us to close the chapter on early moderation efforts with clarity, appreciation, and fairness, and move into our next chapter with stronger alignment.\n\n## Thanks\n\nThank you to @ke1pie, who has been instrumental in patiently carrying this forward for many months, and thank you to everyone who helped keep the lights on 💡",
+          "discussions-to": "https://forum.namada.net/t/discord-mod-allocations-945k-nam/1651",
+          "motivation": "Recognize early Discord mods & settle any past expectations",
+          "requires": "0",
+          "title": "Corrected - PGF - Discord Mod Allocations - 945k NAM"
+        },
+        "Start_Epoch": "568",
+        "End_Epoch": "592",
+        "Activation_Epoch": "593",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 18 involved 1621 addresses with results: 1424 yays | 121 nays | 76 abstains"
+      },
+      {
+        "Id": 19,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "authors": "Veil",
+          "details": "This proposal seeks to add support for four new assets - USDC (via Noble), UM (Penumbra), NYM (Nym), and NTRN (Neutron) - to Namada's MASP and transparent platform. These assets were selected based on community feedback, ecosystem alignment, and ease of integration. Specifically, this proposal includes setting appropriate IBC rate limits and allowing these assets to be used for gas payment.\n\nThe code used to produced the attached WASM can be found at: https://github.com/anoma/namada-governance-upgrades/blob/cccbb06948f258ceae935806ec17019f8838879e/phase3/src/lib.rs \n\nTo summarize, the rate limit and gas parameters set for each token are:\n\nUSDC:\nGlobal mint limit: 5M\nPer-epoch limit: 1M\nGas price: 3 uusdc / gas unit\n\nUM:\nGlobal mint limit: 5M\nPer-epoch limit: 1M\nGas price: 10 upenumbra / gas unit\n\nNYM:\nGlobal mint limit: 10M\nPer-epoch limit: 2M\nGas price: 50 unym / gas unit\n\nNTRN:\nGlobal mint limit: 10M\nPer-epoch limit: 2M\nGas price: 20 untrn / gas unit",
+          "discussions-to": "https://forum.namada.net/t/proposal-add-support-for-usdc-usdy-um-nym-ntrn/1648",
+          "title": "Whitelisting USDC, UM, NYM, and NTRN for Namada"
+        },
+        "Start_Epoch": "598",
+        "End_Epoch": "621",
+        "Activation_Epoch": "622",
+        "Status": "ended",
+        "Data": "Hash: DB46BB1F2F048D4B3431A53E708224238D828F418F7B3B1A6505FCE7BBEB9FD7",
+        "Result": "Prop 19 involved 1836 addresses with results: 1794 yays | 18 nays | 24 abstains"
+      },
+      {
+        "Id": 20,
+        "Type": "Default",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "authors": "Veil",
+          "details": "To make Namada the composable privacy layer of the multichain, we will need to expand the set of ecosystems we support.\n\nProposal\nThis is a proposal asking voters to signal preference for Wormhole to be Namada's first new bridge integration.\n\nContext\nNamada's core protocol is developed and maintained by Heliax, and Heliax is currently deciding their engineering resource priorities. Over the weekend, I created a forum post to discuss the need for a bridge integration - specifically, to begin with a Wormhole integration. @cwgoes and @brentstone have publicly supported the idea, and if voters agree with this direction, Heliax is ready to provide technical resources when needed.\n\nHistory\nVeil is aligned with Namada's mission to support a broad range of assets in order to expand access to composable privacy - being as meaningfully useful for as many uses as possible. We've previously submitted two asset support proposals and plan to propose many more. Integrating Wormhole would significantly grow the universe of assets and chains we can bring into the shielded set, unlocking new opportunities for privacy adoption across ecosystems.\n\nPotential Issue\nAs noted in Namada Discord conversations, Wormhole suffered an exploit in early 2022, resulting in a ~$320M loss. However, the protocol has since facilitated tens of billions in volume and has become the default bridging solution for many new chains. While the exploit was significant, depositors were made whole. Wormhole's continued adoption, resilience and track record since, have made it (in our view) the most reliable and forward-compatible option available today. We're confident that Wormhole’s maturity and battle-tested infrastructure benefit from the Lindy effect and position it well for supporting Namada's growth.\n\nAdditional Note\nWhile this integration is a top priority, it does not preclude or exclude future integrations such as IBC Eureka.",
+          "discussions-to": "https://forum.namada.net/t/prioritize-building-out-a-wormhole-integration/1652",
+          "title": "Signalling - Support for Wormhole as Namada’s First New Bridge Integration"
+        },
+        "Start_Epoch": "607",
+        "End_Epoch": "645",
+        "Activation_Epoch": "646",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 20 involved 2083 addresses with results: 2029 yays | 23 nays | 31 abstains"
+      },
+      {
+        "Id": 21,
+        "Type": "Default",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Gathering social consensus to coordinate a software upgrade of namada nodes at block 2,176,000. This block is expected to occur at about 15:00 UTC on Tuesday, May 27, 2025.",
+          "discussions-to": "https://forum.namada.net/t/coordinating-the-pre-phase-4-hard-fork-upgrade-to-namada-v101/1670",
+          "title": "Signalling: coordinating mainnet software upgrade to namada v101.0.0 at height 2,176,000"
+        },
+        "Start_Epoch": "667",
+        "End_Epoch": "680",
+        "Activation_Epoch": "681",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 21 involved 2389 addresses with results: 2370 yays | 11 nays | 8 abstains"
+      },
+      {
+        "Id": 22,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "authors": "Veil",
+          "details": "This proposal is to enable shielding rewards for an initial set of seven assets: Cosmos Hub (ATOM), Osmosis (OSMO), Celestia (TIA), the Stride liquid-staked versions of these tokens, and Noble’s USDC. Alongside this activation, it will set initial starting points for several key configurable parameters, including the maximum inflation rate, token deposit targets, Proportional Gain, and Derivative Gain.\n\nIt should be clearly noted that these values are just initial settings, and they are fully configurable. The community can revisit and adjust these parameters through governance at any point in the future as needed.\n\nThe proposal code that generated the attached wasm can be found here: https://github.com/anoma/namada-governance-upgrades/blob/5a69808c8b42f7f89b4344150f8db3078d8a6ba5/phase4/src/lib.rs.\n\nThe proportional and derivate gain values are set to 50 and 85, respectively, for each token. The maximum annual inflation rate for USDC is set to 1.8%, while the annual inflation rate for all other tokens is set to 0.9%. The target pool amounts for each token are as follows:\n\nUSDC: 2.2M\nOSMO: 8.7M\nATOM: 421K\nTIA: 781K\nstOSMO: 625K\nstATOM: 27K\nstTIA: 70K",
+          "discussions-to": "https://forum.namada.net/t/phase-4-proposal-discussion/1604",
+          "title": "Phase 4: enable shielding rewards"
+        },
+        "Start_Epoch": "709",
+        "End_Epoch": "734",
+        "Activation_Epoch": "735",
+        "Status": "ended",
+        "Data": "Hash: 24BF5C40B7C41A13EB1A7694CA60E31B8E99E70D80C1BBC46BCEA731AD1A8B93",
+        "Result": "Prop 22 involved 2664 addresses with results: 1933 yays | 680 nays | 51 abstains"
+      },
+      {
+        "Id": 23,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "The tx_claim_rewards must be updated to allow some select users with many redelegations to claim their rewards from specific validators. Currently, these claims enter a code path that iterates asymptotically and does not complete before the tx times out.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/6da3b4b1835ae531589bcef65602bf3a803e1de3/update-tx-claim-rewards-2/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
+          "discussions-to": "https://forum.namada.net/t/proposal-update-tx-claim-rewards/1704",
+          "title": "Update the claim-rewards tx in on-chain storage ahead of Phase 5"
+        },
+        "Start_Epoch": "740",
+        "End_Epoch": "754",
+        "Activation_Epoch": "755",
+        "Status": "ended",
+        "Data": "Hash: 94B466692129203AF0D794E9F0CA83143A69587F6771413FB24345EAA5AA8989",
+        "Result": "Prop 23 involved 2100 addresses with results: 2073 yays | 13 nays | 14 abstains"
+      },
+      {
+        "Id": 24,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "The tx_transfer must be updated to prevent very large batch transfers.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/390cf675a603c251186e255686637a450109e629/update-tx-transfer/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
+          "discussions-to": "https://forum.namada.net/t/update-tx-transfer/1706",
+          "title": "Update the transfer tx in on-chain storage ahead of Phase 5"
+        },
+        "Start_Epoch": "744",
+        "End_Epoch": "756",
+        "Activation_Epoch": "757",
+        "Status": "ended",
+        "Data": "Hash: D915550A5FAE3DBA36FEB204F03799D9690A0512B0CDF2A7B833A7829E18758D",
+        "Result": "Prop 24 involved 2520 addresses with results: 2497 yays | 12 nays | 11 abstains"
+      },
+      {
+        "Id": 25,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Flipping the switch to turn on internal native token (NAM) transfers within Namada. This enables transparent transfers, shielded transfers, shielding, and unshielding of NAM within Namada.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/31e492c3cef25db6dc0dec0a005080d5ce2ace48/phase5a/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
+          "discussions-to": "https://forum.namada.net/t/proposal-begin-phase-5-enable-internal-nam-transfers/1707",
+          "title": "Begin Phase 5: enable internal NAM transfers within Namada"
+        },
+        "Start_Epoch": "753",
+        "End_Epoch": "765",
+        "Activation_Epoch": "766",
+        "Status": "ended",
+        "Data": "Hash: C60D2B2158EBB5B0B964F0529FDB2B3D07CE7292D0918C08100700692C964499",
+        "Result": "Prop 25 involved 4347 addresses with results: 4317 yays | 15 nays | 15 abstains"
+      },
+      {
+        "Id": 26,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "Turning on IBC transfers for the native token NAM. This allows NAM to be transferred out of Namada over IBC and back into Namada the same way. The per-epoch throughput limit is set to 20M NAM.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/ea7e6f6d413a4f8399cb995e782b4aadbe6dda4f/phase5b/src/lib.rs.\n\nPlease see the forum discussion linked here for more details.",
+          "discussions-to": "https://forum.namada.net/t/proposal-enable-ibc-transfers-of-nam-phase-5b/1727",
+          "title": "Phase 5 IBC transfers for NAM"
+        },
+        "Start_Epoch": "783",
+        "End_Epoch": "795",
+        "Activation_Epoch": "796",
+        "Status": "ended",
+        "Data": "Hash: 96BAB710E635BCB0874F01FAFDCDC4E34150758C54B4D684A36038E5F4494DF4",
+        "Result": "Prop 26 involved 3641 addresses with results: 3611 yays | 17 nays | 13 abstains"
+      },
+      {
+        "Id": 27,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qqgll8x8rz9fvtdv8q6n985za0vjvgyu0udxh7fp",
+        "Content": {
+          "details": "This proposal is a follow-up to the failed Proposal #22, which was voted down due to concerns about the values in storage for certain `precision` keys and their associated MASP data. This proposal updates these values to more safely ensure that shielded inflation is actually minted once enabled, given arbitrary amounts of tokens in the shielded pool.\n\nThe code used to generate the WASM attached to this proposal can be found here: https://github.com/anoma/namada-governance-upgrades/blob/374a2a919e4119f2cb99e417926a3ef2bb3c8ea4/pre-phase4/src/lib.rs.\n\nSee the forum discussion for more details.",
+          "discussions-to": "https://forum.namada.net/t/proposal-migration-before-enabling-shielded-rewards-phase-4/1776",
+          "title": "Migrate shielded data ahead of shielded rewards (Phase 4)"
+        },
+        "Start_Epoch": "825",
+        "End_Epoch": "842",
+        "Activation_Epoch": "843",
+        "Status": "ended",
+        "Data": "Hash: 58C2E1B7362765E7248388A299FB112F89B70970A7ADC0B801A0E2785BCF5976",
+        "Result": "Prop 27 involved 1103 addresses with results: 1093 yays | 6 nays | 4 abstains"
+      },
+      {
+        "Id": 28,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "abstract": "",
+          "authors": "Veil",
+          "created": "2025-07-08T10:47:03.580431",
+          "details": "This proposal is to enable shielding rewards for an initial set of seven assets: Cosmos Hub (ATOM), Osmosis (OSMO), Celestia (TIA), the Stride liquid-staked versions of these tokens, and Noble’s USDC. Alongside this activation, it will set initial starting points for several key configurable parameters, including the maximum inflation rate, token deposit targets, Proportional Gain, and Derivative Gain.\n\nIt should be clearly noted that these values are just initial settings, and they are fully configurable. The community can revisit and adjust these parameters through governance at any point in the future as needed.",
+          "discussions-to": "https://forum.namada.net/t/phase-4-proposal-discussion/1604",
+          "license": "SPQR",
+          "motivation": "",
+          "requires": "",
+          "title": "Phase 4: enable shielding rewards"
+        },
+        "Start_Epoch": "873",
+        "End_Epoch": "891",
+        "Activation_Epoch": "892",
+        "Status": "ended",
+        "Data": "Hash: 795BB46859CC225E3E347F1A6CB1DE0784F3658BDE1A779DC2E115A52CD666E2",
+        "Result": "Prop 28 involved 1000 addresses with results: 993 yays | 2 nays | 5 abstains"
+      },
+      {
+        "Id": 29,
+        "Type": "PGF funding",
+        "Author": "tnam1qztdx4y7a3wn0qmgcgtrty237vcnp9f9hs3rt3k7",
+        "Content": {
+          "abstract": "Proposing a one-year, cPGF validator subsidy to support 166 active validators.\nThe goal is to extend operator runway, sustain diversity, and prepare for a more targeted meritocratic reward model.",
+          "authors": "Gavin Birch (Luminara)",
+          "created": "2025-07-25T23:51:00.000Z",
+          "details": "This is a Continuous Public Goods Funding (cPGF) proposal to use ~0.67% of the annual PGF budget to allocate NAM to the current active set of Namada validators for year. If approved, **every epoch, 30.1369863 NAM** will be allocated to each tnam address of the **166 active validators**. Assuming this set of cPGF token \"streams\" will end in one year, the **total amount of NAM per validator will be 44,000 NAM**.\n\n#### Notes\n1. While this is part of the PGF budget, the PGF budget does not inflate the NAM supply until it is allocated. If approved, this will introduce 0.67% supply inflation over the year.\n2. There is [not yet a built-in way to end cPGF](https://github.com/namada-net/namada/issues/4104), so a follow-up PGF proposal will be needed to stop this cPGF after one year; exact date to be determined at proposal launch.\n\n#### Recipient List\nhttps://github.com/Luminara-Hub/govproposals/commit/9f2f88579aa96572e5414b560cb1e96a92eb9169\n\n(Github because the list exceeds governance proposal limit) \n\n#### Exclusions\n- Unit 410 [2]\ttnam1q9vnysn3jj9l3rnucr0zt4jpuy224wdl7c0gezrj\n- Shutdown 1st july — Please Redelegate\ttnam1qyj7mwkpc9tg4mljg76wxshwq2rxlskx7c0tlx4c\n- ValidityOps#2\ttnam1q98jzz306gldxvtg5quwnej4zvna6pgnquk2t4dc\n- [ZKV](https://x.com/zkv_xyz/status/1943628922362503411)\ttnam1qxr8n7u36jcf82d0ccp0flshpwhz3d3xjv5ryn44\n- EquinoxDao (jailed > 10 days)\ttnam1q9zemh43mx2dwtlsrfgjanzzut3j5lepaq7uacug\n- Infraspear (jailed > 10 days)\ttnam1qx03fx58wtm6e2g5yt4uu9jpy702h4pjuy9a7653\n\n\n## Context\nMost staking inflation (~95%) goes to passive delegators, versus active validators with immediate operating costs.\n\nWe have a relatively large, diverse set of validators. Namada doesn't need to ensure a particularly large set of validators, but it would be helpful to have more time to continue to enable, surface and reward high-value-add validators so that they remain active. \n\nDirect support is a much more capital-efficient way to increase validator operator runway than by increasing staking inflation. The goal is to extend operator runway to sustain diversity in preparation for a more targeted, meritocratic rewards model.\n\n## Future\nIf this proposal passes, there should be a proposal to end this subsidy after one year (Luminara intends to do this). There may also be intermediary proposal(s) to remove subsidies from inactive validators.\n\nAs a community, Namada should always be improving our collective ability to effectively target and reward active, value-add participants to sustain Namada's roadmap and mission-momentum.",
+          "discussions-to": "https://forum.namada.net/t/namada-validator-cpgf-1-year-subsidy-0-67-inflation/1819",
+          "motivation": "Sustain the current validator set to surface and reward high-value-add validators.",
+          "requires": "0",
+          "title": "cPGF - Namada Validator 1-Year Subsidy - 0.67% inflation"
+        },
+        "Start_Epoch": "955",
+        "End_Epoch": "979",
+        "Activation_Epoch": "980",
+        "Status": "ended",
+        "Data": "Actions:",
+        "Result": "Prop 29 involved 889 addresses with results: 842 yays | 9 nays | 38 abstains"
+      },
+      {
+        "Id": 30,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "This proposal contains to code to update the `tx_withdraw` wasm in storage. With this new update, any withdraw tx will emit an event that contains the withdrawn NAM token amount. This is similar to the update executed for `tx_claim_rewards` in Prop #11. Please see the forum post linked in `discussions-to` below for more details.\n\nThe proposal code used to generate the WASM within this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/b3221f02b26ab5c7e08cef4496930b0f632ca4f0/update-tx-withdraw/src/lib.rs.\n\nThe new tx_withdraw wasm itself was generated with the changes within: https://github.com/namada-net/namada/pull/4778",
+          "discussions-to": "https://forum.namada.net/t/proposal-update-tx-withdraw-on-chain-with-events/1848",
+          "title": "Update tx_withdraw wasm on-chain"
+        },
+        "Start_Epoch": "1073",
+        "End_Epoch": "1097",
+        "Activation_Epoch": "1098",
+        "Status": "ended",
+        "Data": "Hash: E3FBA2A2D8C42894822020628F8D27B6857EDC5A5373A2B327DBCE1A2AA0DC2D",
+        "Result": "Prop 30 involved 335 addresses with results: 332 yays | 2 nays | 1 abstains"
+      },
+      {
+        "Id": 31,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "details": "This proposal reduces staking inflation from 5% to 2.75% and lowers the target staking ratio from 55% to 45%. The goal is to eliminate unnecessary dilution now that security thresholds are met, while freeing issuance to incentivize privacy usage through Shielded Rewards. By rebalancing inflation toward real adoption, this change reduces wasteful issuance and strengthens the long-term sustainability of the network.\n\nThe file used to produce the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/9ea5c5a6d8d29a2866e83f73ece069d4658cd822/increase_target_staked_ratio/src/lib.rs",
+          "title": "Reduce staking inflation from 5% to 2.75%"
+        },
+        "Start_Epoch": "1154",
+        "End_Epoch": "1173",
+        "Activation_Epoch": "1174",
+        "Status": "ended",
+        "Data": "Hash: B21D4872EF9BA948874D53EC5F175EDE3CA4AA10F52C42E7AF099D78A86BF890",
+        "Result": "Prop 31 involved 304 addresses with results: 291 yays | 11 nays | 2 abstains"
+      },
+      {
+        "Id": 32,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "details": "This proposal updates the Multi-Asset Shielded Pool incentive mechanism by recalibrating the Proportional Gain (p_gain_nom) and Derivative Gain (d_gain_nom) values for incentivized assets. These changes aim to ensure that shielded pool rewards respond more predictably, correcting cases where adjustments were too slow or too fast.\n\nIn addition, we propose reducing Shielded Set Reward (SSR) targets across assets to better align inflation incentives with observed usage and privacy needs. This calibration narrows the scope of incentives to the most active pools while reducing inflation costs on underutilized assets.\n\nThe file used to produce the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/5fad42152f631607a7763352f230040629f7d3e4/phase4/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/adjust-the-masp-gain-and-ssr-target-values/1847",
+          "title": "Update Shielded Inflation: MASP Gain Calibration & SSR Target Adjustments"
+        },
+        "Start_Epoch": "1154",
+        "End_Epoch": "1173",
+        "Activation_Epoch": "1174",
+        "Status": "ended",
+        "Data": "Hash: EEF0B745190917D5C64E1F042E0F8EB9BD062D54522B84C42957F1194D989DD2",
+        "Result": "Prop 32 involved 302 addresses with results: 291 yays | 7 nays | 4 abstains"
+      },
+      {
+        "Id": 33,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "authors": "Veil",
+          "details": "This proposal looks to add support for USDN (Noble’s native yield-bearing stablecoin) to Namada’s Multi-Asset Shielded Pool (MASP), whitelist USDN as a gas token, and set initial rate-limit parameters. Adding USDN would make it the first yield-bearing stable asset in the MASP, enabling shielded deposits that generate real yield and expanding the economic functionality of shielded assets. Whitelisting USDN for gas ensures a seamless user experience, allowing transactions to be paid directly in USDN. The initial parameters are a 5M global mint limit, 1M per-epoch limit, and a gas price of 1 uusdn per gas unit.\n\nThe proposal code used to generate the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/3a4a42da8bb230678b9396daa77c5eef97704d96/phase3/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/proposal-to-add-usdn-support-to-the-masp/1871",
+          "title": "Add USDN support to the MASP, whitelist USDN as a gas token, and establish initial rate-limit parameters."
+        },
+        "Start_Epoch": "1281",
+        "End_Epoch": "1312",
+        "Activation_Epoch": "1313",
+        "Status": "ended",
+        "Data": "Hash: B03AF811B89788007959A66B9E8547D576D66ADB8172FCD10A3B2B923CDF6D0B",
+        "Result": "Prop 33 involved 352 addresses with results: 341 yays | 9 nays | 2 abstains"
+      },
+      {
+        "Id": 34,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "This proposal seeks to increase the values of two different gas parameters in the protocol:\n1. Max block gas: 5M --> 10M\n2. Masp fee payment gas limit: 100k --> 300k\n\nIncreasing these values will help to prepare for IBC Eureka support and to relieve certain unshielding difficulties for some users.\n\nThe code used to generate the attached WASM can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/3075750b50e24144178f3f9531d8771a955d17eb/update_gas_params/src/lib.rs\n\nPlease see the forum discussion for more details and specific motivation.",
+          "discussions-to": "https://forum.namada.net/t/proposal-increase-two-gas-related-protocol-parameters/1880",
+          "title": "Update two gas parameter values"
+        },
+        "Start_Epoch": "1289",
+        "End_Epoch": "1309",
+        "Activation_Epoch": "1310",
+        "Status": "ended",
+        "Data": "Hash: 286644C8096E0520C84624736BB0349681FB17B5677EB3BAB267463B4DFF4811",
+        "Result": "Prop 34 involved 288 addresses with results: 280 yays | 5 nays | 3 abstains"
+      },
+      {
+        "Id": 35,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "This proposal aims to unblock further development of the Polaris integration from the future mainnet upgrade to v201.0.X. This is accomplished by manually whitelisting many tokens over the Osmosis IBC channel in a nearly-permissionless manner. After the upgrade, it will be possible for a short governance proposal to whitelist a whole channel permissionlessly.\n\nThe full list of whitelisted assets can be viewed directly as commented in the Rust code used to generate the attached wasm, which can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/2f5636aeeb26e8ac6922b3eaefeb91f9544d64fb/proposals/mainnet/manual-whitelist-polaris/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/proposal-whitelist-tokens-manually-for-polaris-integration/1883",
+          "title": "Whitelist tokens over the Osmosis IBC channel for Polaris integration."
+        },
+        "Start_Epoch": "1324",
+        "End_Epoch": "1349",
+        "Activation_Epoch": "1350",
+        "Status": "ended",
+        "Data": "Hash: F8CAF64BA1131A59882E859D39D4272230BC643C6D696F24A2241BAB5F06F880",
+        "Result": "Prop 35 involved 311 addresses with results: 311 yays | 0 nays | 0 abstains"
+      },
+      {
+        "Id": 36,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qq92nknz9u82aewcw3k0nrp7t7d5ytgskcjkyduk",
+        "Content": {
+          "authors": "Veil",
+          "details": "This proposal looks to reduce Shielded Set Reward (SSR) incentives by setting the max_reward_rate parameter of each of the following six tokens to 0: ATOM, OSMO, TIA, stATOM, stOSMO, and stTIA. The goal is to simplify the incentive landscape and ensure Namada’s resources remain focused on current and upcoming product–market fit (PMF) initiatives. Maintaining USDC incentives preserves a stable capital base and supports the asset that has demonstrated the most consistent organic usage, while also creating room to introduce and test new assets aligned with emerging use cases. This proposal does not impact the function of the PID controller as it relates to USDC incentives. In short, it aims to give the community a near-clean slate to support the next phase of experimentation and product alignment.\n\nThe code used to generate the wasm attached to this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/eab5a1b3f6ddb24ea5fac2a56addcb753dd511b9/proposals/mainnet/turn-off-shielded-inflation/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/adjusting-shielded-set-rewards-to-align-with-pmf-experiments/1889",
+          "title": "Adjust Shielded Set Rewards to Align with PMF Experiments."
+        },
+        "Start_Epoch": "1364",
+        "End_Epoch": "1388",
+        "Activation_Epoch": "1389",
+        "Status": "ended",
+        "Data": "Hash: 72DF5BEF3E5924A447A8085E5DAD2608E3C7A3596812B6F05F88684C5C36021A",
+        "Result": "Prop 36 involved 275 addresses with results: 242 yays | 28 nays | 5 abstains"
+      },
+      {
+        "Id": 37,
+        "Type": "Default",
+        "Author": "tnam1qzq9cw0xp6h6w78qhy78k9w3ju8dfdq6quwqshk5",
+        "Content": {
+          "abstract": "",
+          "authors": "Knowable",
+          "created": "2025-11-25T21:47:00.000Z",
+          "details": "The last major Housefire testnet upgrade was on September 9. Core maintainers have been prepared to upgrade for over two months, and the Namada community and key partners have been eagerly awaiting the Namada mainnet upgrade. Timing is everything, and Knowable is proposing that we wait no longer.\n\n## Proposing v201.0.7 upgrade at Block 4514500\n\nThis is a proposal to upgrade Namada mainnet to v201.0.7 at Block Height 4514500.\n\nWe selected 4514500 to target 17:15 UTC Tue Dec 2, but since block times may vary, this is just an estimate.\n\n## What’s New ✨\n\nNamada’s last major upgrade being v101.0.0 in late May. A lot has happened since then. [v201.0.7](https://github.com/namada-net/namada/releases/tag/v201.0.7) is ready to deliver some big unlocks, particularly:\n\n- permissionless IBC assets needed by Osmosis and Polaris\n- transaction-level fee capture needed by Borderless Private USDC\n- support for Ethereum assets via Cosmos Hub and IBC Eureka needed by Namadillo for shielded swaps\n- shielded sync & proof generation optimizations\n- general bug fixes for overall reliability\n\nThis upgrade will pave the path for the next major upgrade, which will give us a few more big unlocks.\n\n## Onward 🚀\n\nThere has been unprecedented excitement around the privacy narrative, and Namada has some [clear paths to PMF](https://forum.namada.net/t/a-new-phase-for-namada-product-market-fit-pmf/1884). There’s a growing interest from new stakeholders who are prepared to rally behind Namada alongside a dedicated community of long-time supporters. This upgrade will give Polaris what they need to use Namada to deliver their privacy-centric roadmap, the means for Namada to capture meaningful shielded pool revenue, and so much more.\n\nLet’s continue pursuing the [mission and vision](https://forum.namada.net/t/the-namada-mission/275) we created together 🔥\n\n-------\n\n## Instructions \n\nHere are the steps:\n\nBuild tag `v201.0.7` from source AHEAD OF TIME!\n\n```\ngit checkout v201.0.7\nmake build\n```\n\nSchedule your node to stop at height 4514500 with the current binaries:\n\n```\nnamadan ledger run-until --block-height 4514500 --halt\n```\n\nOnce we reach the upgrade height, restart your node with namadan v201.0.7:\n\n```\nnamadan ledger run\n```\n\nThat should be all! Thanks, looking forward to this important upgrade.",
+          "discussions-to": "https://forum.namada.net/t/signalling-upgrade-to-v201-0-7-at-block-4514500/1899/1",
+          "motivation": "Major upgrade",
+          "requires": "0",
+          "title": "Signalling - Upgrade to v201.0.7 at Block 4514500"
+        },
+        "Start_Epoch": "1429",
+        "End_Epoch": "1453",
+        "Activation_Epoch": "1454",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 37 involved 308 addresses with results: 303 yays | 4 nays | 1 abstains"
+      },
+      {
+        "Id": 38,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "We must increase the values of the `max_tx_bytes` and `max_proposal_bytes` parameters to allow for the larger proposals that will be needed for IBC Eureka activation. Please see the discussion on the Namada forum for more details.\n\nThe proposal code used to generate the wasm attached to this proposal can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/6dd327f4b95154aba44b595798ec0e04ce1d8ea6/proposals/mainnet/update-params-pre-ibc-eureka/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/mainnet-update-two-protocol-parameters-for-ibc-eureka-activation/1906",
+          "title": "Update two protocol parameters needed for IBC Eureka activation"
+        },
+        "Start_Epoch": "1452",
+        "End_Epoch": "1464",
+        "Activation_Epoch": "1465",
+        "Status": "ended",
+        "Data": "Hash: 51C29AC1D380438F184D7ED3053825B5F5A2529FAA11ECB84E2D68B3BB0AB213",
+        "Result": "Prop 38 involved 204 addresses with results: 203 yays | 0 nays | 1 abstains"
+      },
+      {
+        "Id": 39,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "This proposal updates the on-chain wasm tx for IBC transfers. Particularly, this IBC tx update will allow Polaris to complete their Namada integration and will also allow IBC Eureka assets to flow into Namada. Please see the forum discussion for more details.\n\nThe code used to generate the attached wasm file can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/8ce6288a26ba694f317d04a5a3977d641ef993af/proposals/template/update-wasm/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/mainnet-update-tx-ibc-wasm-for-v201-0-7/1910",
+          "title": "Update tx_ibc.wasm for mainnet v201.0.7"
+        },
+        "Start_Epoch": "1466",
+        "End_Epoch": "1478",
+        "Activation_Epoch": "1479",
+        "Status": "ended",
+        "Data": "Hash: DF1529DE727D8DD777A28073A29393D3BC6EA516D6C1912BBD1E1A1D4A200624",
+        "Result": "Prop 39 involved 222 addresses with results: 218 yays | 0 nays | 4 abstains"
+      },
+      {
+        "Id": 40,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qyf80vw4e8aa2efuk4jsg9lpwxrntsj2dql4tssa",
+        "Content": {
+          "abstract": "Change pgf_inflation_rate parameter from 0.05 to 0.00",
+          "authors": "CryptoDruide (For Luminara)",
+          "created": "2025-12-05T19:30:00.000Z",
+          "details": "Inflation is a cost for Namada, so if we must use it, we should use it intentionally.\nAs of Dec 2, the PGF treasury can use up to 41.8m NAM, which provides a solid runway for Namada’s journey to sustainability.\n\nWe propose to turn off PGF treasury inflation, which is currently set at 5%.\nIf this proposal passes, and if we count the PGF account minting allowance as a direct inflation, total network inflation will be reduced from 8.64% to 3.64%.\n\nPGF data overview\nTo date, approximately 5.5 million NAM have been distributed to fund diverse contributors and contributions within the Namada ecosystem.\n\nThe PGF account currently has a mint allowance of approximately 41.8 million NAM.\n\nThese amounts represent a total PGF inflation of approximately 4.42% of the effective supply.\n\nMore data on the PGF account and the funded contributions is available here:\nhttps://v2.explorer75.org/namada/pgf\n\nWhy this proposal?\nInflation is a cost. As soon as new tokens are minted and allocated, they introduce dilution for NAM holders.\n\nWe value the long-term sustainability and credibility of NAM, and we want to communicate this clearly to the ecosystem and its holders.\n\nInflation mechanisms need control and should be used only when it adds value, supports meaningful contributions, and strengthens Namada and its community.\n\nWe believe that the PGF account currently has sufficient runway for the coming months, making continued inflation unnecessary at this time.\n\nThe future fees collected from shielded pool usage are expected to fund the future of our ecosystem in a more sustainable way.",
+          "discussions-to": "https://forum.namada.net/t/proposal-to-turn-off-pgf-treasury-inflation/1908",
+          "motivation": "We believe the PGF treasury has a solid runway for Namada’s journey to sustainability. We want a healthy NAM economy and aim to avoid inflation that is unnecessary at this time.",
+          "requires": "0",
+          "title": "Turn off PGF treasury inflation"
+        },
+        "Start_Epoch": "1468",
+        "End_Epoch": "1488",
+        "Activation_Epoch": "1489",
+        "Status": "ended",
+        "Data": "Hash: 19D0D1464F39F4859FEAA57670FDD372E0214D3F7E8257EC600B98E8D8FFAC43",
+        "Result": "Prop 40 involved 223 addresses with results: 214 yays | 0 nays | 9 abstains"
+      },
+      {
+        "Id": 41,
+        "Type": "Default with Wasm",
+        "Author": "tnam1qrk6vlc9wy95p2hwntwejm8g4kjc39ha65y2vucx",
+        "Content": {
+          "details": "This proposal will enable unlimited permissionless transfers between Namada and the Osmosis and Cosmos Hub blockchains. Permissionless transfers with Osmosis helps to maximally support Polaris, while those with Cosmos Hub are needed to allow any ERC20 assets into Namada.\n\nThe code used to generate the attached wasm can be found here: https://github.com/namada-net/namada-governance-upgrades/blob/de78a3dc0724ecee26d26e664fc4050aa4c71c58/proposals/template/whitelist-channel-unlimited/src/lib.rs",
+          "discussions-to": "https://forum.namada.net/t/permissionless-whitelisting-of-osmosis-and-cosmos-hub-channels/1912",
+          "motivation": "Support Polaris and Enable IBC Eureka",
+          "title": "Whitelist Osmosis and Cosmos Hub channels permissionlessly"
+        },
+        "Start_Epoch": "1508",
+        "End_Epoch": "1520",
+        "Activation_Epoch": "1521",
+        "Status": "ended",
+        "Data": "Hash: A57A17106B517B803D85B939F97206ADDB10904A2B587CD189B71FA1C6136C43",
+        "Result": "Prop 41 involved 190 addresses with results: 190 yays | 0 nays | 0 abstains"
+      },
+      {
+        "Id": 42,
+        "Type": "Default",
+        "Author": "tnam1qzq9cw0xp6h6w78qhy78k9w3ju8dfdq6quwqshk5",
+        "Content": "{\"abstract\": \"\", \"authors\": \"Gavin Birch\", \"created\": \"2026-03-05T15:32:00.000Z\", \"details\": \"In November 2022, Knowable joined as a bootstrapped, independent team of three to help launch Namada: Spork & almostFitz initially, and later CryptoDruide. It was a big opportunity, and we’re grateful to the Anoma Foundation / Heliax founders for it. After nearly 3.5 years, and with no hard feelings, Knowable is leaving this role. A big and sudden change in direction from October, when we were excited to propose this future for Namada: https://forum.namada.net/t/a-new-phase-for-namada-product-market-fit-pmf/1884\\n\\n## But why?\\n\\nThere were political issues that kept blocking a much-needed Namada mainnet upgrade and twitter awareness that spanned months, with no end in sight. Issues that put [Borderless](https://forum.namada.net/t/borderless-private-usdc/1867) on hold, strained Namada’s partnership with Polaris / Osmosis, and kept Namada out of the spotlight while other privacy-focused projects prospered in otherwise uncertain market conditions.\\n\\nIn November it became clear that in order for us to continue growing Namada, we would need to assume the Anoma Foundation’s Namada responsibilities, including hiring the Namada dev team. We put everything on hold to work on negotiations with the Anoma Foundation from Nov into Dec, but were unable to succeed together. In retrospect that may have been a good outcome, because ecosystem isolation has rapidly become the bigger problem.\\n\\n## Namada’s insurmountable challenge\\n\\nCurrently, Namada is rooted in the IBC ecosystem, which has unfortunately remained isolated from where the users are. Polaris and Osmosis appear to have stopped using Namada’s shielded pool, and Namada’s access to USDC through Noble seems uncertain as Noble exits from Cosmos. Namada’s core github commits dried up in early November, Namadillo UI work ended in early December, key longtime devs were laid off throughout December, and now the NAM markets are drying up and closing. Heliax has committed to maintaining Namada, but in its current state we don’t think this will be enough to overcome the ecosystem isolation hurdle, which would require substantial investment.\\n\\n## Knowable’s commitments\\n\\nKnowable has been 100% committed to Namada, with contributions across multiple domains, including operations, strategy, community building, tooling, ecosystem funding, and governance (https://forum.namada.net/u/gavin/activity/topics). We’ve felt accepted by cofounders Christopher, Awa, and Adrian as peers, even early on, with invitations and support to attend all of their gatherings, and so much more. The Heliax team accepted us, made us feel welcome, and worked closely together. Personally, I can’t thank\\u{a0}[@cwgoes](https://forum.namada.net/u/cwgoes)\\u{a0}enough.\\u{a0}❤\\u{fe0f}\\u{a0}To have\\u{a0}[@Veildev](https://forum.namada.net/u/veildev)\\u{a0}aboard was incredible–great experience working together, looking forward to more of it. The Namada community accepted us and enthusiastically supported all of our efforts in many ways.\\u{a0}[@Daniel](https://forum.namada.net/u/daniel)’s unstoppable. The ways that\\u{a0}[@preto](https://forum.namada.net/u/preto)\\u{a0}[@zenodeapp](https://forum.namada.net/u/zenodeapp)\\u{a0}[@Rigorous](https://forum.namada.net/u/rigorous)\\u{a0}have saved our collective butts cannot be counted.\\u{a0}[@mother0x](https://forum.namada.net/u/mother0x)’s been gone a while, but not forgotten.\\u{a0}[@bengtlofgren](https://forum.namada.net/u/bengtlofgren)\\u{a0}too.\\u{a0}[@brentstone](https://forum.namada.net/u/brentstone),\\u{a0}[@chris](https://forum.namada.net/u/chris), sugo,\\u{a0}[@Fraccaman](https://forum.namada.net/u/fraccaman),\\u{a0}[@Zach](https://forum.namada.net/u/zach),\\u{a0}[@jurevans](https://forum.namada.net/u/jurevans), Murisi, Fatemeh, batconjurer, Mateusz, Marco, Dominik, Pedro, Mike, Deigo,\\u{a0}[@tomas](https://forum.namada.net/u/tomas), so many Anoma folks, many advisors–too many names to mention. (I’ll probably wake up in the middle of the night sweating, realizing in horror that I didn’t mention your name. 😅) There’s a lot of history here that we’ll remember fondly, and relationships that are sure to continue.\\n\\nKnowable’s Namada-based Borderless efforts will end, but Borderless will live on in the Ethereum ecosystem with [Armada](https://armada.wtf).\\n\\nKnowable’s validator will be deactivated today (March 5). We’ve been unbonding all NAM, and below you’ll see why. We’ve been migrating our infrastructure to Heliax’s stack, the only thing remaining is the infra for the metrics dashboard we made: https://metrics.namada.net. All tooling we developed can be made available, if not already: https://github.com/vknowable\\n\\nLuminara, our ecosystem funding entity, will no longer be doing PGF work, and the legal entity will be dissolved. This is how 2,891,000 NAM was allocated: https://docs.google.com/spreadsheets/d/195BMPw13iV49pMOW6EfjmY2TDTsO_xVIewFpmZlWdQA/edit?gid=0#gid=0 . Around March 10, we will return the remaining 52,379,111.75 NAM (of 55,270,111.75) to the community via Namada’s PGF address: `tnam1pgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqkhgajr`\\n\\nhttps://namada.help and https://namada.community will be available, if Adrian / the Anoma Foundation would like to take responsibility for them before end of March.\\n\\n## What about PGF?\\n\\nNamada and NAM’s decline has been hard for everyone. In particular, it’s worth noting the work of:\\n\\n- TuDudes, who have supported the full infra stack for three different Namada networks and so much more\\n- TNSO (https://forum.namada.net/t/namada-wallet-mobile-key-management-open-source/1882) and their mobile wallet, https://namadawallet.com\\n- the many (!) infrastructure providers who have run and maintained ibc relayers, masp indexers, namada indexers, RPCs, testnet validators, and the entire stack for the testnet as well: https://namada.community/infrastructure-services\\n- the Support Squad (https://forum.namada.net/t/call-for-volunteers-shield-support-squad/1678) and key members of the Namada community who have tirelessly helped everyone and contributed in numerous ways\\n\\nTo my knowledge they have received nothing or almost nothing for doing this, and many have tenaciously continued their work. There are others who did receive PGF, like the explorer service providers, and Kleomedes, who received a token allocation from Luminara for https://namadata.xyz. We think they have also done far more than what they’ve been materially credited for.\\n\\nIn fact, we have a list of names (https://docs.google.com/spreadsheets/d/1E-xzFVX_3r_PLZpdsO3sFlNyrSXqZ3A0vwRkLDLa0Mg/edit?gid=0#gid=0), since Luminara had planned two further PGF initiatives (which were disrupted in November):\\n1. Namada community: https://docs.google.com/document/d/13vc1Q28LHuw88so5RejpXycAzr1l-1mRn17Jqd-2h1Q/edit?tab=t.0#heading=h.wtvwvh6wo1m\\n2. TuDudes: https://docs.google.com/document/d/1V1jvNWPwHFzDVp7e-qf9dDoI32ndW9KBTxrs8CoBYtQ/edit?tab=t.0#heading=h.wtvwvh6wo1m\\n\\nThough Luminara is winding down, there is likely somewhere between 2 - 4% of the NAM supply that Knowable and individuals like myself do not intend to sell. No promises, but if it’s not too challenging, I think we’d like to try pooling and distributing to the 54 contributors on that list, and we hope that others will follow suit (eg. XAN airdrop; Armada airdrop). If your name is on the list, please make sure your addresses are up-to-date, and please check your messages from CryptoDruide on Discord.\\n\\n## What now for Knowable?\\n\\nKnowable was prepared to grow Namada. Our responsibilities had grown, and we were prepared to assume the founding team’s responsibilities as well. We had the strategy and relationships lined up to do it. While we know that with great power comes great responsibility, it’s not necessarily the other way around. Despite the amount of responsibility we took on, we simply did not have the power to overcome the constraints.\\n\\nWe’ve learned to respect markets, to balance being effective with being innovative, and the existential need for token alignment. It’s a ubiquitous problem in crypto: power must come with enforceable accountability guarantees so that the community and market participants are not at such a disadvantage.\\n\\nWe still believe in the thesis (more than ever): https://vknowable.github.io/knowable-blog/thesis-privacy-is-table-stakes-for-adoption/\\nAnd we still believe in the asset privacy infrastructure opportunity: https://armada.wtf\\n\\n**On behalf of Knowable and Luminara, wishing you way more than luck,**\\n\\nGavin Birch ❤\\u{fe0f}\", \"discussions-to\": \"https://forum.namada.net/t/knowable-is-leaving-our-namada-role/1930\", \"motivation\": \"Knowable had big plans for Namada that we communicated to people, and now we don't, so we want to let people know that our plans have changed.\", \"requires\": \"0\", \"title\": \"Signalling - Knowable is leaving Namada\"}",
+        "Start_Epoch": "1827",
+        "End_Epoch": "1867",
+        "Activation_Epoch": "1868",
+        "Status": "ended",
+        "Data": "",
+        "Result": "Prop 42 involved 47 addresses with results: 24 yays | 3 nays | 20 abstains"
+      }
+    ]
+  }
 ]
