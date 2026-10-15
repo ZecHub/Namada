@@ -45,7 +45,10 @@ export function NetworkDashboard() {
         setSupplyRows(supplyData); setSupply(supplyData[supplyData.length - 1]);
         const rows: Proposal[] = proposalRows.flatMap((row: { Proposal?: Proposal[] }) => row.Proposal ?? []);
         setProposals(rows.sort((a: Proposal, b: Proposal) => b.id - a.id).slice(0, 4));
-        const parameterData = parameterRows[0]; setParameters({ ...parameterData.Governance_Parameters?.[0], ...parameterData.Proof_Of_Stake_Parmeters?.[0] }); setValidators(validatorRows);
+        const parameterData = parameterRows[0];
+        const posParams = parameterData.Proof_Of_Stake_Parameters?.[0] ?? parameterData.Proof_Of_Stake_Parmeters?.[0];
+        setParameters({ ...parameterData.Governance_Parameters?.[0], ...posParams });
+        setValidators(validatorRows);
       })
       .catch(() => setError(true));
   }, []);

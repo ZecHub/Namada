@@ -7,10 +7,8 @@ import {
   Shield,
   X,
 } from "lucide-react";
-import { NetworkDashboard } from "./Home";
 import { DATA_URL } from "../components/lib/chart/data-url";
 import NamadaChart from "../components/Charts/Namada/NamadaChart";
-import ProposalParticipationChart from "../components/ProposalParticipationChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
@@ -35,6 +33,7 @@ type ProtocolData = {
   Governance_Parameters?: Record<string, unknown>[];
   Public_Goods_Funding_Parameters?: Record<string, unknown>[];
   Protocol_Parameters?: Record<string, unknown>[];
+  Proof_Of_Stake_Parameters?: Record<string, unknown>[];
   Proof_Of_Stake_Parmeters?: Record<string, unknown>[];
   IBC_Parameters?: Record<string, unknown>[];
 };
@@ -178,7 +177,10 @@ function ProtocolParameters() {
         <ParameterCard title="Protocol Parameters" values={protocol} />
         <ParameterCard
           title="Proof of Stake"
-          values={data?.Proof_Of_Stake_Parmeters?.[0]}
+          values={
+            data?.Proof_Of_Stake_Parameters?.[0] ??
+            data?.Proof_Of_Stake_Parmeters?.[0]
+          }
         />
         <ParameterCard
           title="IBC Parameters"
@@ -216,7 +218,7 @@ function ProtocolParameters() {
   );
 }
 
-function RewardsChart() {
+export function RewardsChart() {
   const [rows, setRows] = useState<RewardPoint[]>([]);
   const [metric, setMetric] = useState<
     "Staked_Ratio" | "Annual_Staking_Rewards_Ratio" | "Inflation_Rate"
