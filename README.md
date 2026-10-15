@@ -25,11 +25,20 @@ To set up the development environment, follow these steps:
    npm run build
    ```
 
-## Governance proposal reconciliation
+## Governance proposal source and reconciliation
 
-The dashboard combines the summary snapshot in `public/data/props.json` with
-the richer records in `public/data/proposals/propsDetails.json`. Reconciliation
-is deterministic and does not depend on fetch or array order:
+The dashboard uses the official Namada indexer
+(`https://indexer.namada.net`) as the primary source for the current epoch and
+governance proposals. It follows the indexer's pagination and validates the
+returned proposal count before presenting the data as current.
+
+If the live indexer cannot be reached, the UI falls back to the bundled summary
+snapshot in `public/data/props.json` and the richer records in
+`public/data/proposals/propsDetails.json`. That fallback is explicitly labeled
+as a historical snapshot rather than current network state.
+
+Snapshot reconciliation is deterministic and does not depend on fetch or array
+order:
 
 1. The detailed dataset has explicit authority over the summary dataset.
 2. Within the same authority, the newest `Last_committed_epoch` wins.
