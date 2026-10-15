@@ -115,7 +115,7 @@
         "Is_native_token_transferable": true
       }
     ],
-    "Proof_Of_Stake_Parmeters": [
+    "Proof_Of_Stake_Parameters": [
       {
         "Pipline_length": "2 epochs",
         "Unbonding_lenth": "53 epochs",

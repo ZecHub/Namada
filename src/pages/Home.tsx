@@ -58,7 +58,15 @@ export function NetworkDashboard() {
       .then(([supplyData, parameterRows, validatorRows]) => {
         if (!active) return;
         setSupplyRows(supplyData); setSupply(supplyData[supplyData.length - 1]);
-        const parameterData = parameterRows[0]; setParameters({ ...parameterData.Governance_Parameters?.[0], ...parameterData.Proof_Of_Stake_Parmeters?.[0] }); setValidators(validatorRows);
+        const parameterData = parameterRows[0];
+        const posParams =
+          parameterData.Proof_Of_Stake_Parameters?.[0] ??
+          parameterData.Proof_Of_Stake_Parmeters?.[0];
+        setParameters({
+          ...parameterData.Governance_Parameters?.[0],
+          ...posParams,
+        });
+        setValidators(validatorRows);
       })
       .catch(() => {
         if (active && !controller.signal.aborted) setError(true);
