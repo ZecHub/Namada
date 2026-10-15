@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test": "tsc src/lib/proposal-reconciliation.ts --target ES2020 --module NodeNext --moduleResolution NodeNext --strict --skipLibCheck --outDir node_modules/.cache/namada-tests && node --test tests/*.test.mjs",
+    "test": "tsc src/lib/proposal-reconciliation.ts src/lib/governance-source.ts --target ES2020 --module NodeNext --moduleResolution NodeNext --strict --skipLibCheck --outDir node_modules/.cache/namada-tests && node --test tests/*.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

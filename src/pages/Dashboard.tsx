@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -15,9 +15,9 @@ import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
 import {
-  reconcileProposals,
-  type ProposalSnapshot,
-} from "../lib/proposal-reconciliation";
+  loadGovernanceData,
+  type GovernanceData,
+} from "../lib/governance-source";
 
 type Validator = {
   Name?: string;
@@ -46,22 +46,32 @@ type RewardPoint = {
 };
 
 export function GovernanceProposals() {
-  const [snapshot, setSnapshot] = useState<ProposalSnapshot | null>(null);
+  const [governance, setGovernance] = useState<GovernanceData | null>(null);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
-    fetch(DATA_URL.proposalsUrl)
-      .then((response) => response.json())
-      .then((rows: ProposalSnapshot[]) => setSnapshot(rows[0]))
-      .catch(() => setSnapshot({ Proposal: [] }));
+    loadGovernanceData()
+      .then(setGovernance)
+      .catch(() => setError(true));
   }, []);
-  const proposals = [...(snapshot?.Proposal || [])].sort(
-    (a, b) => (b.id ?? b.Id ?? 0) - (a.id ?? a.Id ?? 0),
-  );
+
+  const proposals = governance?.proposals ?? [];
+
   return (
     <section className="governance-proposals section-wrap">
       <div className="epoch-banner">
-        <span>Current epoch</span>
-        <b>{snapshot?.Last_committed_epoch ?? "Loading…"}</b>
+        <span>
+          {governance?.source === "snapshot" ? "Snapshot epoch" : "Current epoch"}
+        </span>
+        <b>{governance?.epoch || "Loading…"}</b>
+        <small>{governance?.sourceLabel || "Loading live Namada indexer…"}</small>
       </div>
+      {error && (
+        <p className="dashboard-error">
+          Governance data unavailable from both the live indexer and local
+          snapshot.
+        </p>
+      )}
       <div className="proposals-table-wrap">
         <table className="proposals-table">
           <thead>
@@ -77,23 +87,23 @@ export function GovernanceProposals() {
           </thead>
           <tbody>
             {proposals.map((proposal, index) => (
-              <tr key={proposal.id ?? proposal.Id ?? index}>
+              <tr key={proposal.id}>
                 <td>{index + 1}</td>
                 <td>
-                  <b>{proposal.id ?? proposal.Id}</b>
+                  <b>{proposal.id}</b>
                 </td>
-                <td>{proposal.Type}</td>
+                <td>{proposal.Type || "—"}</td>
                 <td>
-                  <code>{proposal.Author}</code>
+                  <code>{proposal.Author || "—"}</code>
                 </td>
-                <td>{proposal.Start_Epoch}</td>
-                <td>{proposal.End_Epoch}</td>
-                <td>{proposal.Activation_Epoch}</td>
+                <td>{proposal.Start_Epoch || "—"}</td>
+                <td>{proposal.End_Epoch || "—"}</td>
+                <td>{proposal.Activation_Epoch || "—"}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        {snapshot && !proposals.length && (
+        {governance && !proposals.length && (
           <p className="dashboard-loading">No proposal data available.</p>
         )}
       </div>
@@ -435,56 +445,44 @@ function SourceChartsWorkspace() {
 }
 
 function PaginatedGovernanceProposals() {
-  const [summarySnapshots, setSummarySnapshots] = useState<ProposalSnapshot[]>(
-    [],
-  );
-  const [detailSnapshots, setDetailSnapshots] = useState<ProposalSnapshot[]>(
-    [],
-  );
+  const [governance, setGovernance] = useState<GovernanceData | null>(null);
+  const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const pageSize = 10;
+
   useEffect(() => {
-    Promise.all([
-      fetch(DATA_URL.proposalsUrl).then((response) => response.json()),
-      fetch(DATA_URL.propsDetailsUrl).then((response) => response.json()),
-    ])
-      .then(([summary, details]: [ProposalSnapshot[], ProposalSnapshot[]]) => {
-        setSummarySnapshots(summary);
-        setDetailSnapshots(details);
+    loadGovernanceData()
+      .then((data) => {
+        setGovernance(data);
+        setPage(1);
       })
-      .catch(() => {
-        setSummarySnapshots([]);
-        setDetailSnapshots([]);
-      });
+      .catch(() => setError(true));
   }, []);
-  const { proposals, conflicts } = useMemo(
-    () =>
-      reconcileProposals([
-        { name: "summary", authority: 1, snapshots: summarySnapshots },
-        { name: "details", authority: 2, snapshots: detailSnapshots },
-      ]),
-    [summarySnapshots, detailSnapshots],
-  );
-  useEffect(() => {
-    if (conflicts.length && import.meta.env.DEV) {
-      console.warn("Conflicting governance proposal fields", conflicts);
-    }
-  }, [conflicts]);
+
+  const proposals = governance?.proposals ?? [];
   const pageCount = Math.max(1, Math.ceil(proposals.length / pageSize));
   const visible = proposals.slice((page - 1) * pageSize, page * pageSize);
-  const epoch = Math.max(
-    ...summarySnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
-    ...detailSnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
-    0,
-  );
+  const epoch = governance?.epoch || 0;
+
   return (
     <section className="governance-proposals section-wrap">
       <div className="epoch-banner">
-        <span>Current epoch</span>
+        <span>
+          {governance?.source === "snapshot" ? "Snapshot epoch" : "Current epoch"}
+        </span>
         <b>{epoch || "Loading…"}</b>
-        <small>{proposals.length} proposals tracked</small>
+        <small>
+          {proposals.length} proposals tracked ·{" "}
+          {governance?.sourceLabel || "Loading live Namada indexer…"}
+        </small>
       </div>
+      {error && (
+        <p className="dashboard-error">
+          Governance data unavailable from both the live indexer and local
+          snapshot.
+        </p>
+      )}
       <div className="proposals-table-wrap">
         <table className="proposals-table">
           <thead>
@@ -502,7 +500,6 @@ function PaginatedGovernanceProposals() {
             {visible.map((proposal, index) => (
               <Fragment key={proposal.id}>
                 <tr
-                  key={proposal.id}
                   className={`proposal-table-row${expandedId === proposal.id ? " is-expanded" : ""}`}
                   tabIndex={0}
                   aria-expanded={expandedId === proposal.id}
@@ -520,17 +517,17 @@ function PaginatedGovernanceProposals() {
                     }
                   }}
                 >
-                <td>{(page - 1) * pageSize + index + 1}</td>
-                <td>
-                  <b>{proposal.id}</b>
-                </td>
-                <td>{proposal.Type}</td>
-                <td>
-                  <code>{proposal.Author}</code>
-                </td>
-                <td>{proposal.Start_Epoch}</td>
-                <td>{proposal.End_Epoch}</td>
-                <td>{proposal.Activation_Epoch}</td>
+                  <td>{(page - 1) * pageSize + index + 1}</td>
+                  <td>
+                    <b>{proposal.id}</b>
+                  </td>
+                  <td>{proposal.Type || "—"}</td>
+                  <td>
+                    <code>{proposal.Author || "—"}</code>
+                  </td>
+                  <td>{proposal.Start_Epoch || "—"}</td>
+                  <td>{proposal.End_Epoch || "—"}</td>
+                  <td>{proposal.Activation_Epoch || "—"}</td>
                 </tr>
                 {expandedId === proposal.id && (
                   <tr className="proposal-details-row">
@@ -538,8 +535,10 @@ function PaginatedGovernanceProposals() {
                       <article className="proposal-details">
                         <div className="proposal-details-heading">
                           <div>
-                            <span className="section-kicker">Proposal {proposal.id}</span>
-                            <h3>{proposal.Content?.title || proposal.Type}</h3>
+                            <span className="section-kicker">
+                              Proposal {proposal.id}
+                            </span>
+                            <h3>{proposal.Content?.title || proposal.Type || "Proposal"}</h3>
                           </div>
                           {safeHttpsUrl(proposal.Content?.["discussions-to"]) && (
                             <a
@@ -561,15 +560,18 @@ function PaginatedGovernanceProposals() {
                         {proposal.Content?.details && (
                           <div className="proposal-detail-block">
                             <h4>Details</h4>
-                            <p className="proposal-detail-copy">{proposal.Content.details}</p>
+                            <p>{proposal.Content.details}</p>
                           </div>
                         )}
-                        {proposal.Result && (
-                          <div className="proposal-detail-block">
-                            <h4>Result</h4>
-                            <p>{proposal.Result}</p>
-                          </div>
-                        )}
+                        <div className="proposal-detail-meta">
+                          <span>
+                            <b>Status</b> {proposal.Status || "tracked"}
+                          </span>
+                          <span>
+                            <b>Activation epoch</b>{" "}
+                            {proposal.Activation_Epoch || "—"}
+                          </span>
+                        </div>
                       </article>
                     </td>
                   </tr>
@@ -578,20 +580,21 @@ function PaginatedGovernanceProposals() {
             ))}
           </tbody>
         </table>
-        {!visible.length && (
-          <p className="dashboard-loading">Loading proposal data…</p>
+        {governance && !proposals.length && (
+          <p className="dashboard-loading">No proposal data available.</p>
         )}
       </div>
       {proposals.length > pageSize && (
-        <div className="pagination" aria-label="Proposal pagination">
+        <div className="pagination">
           <span>
             Showing {(page - 1) * pageSize + 1}–
             {Math.min(page * pageSize, proposals.length)} of {proposals.length}
           </span>
           <div>
             <button
-              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              type="button"
               disabled={page === 1}
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
             >
               Previous
             </button>
@@ -599,10 +602,11 @@ function PaginatedGovernanceProposals() {
               Page {page} of {pageCount}
             </b>
             <button
+              type="button"
+              disabled={page === pageCount}
               onClick={() =>
                 setPage((current) => Math.min(pageCount, current + 1))
               }
-              disabled={page === pageCount}
             >
               Next
             </button>

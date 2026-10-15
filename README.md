@@ -39,8 +39,18 @@ is deterministic and does not depend on fetch or array order:
 5. Populated fields with different values are returned as conflicts, including
    their source provenance. Development builds log those conflicts for review.
 
-This protects future dataset updates without claiming that the current
-snapshots contain incorrect dashboard results.
+The dashboard now treats the Namada indexer as the current governance source:
+
+- proposals: `https://indexer.namada.net/api/v1/gov/proposal`
+- current epoch: `https://indexer.namada.net/api/v1/chain/epoch/latest`
+
+All proposal pages are loaded automatically, so new governance proposals appear
+without editing bundled JSON. The local `props.json` and `propsDetails.json`
+files remain an offline fallback only. When the indexer is unavailable, the UI
+labels that data as a **Historical snapshot** and changes "Current epoch" to
+"Snapshot epoch" so stale data cannot silently present itself as current.
+
+The reconciliation rules below are used only for that fallback path.
 
 ## Learn More
 
