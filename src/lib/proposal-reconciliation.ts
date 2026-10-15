@@ -237,3 +237,187 @@ export function reconcileProposals(
     provenance,
   };
 }
+
+export const NAMADA_INDEXER_BASE_URL = "https://indexer.namada.net";
+
+type NamadaIndexerProposal = {
+  id?: number;
+  content?: string | ProposalContent;
+  type?: string;
+  author?: string;
+  startEpoch?: number;
+  endEpoch?: number;
+  activationEpoch?: number;
+  status?: string;
+};
+
+type NamadaIndexerProposalPage = {
+  results?: NamadaIndexerProposal[];
+  pagination?: {
+    page?: number;
+    perPage?: number;
+    totalPages?: number;
+    totalItems?: number;
+  };
+};
+
+type NamadaIndexerEpoch = {
+  epoch?: string | number;
+};
+
+export type CurrentGovernance = {
+  snapshot: ProposalSnapshot;
+  fetchedAt: string;
+  latestProposalId: number;
+  totalItems: number;
+};
+
+function proposalContent(value: unknown): ProposalContent | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+
+  const source = value as Record<string, unknown>;
+  const content: ProposalContent = {};
+  contentFields.forEach((field) => {
+    const candidate = source[field];
+    if (typeof candidate === "string" && candidate.length) {
+      Object.assign(content, { [field]: candidate });
+    }
+  });
+  return Object.keys(content).length ? content : undefined;
+}
+
+export function normalizeIndexerProposal(
+  row: NamadaIndexerProposal,
+): NormalizedProposal | null {
+  const id = Number(row.id);
+  if (!Number.isInteger(id) || id < 0) return null;
+
+  let rawContent: unknown = row.content;
+  if (typeof rawContent === "string") {
+    try {
+      rawContent = JSON.parse(rawContent);
+    } catch {
+      rawContent = undefined;
+    }
+  }
+
+  const content = proposalContent(rawContent);
+  return {
+    id,
+    ...(row.type ? { Type: row.type } : {}),
+    ...(row.author ? { Author: row.author } : {}),
+    ...(row.startEpoch !== undefined
+      ? { Start_Epoch: String(row.startEpoch) }
+      : {}),
+    ...(row.endEpoch !== undefined ? { End_Epoch: String(row.endEpoch) } : {}),
+    ...(row.activationEpoch !== undefined
+      ? { Activation_Epoch: String(row.activationEpoch) }
+      : {}),
+    ...(row.status ? { Status: row.status } : {}),
+    ...(content ? { Content: content } : {}),
+  };
+}
+
+export function buildLiveGovernanceSnapshot(
+  epochPayload: NamadaIndexerEpoch,
+  proposalPages: NamadaIndexerProposalPage[],
+): Omit<CurrentGovernance, "fetchedAt"> {
+  const epoch = Number(epochPayload?.epoch);
+  if (!Number.isInteger(epoch) || epoch < 0) {
+    throw new Error("Namada indexer returned an invalid latest epoch");
+  }
+  if (!proposalPages.length) {
+    throw new Error("Namada indexer returned no proposal pages");
+  }
+
+  const expectedPages = Number(proposalPages[0].pagination?.totalPages ?? 1);
+  const expectedItems = Number(
+    proposalPages[0].pagination?.totalItems ??
+      proposalPages.reduce((total, page) => total + (page.results?.length ?? 0), 0),
+  );
+
+  if (
+    !Number.isInteger(expectedPages) ||
+    expectedPages < 1 ||
+    proposalPages.length !== expectedPages
+  ) {
+    throw new Error("Namada indexer proposal pagination is incomplete");
+  }
+
+  const normalized = proposalPages
+    .flatMap((page) => page.results ?? [])
+    .map(normalizeIndexerProposal)
+    .filter((proposal): proposal is NormalizedProposal => proposal !== null);
+
+  if (
+    !Number.isInteger(expectedItems) ||
+    expectedItems < 1 ||
+    normalized.length !== expectedItems
+  ) {
+    throw new Error("Namada indexer proposal count does not match pagination");
+  }
+
+  const ids = normalized.map(({ id }) => id);
+  if (new Set(ids).size !== ids.length) {
+    throw new Error("Namada indexer returned duplicate proposal IDs");
+  }
+
+  const latestProposalId = Math.max(...ids);
+  // On-chain proposal IDs are a zero-based monotonically increasing counter.
+  // If pagination says N proposals exist, the latest source record must not be
+  // older than N - 1 or the displayed list would silently lag the source.
+  if (latestProposalId < expectedItems - 1) {
+    throw new Error("Namada indexer proposal set is stale or incomplete");
+  }
+
+  return {
+    snapshot: {
+      Last_committed_epoch: epoch,
+      Proposal: normalized,
+    },
+    latestProposalId,
+    totalItems: expectedItems,
+  };
+}
+
+export async function fetchCurrentGovernance(
+  fetcher: typeof fetch = fetch,
+  baseUrl = NAMADA_INDEXER_BASE_URL,
+  signal?: AbortSignal,
+): Promise<CurrentGovernance> {
+  const getJson = async <T>(url: string): Promise<T> => {
+    const response = await fetcher(url, { signal });
+    if (!response.ok) {
+      throw new Error(`Namada indexer request failed: ${response.status}`);
+    }
+    return (await response.json()) as T;
+  };
+
+  const [epochPayload, firstPage] = await Promise.all([
+    getJson<NamadaIndexerEpoch>(`${baseUrl}/api/v1/chain/epoch/latest`),
+    getJson<NamadaIndexerProposalPage>(`${baseUrl}/api/v1/gov/proposal`),
+  ]);
+
+  const totalPages = Number(firstPage.pagination?.totalPages ?? 1);
+  if (!Number.isInteger(totalPages) || totalPages < 1) {
+    throw new Error("Namada indexer returned invalid proposal pagination");
+  }
+
+  const remainingPages = await Promise.all(
+    Array.from({ length: totalPages - 1 }, (_, index) =>
+      getJson<NamadaIndexerProposalPage>(
+        `${baseUrl}/api/v1/gov/proposal?page=${index + 2}`,
+      ),
+    ),
+  );
+
+  const current = buildLiveGovernanceSnapshot(epochPayload, [
+    firstPage,
+    ...remainingPages,
+  ]);
+
+  return {
+    ...current,
+    fetchedAt: new Date().toISOString(),
+  };
+}
