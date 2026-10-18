@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { reconcileProposals } from "../node_modules/.cache/namada-tests/proposal-reconciliation.js";
+import {
+  buildLiveGovernanceSnapshot,
+  fetchCurrentGovernance,
+  normalizeIndexerProposal,
+  reconcileProposals,
+} from "../node_modules/.cache/namada-tests/proposal-reconciliation.js";
 
 const summaryProposal = {
   id: 23,
@@ -100,4 +105,112 @@ test("keeps proposals that only exist in one dataset", () => {
     result.proposals.map(({ id }) => id),
     [24, 23],
   );
+});
+
+test("normalizes current indexer proposals into the dashboard shape", () => {
+  const proposal = normalizeIndexerProposal({
+    id: 42,
+    content: JSON.stringify({
+      title: "Signalling - Knowable is leaving Namada",
+      "discussions-to": "https://forum.namada.net/t/example",
+    }),
+    type: "default",
+    author: "tnam-author",
+    startEpoch: 1827,
+    endEpoch: 1867,
+    activationEpoch: 1868,
+    status: "executedRejected",
+  });
+
+  assert.equal(proposal.id, 42);
+  assert.equal(proposal.Type, "default");
+  assert.equal(proposal.Start_Epoch, "1827");
+  assert.equal(proposal.Content.title, "Signalling - Knowable is leaving Namada");
+});
+
+test("builds a current snapshot only when every indexer page is present", () => {
+  const current = buildLiveGovernanceSnapshot(
+    { epoch: "2665" },
+    [
+      {
+        results: [
+          { id: 2, type: "default", startEpoch: 20 },
+          { id: 1, type: "default", startEpoch: 10 },
+        ],
+        pagination: { page: 1, totalPages: 2, totalItems: 3 },
+      },
+      {
+        results: [{ id: 0, type: "default", startEpoch: 1 }],
+        pagination: { page: 2, totalPages: 2, totalItems: 3 },
+      },
+    ],
+  );
+
+  assert.equal(current.snapshot.Last_committed_epoch, 2665);
+  assert.equal(current.latestProposalId, 2);
+  assert.equal(current.totalItems, 3);
+  assert.deepEqual(
+    current.snapshot.Proposal.map(({ id }) => id),
+    [2, 1, 0],
+  );
+
+  assert.throws(
+    () =>
+      buildLiveGovernanceSnapshot(
+        { epoch: "2665" },
+        [
+          {
+            results: [{ id: 2 }],
+            pagination: { page: 1, totalPages: 2, totalItems: 3 },
+          },
+        ],
+      ),
+    /pagination is incomplete/,
+  );
+});
+
+test("fetches every proposal page and the live epoch from the Namada indexer", async () => {
+  const calls = [];
+  const payloads = new Map([
+    [
+      "https://indexer.test/api/v1/chain/epoch/latest",
+      { epoch: "2665" },
+    ],
+    [
+      "https://indexer.test/api/v1/gov/proposal",
+      {
+        results: [{ id: 2, content: "{\"title\":\"Latest\"}" }, { id: 1 }],
+        pagination: { page: 1, totalPages: 2, totalItems: 3 },
+      },
+    ],
+    [
+      "https://indexer.test/api/v1/gov/proposal?page=2",
+      {
+        results: [{ id: 0 }],
+        pagination: { page: 2, totalPages: 2, totalItems: 3 },
+      },
+    ],
+  ]);
+
+  const fetcher = async (url) => {
+    calls.push(String(url));
+    const payload = payloads.get(String(url));
+    return {
+      ok: Boolean(payload),
+      status: payload ? 200 : 404,
+      async json() {
+        return payload;
+      },
+    };
+  };
+
+  const current = await fetchCurrentGovernance(
+    fetcher,
+    "https://indexer.test",
+  );
+
+  assert.deepEqual(calls.sort(), [...payloads.keys()].sort());
+  assert.equal(current.snapshot.Last_committed_epoch, 2665);
+  assert.equal(current.latestProposalId, 2);
+  assert.equal(current.snapshot.Proposal[0].Content.title, "Latest");
 });

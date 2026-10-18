@@ -8,13 +8,15 @@ import {
   X,
 } from "lucide-react";
 import { NetworkDashboard } from "./Home";
-import { DATA_URL } from "../components/lib/chart/data-url";
+import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
 import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import ProposalParticipationChart from "../components/ProposalParticipationChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
 import {
+  fetchCurrentGovernance,
+  NAMADA_INDEXER_BASE_URL,
   reconcileProposals,
   type ProposalSnapshot,
 } from "../lib/proposal-reconciliation";
@@ -44,62 +46,6 @@ type RewardPoint = {
   Annual_Staking_Rewards_Ratio: string;
   Inflation_Rate: string;
 };
-
-export function GovernanceProposals() {
-  const [snapshot, setSnapshot] = useState<ProposalSnapshot | null>(null);
-  useEffect(() => {
-    fetch(DATA_URL.proposalsUrl)
-      .then((response) => response.json())
-      .then((rows: ProposalSnapshot[]) => setSnapshot(rows[0]))
-      .catch(() => setSnapshot({ Proposal: [] }));
-  }, []);
-  const proposals = [...(snapshot?.Proposal || [])].sort(
-    (a, b) => (b.id ?? b.Id ?? 0) - (a.id ?? a.Id ?? 0),
-  );
-  return (
-    <section className="governance-proposals section-wrap">
-      <div className="epoch-banner">
-        <span>Current epoch</span>
-        <b>{snapshot?.Last_committed_epoch ?? "Loading…"}</b>
-      </div>
-      <div className="proposals-table-wrap">
-        <table className="proposals-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>ID</th>
-              <th>Type</th>
-              <th>Author</th>
-              <th>Start epoch</th>
-              <th>End epoch</th>
-              <th>Activation epoch</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proposals.map((proposal, index) => (
-              <tr key={proposal.id ?? proposal.Id ?? index}>
-                <td>{index + 1}</td>
-                <td>
-                  <b>{proposal.id ?? proposal.Id}</b>
-                </td>
-                <td>{proposal.Type}</td>
-                <td>
-                  <code>{proposal.Author}</code>
-                </td>
-                <td>{proposal.Start_Epoch}</td>
-                <td>{proposal.End_Epoch}</td>
-                <td>{proposal.Activation_Epoch}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {snapshot && !proposals.length && (
-          <p className="dashboard-loading">No proposal data available.</p>
-        )}
-      </div>
-    </section>
-  );
-}
 
 function formatParameter(value: unknown, key: string) {
   if (typeof value === "boolean") return value ? "Yes" : "No";
@@ -441,49 +387,112 @@ function PaginatedGovernanceProposals() {
   const [detailSnapshots, setDetailSnapshots] = useState<ProposalSnapshot[]>(
     [],
   );
+  const [liveSnapshot, setLiveSnapshot] = useState<ProposalSnapshot | null>(
+    null,
+  );
+  const [governanceSource, setGovernanceSource] = useState<
+    "loading" | "live" | "snapshot"
+  >("loading");
+  const [snapshotUpdatedAt, setSnapshotUpdatedAt] = useState<string | null>(
+    null,
+  );
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const pageSize = 10;
+
   useEffect(() => {
-    Promise.all([
-      fetch(DATA_URL.proposalsUrl).then((response) => response.json()),
-      fetch(DATA_URL.propsDetailsUrl).then((response) => response.json()),
-    ])
-      .then(([summary, details]: [ProposalSnapshot[], ProposalSnapshot[]]) => {
-        setSummarySnapshots(summary);
-        setDetailSnapshots(details);
-      })
-      .catch(() => {
+    const controller = new AbortController();
+    let active = true;
+
+    const loadGovernance = async () => {
+      try {
+        const current = await fetchCurrentGovernance(
+          fetch,
+          NAMADA_INDEXER_BASE_URL,
+          controller.signal,
+        );
+        if (!active) return;
+        setLiveSnapshot(current.snapshot);
+        setGovernanceSource("live");
+        return;
+      } catch {
+        if (controller.signal.aborted) return;
+      }
+
+      try {
+        const [summary, details, updatedAt] = await Promise.all([
+          fetch(DATA_URL.proposalsUrl, { signal: controller.signal }).then(
+            (response) => response.json(),
+          ),
+          fetch(DATA_URL.propsDetailsUrl, { signal: controller.signal }).then(
+            (response) => response.json(),
+          ),
+          getLastUpdatedDate(DATE_URL.propsDetailsUrl, controller.signal),
+        ]);
+        if (!active) return;
+        setSummarySnapshots(summary as ProposalSnapshot[]);
+        setDetailSnapshots(details as ProposalSnapshot[]);
+        setSnapshotUpdatedAt(updatedAt === "N/A" ? null : updatedAt);
+        setGovernanceSource("snapshot");
+      } catch {
+        if (!active || controller.signal.aborted) return;
         setSummarySnapshots([]);
         setDetailSnapshots([]);
-      });
+        setGovernanceSource("snapshot");
+      }
+    };
+
+    void loadGovernance();
+    return () => {
+      active = false;
+      controller.abort();
+    };
   }, []);
+
   const { proposals, conflicts } = useMemo(
     () =>
-      reconcileProposals([
-        { name: "summary", authority: 1, snapshots: summarySnapshots },
-        { name: "details", authority: 2, snapshots: detailSnapshots },
-      ]),
-    [summarySnapshots, detailSnapshots],
+      liveSnapshot
+        ? reconcileProposals([
+            {
+              name: "namada-indexer",
+              authority: 3,
+              snapshots: [liveSnapshot],
+            },
+          ])
+        : reconcileProposals([
+            { name: "summary", authority: 1, snapshots: summarySnapshots },
+            { name: "details", authority: 2, snapshots: detailSnapshots },
+          ]),
+    [liveSnapshot, summarySnapshots, detailSnapshots],
   );
+
   useEffect(() => {
     if (conflicts.length && import.meta.env.DEV) {
       console.warn("Conflicting governance proposal fields", conflicts);
     }
   }, [conflicts]);
+
   const pageCount = Math.max(1, Math.ceil(proposals.length / pageSize));
   const visible = proposals.slice((page - 1) * pageSize, page * pageSize);
-  const epoch = Math.max(
-    ...summarySnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
-    ...detailSnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
-    0,
-  );
+  const epoch =
+    liveSnapshot?.Last_committed_epoch ??
+    Math.max(
+      ...summarySnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
+      ...detailSnapshots.map((snapshot) => snapshot.Last_committed_epoch || 0),
+      0,
+    );
+  const sourceLabel =
+    governanceSource === "live"
+      ? `Live Namada indexer · ${proposals.length} proposals`
+      : governanceSource === "snapshot"
+        ? `Historical snapshot${snapshotUpdatedAt ? ` · ${new Date(snapshotUpdatedAt).toLocaleDateString()}` : ""} · ${proposals.length} proposals`
+        : "Loading current governance…";
   return (
     <section className="governance-proposals section-wrap">
       <div className="epoch-banner">
-        <span>Current epoch</span>
+        <span>{governanceSource === "snapshot" ? "Snapshot epoch" : "Current epoch"}</span>
         <b>{epoch || "Loading…"}</b>
-        <small>{proposals.length} proposals tracked</small>
+        <small>{sourceLabel}</small>
       </div>
       <div className="proposals-table-wrap">
         <table className="proposals-table">
