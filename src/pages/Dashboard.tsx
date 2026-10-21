@@ -663,7 +663,7 @@ function ValidatorTable() {
               const key = validator.Address || validator.Name || "validator";
               const isExpanded = expanded === key;
               return (
-                <>
+                <Fragment key={key}>
                   {
                     <tr
                       key={key}
@@ -803,7 +803,7 @@ function ValidatorTable() {
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               );
             })}
           </tbody>
