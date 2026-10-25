@@ -13,6 +13,8 @@ import {
   Tooltip,
   Legend,
   TimeScale,
+  type ChartOptions,
+  type TooltipItem,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { format, parse } from "date-fns";
@@ -153,7 +155,7 @@ const RewardCharts = ({ DataUrlOptions }: RewardChartProps) => {
     return "day";
   };
 
-  const options: any = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     interaction: {
       mode: "index" as const,
@@ -166,7 +168,7 @@ const RewardCharts = ({ DataUrlOptions }: RewardChartProps) => {
         time: {
           parser: "MM/dd/yyyy",
           tooltipFormat: "MMM dd, yyyy",
-          unit: timeRange === "7d" ? "day" : "month",
+          unit: getTimeUnit(timeRange),
         },
         title: {
           display: true,
@@ -207,15 +209,15 @@ const RewardCharts = ({ DataUrlOptions }: RewardChartProps) => {
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem<"line">) {
             let label = context.dataset.label || "";
             if (label) {
               label += ": ";
             }
-            label += context.parsed.y.toFixed(2) + "%";
+            label += (context.parsed.y ?? 0).toFixed(2) + "%";
             return label;
           },
-          afterLabel: function (context: any) {
+          afterLabel: function (context: TooltipItem<"line">) {
             const date = format(new Date(context.label), "PP");
             return `Date: ${date}`;
           },
@@ -261,7 +263,7 @@ const RewardCharts = ({ DataUrlOptions }: RewardChartProps) => {
         <div className="flex gap-2">
           <select
             value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value as any)}
+            onChange={(e) => setTimeRange(e.target.value as typeof timeRange)}
             className="border bg-white dark:bg-slate-900 rounded px-3 py-1 text-sm"
           >
             <option value="7d">Last 7 days</option>
