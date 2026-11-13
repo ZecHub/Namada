@@ -293,6 +293,7 @@ function MarketMetrics() {
     namada?: { usd?: number; btc?: number; usd_market_cap?: number };
   } | null>(null);
   const [totalSupply, setTotalSupply] = useState(0);
+  const [supplyDate, setSupplyDate] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -308,14 +309,19 @@ function MarketMetrics() {
         );
         setPrice(market);
         setTotalSupply(namada?.totalSupply ? Number(namada.totalSupply) : 0);
+        setSupplyDate(latest?.Date ?? null);
       })
       .catch(() => {
         setPrice(null);
         setTotalSupply(0);
+        setSupplyDate(null);
       });
   }, []);
 
   const usd = price?.namada?.usd;
+  // CoinGecko's market cap uses circulating supply; price x total supply is
+  // the fully diluted value, so show that separately instead of as "market cap".
+  const marketCap = price?.namada?.usd_market_cap;
   return (
     <section className="charts-workspace section-wrap">
       <div className="metrics-heading">
@@ -331,18 +337,29 @@ function MarketMetrics() {
         <div>
           <span>Market cap</span>
           <b>
-            {usd && totalSupply
-              ? `$${(usd * totalSupply).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
-              : "Loading…"}
+            {marketCap
+              ? `$${marketCap.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+              : price
+                ? "—"
+                : "Loading…"}
           </b>
+          {usd && totalSupply ? (
+            <small>
+              Fully diluted: $
+              {(usd * totalSupply).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              })}
+            </small>
+          ) : null}
         </div>
         <div>
-          <span>Circulation</span>
+          <span>Total supply</span>
           <b>
             {totalSupply
               ? `${totalSupply.toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM`
               : "Loading…"}
           </b>
+          {supplyDate ? <small>Snapshot {supplyDate}</small> : null}
         </div>
         <div>
           <span>Market price (USD)</span>
