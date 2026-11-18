@@ -12,6 +12,7 @@ import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
+import ProposalStatusBadge from "../components/ProposalStatusBadge";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -507,6 +508,7 @@ function PaginatedGovernanceProposals() {
               <th>Start epoch</th>
               <th>End epoch</th>
               <th>Activation epoch</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -542,10 +544,11 @@ function PaginatedGovernanceProposals() {
                 <td>{proposal.Start_Epoch}</td>
                 <td>{proposal.End_Epoch}</td>
                 <td>{proposal.Activation_Epoch}</td>
+                <td><ProposalStatusBadge status={proposal.Status} /></td>
                 </tr>
                 {expandedId === proposal.id && (
                   <tr className="proposal-details-row">
-                    <td colSpan={7}>
+                    <td colSpan={8}>
                       <article className="proposal-details">
                         <div className="proposal-details-heading">
                           <div>
