@@ -12,6 +12,7 @@ import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
+import { normalizeSupplyData } from "../lib/supply-normalization";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -302,7 +303,8 @@ function MarketMetrics() {
       fetch(DATA_URL.namadaSupplyUrl).then((response) => response.json()),
     ])
       .then(([market, supply]) => {
-        const latest = supply[supply.length - 1];
+        const normalizedSupply = normalizeSupplyData(supply).records;
+        const latest = normalizedSupply[normalizedSupply.length - 1];
         const namada = latest?.Total_Supply?.find(
           (token: { id: string }) => token.id === "Namada",
         );

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight, BookOpen, CheckCircle2, ChevronRight, Code2, Coins, ExternalLink, Github, Globe2, Menu, Search, Server, Shield, SlidersHorizontal, Sparkles, Vote, WalletCards, X } from "lucide-react";
 import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
 import { safeHttpsUrl } from "../lib/safe-url";
+import { normalizeSupplyData } from "../lib/supply-normalization";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -57,7 +58,8 @@ export function NetworkDashboard() {
     ])
       .then(([supplyData, parameterRows, validatorRows]) => {
         if (!active) return;
-        setSupplyRows(supplyData); setSupply(supplyData[supplyData.length - 1]);
+        const normalizedSupply = normalizeSupplyData(supplyData).records;
+        setSupplyRows(normalizedSupply); setSupply(normalizedSupply[normalizedSupply.length - 1] ?? null);
         const parameterData = parameterRows[0];
         const posParams =
           parameterData.Proof_Of_Stake_Parameters?.[0] ??

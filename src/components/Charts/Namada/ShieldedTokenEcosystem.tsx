@@ -31,7 +31,7 @@ import {
   SelectValue,
 } from "../../UI/shadcn/select";
 
-import { NamadaAsset, NamadaRawData } from "../../lib/chart/types";
+import { NamadaRawData } from "../../lib/chart/types";
 
 type ShieldedTokenEcosystemProps = {
   divChartRef: RefObject<HTMLDivElement | null>;
@@ -60,8 +60,8 @@ export default function ShieldedTokenEcosystem(
         );
         setRawData(data || []);
 
-        const firstEntry = data?.[100]?.Total_Supply || [];
-        setTokenIds(firstEntry.map((t: NamadaAsset) => t.id));
+        const tokenIds = [...new Set((data || []).flatMap((entry) => entry.Total_Supply.map((token) => token.id)))];
+        setTokenIds(tokenIds);
       } catch (err) {
         console.error("Failed to fetch namada data:", err);
       } finally {
@@ -77,9 +77,7 @@ export default function ShieldedTokenEcosystem(
     const row: FlattenedTokenData = { Date: entry.Date };
     entry.Total_Supply.forEach((token) => {
       const value = parseFloat(token.shieldedSupply || "0");
-      token.id === "Namada"
-        ? (row[token.id] = value)
-        : (row[token.id] = value / 1000000);
+      row[token.id] = token.id === "Namada" ? value : value / 1000000;
     });
     return row;
   });
