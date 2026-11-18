@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowUpRight, BookOpen, CheckCircle2, ChevronRight, Code2, Coins, ExternalLink, Github, Globe2, Menu, Search, Server, Shield, SlidersHorizontal, Sparkles, Vote, WalletCards, X } from "lucide-react";
 import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
 import { safeHttpsUrl } from "../lib/safe-url";
+import { fetchJson, useIndependentSources } from "../lib/source-loader";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -37,85 +38,42 @@ function GuideCard({ guide }: { guide: Guide }) { const Icon = guide.icon; retur
 type SupplyPoint = { Date: string; Native_Supply_NAM: string; Total_Supply: { id: string; totalSupply: string }[] };
 type Proposal = { id: number; Type: string; Content?: { title?: string; "discussions-to"?: string }; Start_Epoch: string; End_Epoch: string; Activation_Epoch: string; Status?: string };
 type Validator = { Name?: string; Address?: string; Commission?: string; Epoch?: string; Description?: string; Website?: string };
+type HomeProtocol = {
+  Governance_Parameters?: Record<string, unknown>[];
+  Proof_Of_Stake_Parameters?: Record<string, unknown>[];
+  Proof_Of_Stake_Parmeters?: Record<string, unknown>[];
+};
+
+const networkLoaders = {
+  supply: (signal: AbortSignal) => fetchJson<SupplyPoint[]>(supplyDataUrl, signal, (value): value is SupplyPoint[] => Array.isArray(value) && value.every((row) => row && typeof row === "object" && typeof row.Date === "string" && Array.isArray(row.Total_Supply))),
+  parameters: (signal: AbortSignal) => fetchJson<HomeProtocol[]>(DATA_URL.protocol_parametersUrl, signal, (value): value is HomeProtocol[] => Array.isArray(value) && value.every((row) => row && typeof row === "object")),
+  validators: (signal: AbortSignal) => fetchJson<Validator[]>(DATA_URL.zechubUrl, signal, (value): value is Validator[] => Array.isArray(value) && value.every((row) => row && typeof row === "object")),
+  proposals: async (signal: AbortSignal) => {
+    try {
+      const current = await fetchCurrentGovernance(fetch, NAMADA_INDEXER_BASE_URL, signal);
+      return { source: "live" as const, rows: (current.snapshot.Proposal ?? []) as Proposal[] };
+    } catch (error) {
+      if (signal.aborted) throw error;
+      const snapshots = await fetchJson<{ Proposal?: Proposal[] }[]>(proposalDataUrl, signal, (value): value is { Proposal?: Proposal[] }[] => Array.isArray(value) && value.every((row) => row && typeof row === "object"));
+      return { source: "snapshot" as const, rows: snapshots.flatMap((row) => row.Proposal ?? []) };
+    }
+  },
+};
 
 export function NetworkDashboard() {
-  const [supplyRows, setSupplyRows] = useState<SupplyPoint[]>([]); const [supply, setSupply] = useState<SupplyPoint | null>(null);
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [proposalSource, setProposalSource] = useState<
-    "loading" | "live" | "snapshot"
-  >("loading");
-  const [parameters, setParameters] = useState<Record<string, unknown> | null>(null); const [validators, setValidators] = useState<Validator[]>([]);
-  const [error, setError] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-
-    Promise.all([
-      fetch(supplyDataUrl, { signal: controller.signal }).then((r) => r.json()),
-      fetch(DATA_URL.protocol_parametersUrl, { signal: controller.signal }).then((r) => r.json()),
-      fetch(DATA_URL.zechubUrl, { signal: controller.signal }).then((r) => r.json()),
-    ])
-      .then(([supplyData, parameterRows, validatorRows]) => {
-        if (!active) return;
-        setSupplyRows(supplyData); setSupply(supplyData[supplyData.length - 1]);
-        const parameterData = parameterRows[0];
-        const posParams =
-          parameterData.Proof_Of_Stake_Parameters?.[0] ??
-          parameterData.Proof_Of_Stake_Parmeters?.[0];
-        setParameters({
-          ...parameterData.Governance_Parameters?.[0],
-          ...posParams,
-        });
-        setValidators(validatorRows);
-      })
-      .catch(() => {
-        if (active && !controller.signal.aborted) setError(true);
-      });
-
-    const loadProposals = async () => {
-      try {
-        const current = await fetchCurrentGovernance(
-          fetch,
-          NAMADA_INDEXER_BASE_URL,
-          controller.signal,
-        );
-        if (!active) return;
-        const rows = (current.snapshot.Proposal ?? []) as Proposal[];
-        setProposals(
-          [...rows].sort((a: Proposal, b: Proposal) => b.id - a.id).slice(0, 4),
-        );
-        setProposalSource("live");
-        return;
-      } catch {
-        if (controller.signal.aborted) return;
-      }
-
-      try {
-        const proposalRows = await fetch(proposalDataUrl, {
-          signal: controller.signal,
-        }).then((r) => r.json());
-        if (!active) return;
-        const rows: Proposal[] = proposalRows.flatMap(
-          (row: { Proposal?: Proposal[] }) => row.Proposal ?? [],
-        );
-        setProposals(
-          rows.sort((a: Proposal, b: Proposal) => b.id - a.id).slice(0, 4),
-        );
-        setProposalSource("snapshot");
-      } catch {
-        if (active && !controller.signal.aborted) setError(true);
-      }
-    };
-
-    void loadProposals();
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, []);
+  const { states, retryFailed } = useIndependentSources(networkLoaders);
+  const supplyRows = states.supply.data ?? [];
+  const supply = supplyRows[supplyRows.length - 1] ?? null;
+  const proposals = states.proposals.data?.rows ?? [];
+  const proposalSource = states.proposals.data?.source ?? "loading";
+  const parameterData = states.parameters.data?.[0];
+  const posParams = parameterData?.Proof_Of_Stake_Parameters?.[0] ?? parameterData?.Proof_Of_Stake_Parmeters?.[0];
+  const parameters = { ...parameterData?.Governance_Parameters?.[0], ...posParams };
+  const validators = states.validators.data ?? [];
+  const hasFailures = Object.values(states).some((state) => state.status === "error" || state.status === "stale");
   const namadaTotal = supply?.Total_Supply?.find((token) => token.id === "Namada")?.totalSupply;
   const chartRows = supplyRows.slice(-10); const chartMax = Math.max(...chartRows.map((row) => Number(row.Native_Supply_NAM)), 1);
-  return <section className="dashboard section-wrap" id="dashboard"><div className="section-heading"><div><span className="section-kicker">Network pulse</span><h2>Namada dashboard</h2></div><div className="source-links"><a className="data-source-link" href="/data/namada_supply.json" target="_blank" rel="noreferrer">Supply data <ArrowUpRight size={14} /></a><a className="data-source-link" href={proposalSource === "live" ? `${NAMADA_INDEXER_BASE_URL}/api/v1/gov/proposal` : "/data/proposals/propsDetails.json"} target="_blank" rel="noreferrer">{proposalSource === "snapshot" ? "Historical proposal snapshot" : "Live proposal data"} <ArrowUpRight size={14} /></a></div></div><div className="dashboard-grid"><div className="metrics-panel"><div className="metric-label">NAM total supply <span className="live-dot" /> local snapshot</div><strong>{namadaTotal ? Number(namadaTotal).toLocaleString(undefined, { maximumFractionDigits: 0 }) : "—"}</strong><span className="metric-date">Updated {supply?.Date ?? "loading…"}</span><div className="metric-divider" /><div className="metric-label">Native supply</div><b>{supply?.Native_Supply_NAM ? `${Number(supply.Native_Supply_NAM).toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM` : "Loading…"}</b><span className="metric-date">Source: <a href={supplySourceUrl} target="_blank" rel="noreferrer">ZecHub Namada data</a></span></div><div className="proposals-panel"><div className="proposal-head"><div><div className="metric-label">Governance</div><h3>Recent proposals</h3></div><a href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">How governance works <ArrowUpRight size={14} /></a></div>{error && <p className="dashboard-error">Data snapshot unavailable. Check the source links.</p>}{proposals.map((proposal) => <a className="proposal-row" key={proposal.id} href={safeHttpsUrl(proposal.Content?.["discussions-to"], `${officialDocs}/users/governance`)} target="_blank" rel="noreferrer"><span className="proposal-id">#{proposal.id}</span><span className="proposal-title">{proposal.Content?.title || proposal.Type}</span><span className={`proposal-status ${proposal.Status === "ended" || proposal.Status?.startsWith("executed") ? "ended" : "active"}`}>{proposal.Status || "tracked"}</span><ArrowUpRight size={15} /></a>)}{!proposals.length && !error && <p className="dashboard-loading">Loading proposals…</p>}</div></div><div className="analytics-grid"><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Chart</span><h3>NAM supply history</h3></span><BarIcon /></div><div className="bars" aria-label="NAM native supply history">{chartRows.map((row) => <div className="bar-column" key={row.Date}><div className="bar" style={{ height: `${Math.max(8, Number(row.Native_Supply_NAM) / chartMax * 100)}%` }} title={`${row.Date}: ${Number(row.Native_Supply_NAM).toLocaleString()} NAM`} /><small>{row.Date.slice(0, 5)}</small></div>)}</div></div><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Protocol</span><h3>Parameters</h3></span><SlidersHorizontal size={18} /></div><div className="parameter-list"><span><b>Proposal fund</b>{String(parameters?.Min_proposal_fund || "Loading…")}</span><span><b>Pipeline</b>{String(parameters?.Pipline_length || "Loading…")}</span><span><b>Validator slots</b>{String(parameters?.Max_consensus_validator_slots || "Loading…")}</span><span><b>Stake threshold</b>{String(parameters?.Validator_stake_threshold || "Loading…")}</span></div><a className="dashboard-link" href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">View governance docs <ArrowUpRight size={14} /></a></div></div><div className="validators-card"><div className="analytics-title"><span><span className="metric-label">Operators</span><h3>Validators</h3></span><Server size={18} /></div><div className="validator-list">{validators.map((validator) => <a className="validator-row" key={validator.Address} href={safeHttpsUrl(validator.Website, `${officialDocs}/operators/validators`)} target="_blank" rel="noreferrer"><span className="validator-avatar">{(validator.Name || "V").slice(0, 1)}</span><span><b>{validator.Name || "Validator"}</b><small>{validator.Description || "Namada network operator"}</small></span><em>{validator.Commission ? `${Number(validator.Commission) * 100}%` : "—"}<ArrowUpRight size={14} /></em></a>)}</div></div></section>;
+  return <section className="dashboard section-wrap" id="dashboard"><div className="section-heading"><div><span className="section-kicker">Network pulse</span><h2>Namada dashboard</h2></div><div className="source-links"><a className="data-source-link" href="/data/namada_supply.json" target="_blank" rel="noreferrer">Supply data <ArrowUpRight size={14} /></a><a className="data-source-link" href={proposalSource === "live" ? `${NAMADA_INDEXER_BASE_URL}/api/v1/gov/proposal` : "/data/proposals/propsDetails.json"} target="_blank" rel="noreferrer">{proposalSource === "snapshot" ? "Historical proposal snapshot" : "Live proposal data"} <ArrowUpRight size={14} /></a></div></div><div className="dashboard-grid"><div className="metrics-panel"><div className="metric-label">NAM total supply <span className="live-dot" /> local snapshot</div><strong>{namadaTotal ? Number(namadaTotal).toLocaleString(undefined, { maximumFractionDigits: 0 }) : "—"}</strong><span className="metric-date">Updated {supply?.Date ?? "loading…"}</span><div className="metric-divider" /><div className="metric-label">Native supply</div><b>{supply?.Native_Supply_NAM ? `${Number(supply.Native_Supply_NAM).toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM` : "Loading…"}</b><span className="metric-date">Source: <a href={supplySourceUrl} target="_blank" rel="noreferrer">ZecHub Namada data</a></span></div><div className="proposals-panel"><div className="proposal-head"><div><div className="metric-label">Governance</div><h3>Recent proposals</h3></div><a href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">How governance works <ArrowUpRight size={14} /></a></div>{hasFailures && <p className="dashboard-error" role="status">Some sources are unavailable; loaded data is preserved. <button type="button" onClick={retryFailed}>Retry failed sources</button></p>}{proposals.map((proposal) => <a className="proposal-row" key={proposal.id} href={safeHttpsUrl(proposal.Content?.["discussions-to"], `${officialDocs}/users/governance`)} target="_blank" rel="noreferrer"><span className="proposal-id">#{proposal.id}</span><span className="proposal-title">{proposal.Content?.title || proposal.Type}</span><span className={`proposal-status ${proposal.Status === "ended" || proposal.Status?.startsWith("executed") ? "ended" : "active"}`}>{proposal.Status || "tracked"}</span><ArrowUpRight size={15} /></a>)}{!proposals.length && states.proposals.status === "loading" && <p className="dashboard-loading">Loading proposals…</p>}{!proposals.length && states.proposals.status === "empty" && <p className="dashboard-loading">No proposals were returned.</p>}{states.proposals.status === "error" && <p className="dashboard-error">Governance data is unavailable.</p>}</div></div><div className="analytics-grid"><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Chart</span><h3>NAM supply history</h3></span><BarIcon /></div><div className="bars" aria-label="NAM native supply history">{chartRows.map((row) => <div className="bar-column" key={row.Date}><div className="bar" style={{ height: `${Math.max(8, Number(row.Native_Supply_NAM) / chartMax * 100)}%` }} title={`${row.Date}: ${Number(row.Native_Supply_NAM).toLocaleString()} NAM`} /><small>{row.Date.slice(0, 5)}</small></div>)}</div></div><div className="analytics-card"><div className="analytics-title"><span><span className="metric-label">Protocol</span><h3>Parameters</h3></span><SlidersHorizontal size={18} /></div><div className="parameter-list"><span><b>Proposal fund</b>{String(parameters?.Min_proposal_fund || "Loading…")}</span><span><b>Pipeline</b>{String(parameters?.Pipline_length || "Loading…")}</span><span><b>Validator slots</b>{String(parameters?.Max_consensus_validator_slots || "Loading…")}</span><span><b>Stake threshold</b>{String(parameters?.Validator_stake_threshold || "Loading…")}</span></div><a className="dashboard-link" href={`${officialDocs}/users/governance`} target="_blank" rel="noreferrer">View governance docs <ArrowUpRight size={14} /></a></div></div><div className="validators-card"><div className="analytics-title"><span><span className="metric-label">Operators</span><h3>Validators</h3></span><Server size={18} /></div><div className="validator-list">{validators.map((validator) => <a className="validator-row" key={validator.Address} href={safeHttpsUrl(validator.Website, `${officialDocs}/operators/validators`)} target="_blank" rel="noreferrer"><span className="validator-avatar">{(validator.Name || "V").slice(0, 1)}</span><span><b>{validator.Name || "Validator"}</b><small>{validator.Description || "Namada network operator"}</small></span><em>{validator.Commission ? `${Number(validator.Commission) * 100}%` : "—"}<ArrowUpRight size={14} /></em></a>)}</div></div></section>;
 }
 
 function BarIcon() { return <span className="bar-icon"><i /><i /><i /></span>; }
