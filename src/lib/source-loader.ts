@@ -63,6 +63,18 @@ export function sourceSuccess<T>(data: T): SourceState<T> {
     updatedAt: Date.now(),
   };
 }
+
+export async function settleSource<T>(
+  loader: SourceLoader<T>,
+  previous: SourceState<T>,
+  signal: AbortSignal,
+): Promise<SourceState<T>> {
+  try {
+    return sourceSuccess(await loader(signal));
+  } catch (error) {
+    return sourceFailure(previous, error);
+  }
+}
 import { useCallback, useEffect, useRef, useState } from "react";
 
 
@@ -75,6 +87,7 @@ export function useIndependentSources<T extends object>(
       Object.keys(loaders).map((key) => [key, createSourceState()]),
     ) as { [K in Key]: SourceState<T[K]> },
   );
+  const statesRef = useRef(states);
   const controllers = useRef(new Map<Key, AbortController>());
   const requests = useRef(new Map<Key, number>());
   const loaderRef = useRef(loaders);
@@ -86,24 +99,27 @@ export function useIndependentSources<T extends object>(
     controllers.current.set(key, controller);
     const requestId = (requests.current.get(key) ?? 0) + 1;
     requests.current.set(key, requestId);
-    setStates((current) => ({
-      ...current,
-      [key]: { ...current[key], status: "loading", error: null },
-    }));
-    try {
-      const data = await loaderRef.current[key](controller.signal);
-      if (requests.current.get(key) !== requestId) return;
-      setStates((current) => ({ ...current, [key]: sourceSuccess(data) }));
-    } catch (error) {
-      if (requests.current.get(key) !== requestId || controller.signal.aborted)
-        return;
-      setStates((current) => ({
+    setStates((current) => {
+      const next = {
         ...current,
-        [key]: sourceFailure(current[key], error),
-      }));
-    } finally {
-      if (requests.current.get(key) === requestId) controllers.current.delete(key);
+        [key]: { ...current[key], status: "loading" as const, error: null },
+      };
+      statesRef.current = next;
+      return next;
+    });
+    const result = await settleSource(
+      loaderRef.current[key],
+      statesRef.current[key],
+      controller.signal,
+    );
+    if (requests.current.get(key) === requestId && !controller.signal.aborted) {
+      setStates((current) => {
+        const next = { ...current, [key]: result };
+        statesRef.current = next;
+        return next;
+      });
     }
+    if (requests.current.get(key) === requestId) controllers.current.delete(key);
   }, []);
 
   const retryFailed = useCallback(() => {

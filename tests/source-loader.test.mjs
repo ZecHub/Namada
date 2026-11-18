@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   fetchJson,
   isEmptyResult,
+  settleSource,
   sourceFailure,
   sourceSuccess,
 } from "../node_modules/.cache/namada-tests/source-loader.js";
@@ -46,5 +47,31 @@ test("retains successful data as stale when a refresh fails", () => {
   assert.equal(next.status, "stale");
   assert.deepEqual(next.data, [{ id: 1 }]);
   assert.equal(next.error, "offline");
+});
+
+test("settles independent sources separately and retries only failed sources", async () => {
+  let healthyCalls = 0;
+  let flakyCalls = 0;
+  const signal = new AbortController().signal;
+  const healthy = await settleSource(async () => {
+    healthyCalls += 1;
+    return [{ id: 1 }];
+  }, sourceSuccess(null), signal);
+  const flakyLoader = async () => {
+    flakyCalls += 1;
+    if (flakyCalls === 1) throw new Error("temporary failure");
+    return [{ id: 2 }];
+  };
+  let flaky = await settleSource(flakyLoader, sourceSuccess(null), signal);
+
+  assert.equal(healthy.status, "success");
+  assert.equal(flaky.status, "error");
+  if (flaky.status === "error") {
+    flaky = await settleSource(flakyLoader, flaky, signal);
+  }
+
+  assert.equal(flaky.status, "success");
+  assert.equal(healthyCalls, 1);
+  assert.equal(flakyCalls, 2);
 });
 
