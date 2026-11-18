@@ -11,7 +11,9 @@ import {
   ShieldedTransactionDatum,
   ShieldedTxCount,
   SupplyData,
+  NamadaRawData,
 } from "./types";
+import { normalizeSupplyData } from "../../../lib/supply-normalization";
 
 export async function getBlockchainData(
   url: string,
@@ -215,7 +217,7 @@ export async function getDifficultyData(
 export async function getNamadaSupply(
   url: string,
   signal?: AbortSignal
-): Promise<any[]> {
+): Promise<NamadaRawData[]> {
   try {
     const res = await fetch(url, { signal });
 
@@ -224,13 +226,13 @@ export async function getNamadaSupply(
       return [];
     }
 
-    const data: any[] = await res.json();
-    return data;
-  } catch (err: any) {
-    if (err.name === "AbortError") {
+    const data: unknown = await res.json();
+    return normalizeSupplyData(data).records;
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === "AbortError") {
       console.warn("Fetch aborted.");
     } else {
-      console.error("Error fetching Namada supply:", err.message || err);
+      console.error("Error fetching Namada supply:", err);
     }
     return [];
   }
