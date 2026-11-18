@@ -51,6 +51,20 @@ order:
 This protects future dataset updates without claiming that the current
 snapshots contain incorrect dashboard results.
 
+## Governance proposal statuses
+
+Proposal badges use one shared mapping in `src/lib/proposal-status.ts`.
+Namada's on-chain lifecycle values `pending`, `on-going`, and `ended` map to
+Pending, Active, and Completed. The live indexer reports finalized outcomes as
+`executedPassed` and `executedRejected`; these map to Completed and Rejected.
+Historical `ended` records do not contain an outcome, so they remain Completed
+rather than implying a pass or rejection. Missing or unrecognized values map
+to Unknown and never receive active styling.
+
+The lifecycle names follow the [Namada proposal status enum](https://github.com/namada-net/namada/blob/main/crates/governance/src/utils.rs#L20-L35)
+and the [governance query documentation](https://docs.namada.net/users/query).
+Final outcome names are taken from the [Namada indexer proposal API](https://indexer.namada.net/api/v1/gov/proposal).
+
 ## Learn More
 
 Check out [vite.dev](https://vite.dev/) to learn more about Vite.

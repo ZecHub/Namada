@@ -118,8 +118,25 @@
     color: var(--blue)
 }
 
-.proposal-status.ended {
-    color: #899591
+.proposal-status.active {
+    color: var(--blue)
+}
+
+.proposal-status.pending {
+    color: #f3c969
+}
+
+.proposal-status.completed {
+    color: #a9b3b0
+}
+
+.proposal-status.rejected {
+    color: #f28b82
+}
+
+.proposal-status.unknown {
+    color: #9aa3a1;
+    text-decoration: underline dotted
 }
 
 .proposal-row svg {
@@ -158,10 +175,6 @@
     }
 
     .proposal-row {
-        grid-template-columns: 35px 1fr 15px
-    }
-
-    .proposal-status {
-        display: none
+        grid-template-columns: 35px minmax(0, 1fr) auto 15px
     }
 }
