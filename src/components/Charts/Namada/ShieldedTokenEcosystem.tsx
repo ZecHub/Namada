@@ -12,6 +12,7 @@ import { useResponsiveFontSize } from "../../hooks/useResponsiveFontSize";
 import { DATA_URL } from "../../lib/chart/data-url";
 import { getNamadaSupply } from "../../lib/chart/helpers";
 import { FlattenedTokenData } from "../../lib/chart/types";
+import { formatSupplyAmount } from "../../../lib/supply-format";
 import { Spinner } from "flowbite-react";
 import {
   Area,
@@ -77,9 +78,7 @@ export default function ShieldedTokenEcosystem(
     const row: FlattenedTokenData = { Date: entry.Date };
     entry.Total_Supply.forEach((token) => {
       const value = parseFloat(token.shieldedSupply || "0");
-      token.id === "Namada"
-        ? (row[token.id] = value)
-        : (row[token.id] = value / 1000000);
+      row[token.id] = token.id === "Namada" ? value : value / 1_000_000;
     });
     return row;
   });
@@ -180,15 +179,15 @@ export default function ShieldedTokenEcosystem(
                 <XAxis dataKey="Date" tick={{ fontSize, fill: "#94a3b8" }} />
                 <YAxis
                   tick={{ fontSize, fill: "#94a3b8" }}
-                  tickFormatter={(value: number) => {
-                    // Use billions format for Namada, thousands for others
-                    if (props.selectedTokenId === "Namada") {
-                      return `${(value / 1e9).toFixed(1)}B`;
-                    }
-                    return `${(value / 1e3).toFixed(0)}k`;
-                  }}
+                  tickFormatter={(value: number) =>
+                    formatSupplyAmount(value, props.selectedTokenId)
+                  }
                 />
                 <Tooltip
+                  formatter={(value, name) => [
+                    formatSupplyAmount(Number(value), String(name)),
+                    String(name),
+                  ]}
                   wrapperStyle={{
                     backgroundColor: "hsl(var(--chart-1)",
                   }}
