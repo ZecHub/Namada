@@ -12,6 +12,7 @@ import { useResponsiveFontSize } from "../../hooks/useResponsiveFontSize";
 import { DATA_URL } from "../../lib/chart/data-url";
 import { getNamadaSupply } from "../../lib/chart/helpers";
 import { FlattenedTokenData } from "../../lib/chart/types";
+import { formatSupplyAmount } from "../../../lib/supply-format";
 import { Spinner } from "flowbite-react";
 import {
   Area,
@@ -71,8 +72,10 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
         );
         setRawData(data || []);
 
-        const tokenIds = [...new Set((data || []).flatMap((entry) => entry.Total_Supply.map((token) => token.id)))];
-        setTokenIds(tokenIds);
+        const availableTokenIds = [...new Set(
+          (data || []).flatMap((entry) => entry.Total_Supply.map((token) => token.id)),
+        )];
+        setTokenIds(availableTokenIds);
       } catch (err) {
         console.error("Failed to fetch namada data:", err);
       } finally {
@@ -88,7 +91,7 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
     const row: FlattenedTokenData = { Date: entry.Date };
     entry.Total_Supply.forEach((token) => {
       const value = parseFloat(token.totalSupply || "0");
-      row[token.id] = token.id === "Namada" ? value : value / 1000000;
+      row[token.id] = token.id === "Namada" ? value : value / 1_000_000;
     });
     return row;
   });
@@ -188,15 +191,15 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
                 <XAxis dataKey="Date" tick={{ fontSize, fill: "#94a3b8" }} />
                 <YAxis
                   tick={{ fontSize, fill: "#94a3b8" }}
-                  tickFormatter={(value: number) => {
-                    // Use billions format for Namada, thousands for others
-                    if (props.selectedTokenId === "Namada") {
-                      return `${(value / 1e9).toFixed(1)}B`;
-                    }
-                    return `${(value / 1e3).toFixed(0)}k`;
-                  }}
+                  tickFormatter={(value: number) =>
+                    formatSupplyAmount(value, props.selectedTokenId)
+                  }
                 />
                 <Tooltip
+                  formatter={(value, name) => [
+                    formatSupplyAmount(Number(value), String(name)),
+                    String(name),
+                  ]}
                   wrapperStyle={{
                     backgroundColor: "hsl(var(--chart-1)",
                   }}

@@ -7,12 +7,14 @@ import {
   Shield,
   X,
 } from "lucide-react";
-import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
+import { DATA_URL } from "../components/lib/chart/data-url";
 import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
 import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
 import { normalizeSupplyData } from "../lib/supply-normalization";
+import { fetchJson, useIndependentSources } from "../lib/source-loader";
+import ProposalStatusBadge from "../components/ProposalStatusBadge";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -45,6 +47,20 @@ type RewardPoint = {
   Staked_Ratio: string;
   Annual_Staking_Rewards_Ratio: string;
   Inflation_Rate: string;
+};
+
+const protocolLoaders = {
+  protocol: (signal: AbortSignal) =>
+    fetchJson<ProtocolData[]>("/data/protocol_parameters.json", signal, (value): value is ProtocolData[] =>
+      Array.isArray(value) && value.every((row) => row && typeof row === "object"),
+    ),
+};
+
+const validatorLoaders = {
+  validators: (signal: AbortSignal) =>
+    fetchJson<Validator[]>("/data/zechub.json", signal, (value): value is Validator[] =>
+      Array.isArray(value) && value.every((row) => row && typeof row === "object"),
+    ),
 };
 
 function formatParameter(value: unknown, key: string) {
@@ -90,13 +106,8 @@ function ParameterCard({
   );
 }
 function ProtocolParameters() {
-  const [data, setData] = useState<ProtocolData | null>(null);
-  useEffect(() => {
-    fetch("/data/protocol_parameters.json")
-      .then((response) => response.json())
-      .then((rows: ProtocolData[]) => setData(rows[0]))
-      .catch(() => setData({}));
-  }, []);
+  const { states, retry } = useIndependentSources(protocolLoaders);
+  const data = states.protocol.data?.[0] ?? null;
   const protocol = data?.Protocol_Parameters?.[0];
   const vpAllowlist = protocol?.VP_allowlist as string[] | undefined;
   const transactionsAllowlist = protocol?.Transactions_allowlist as
@@ -113,6 +124,8 @@ function ProtocolParameters() {
         <span className="directory-note">Source: Namada data registry</span>
       </div>
       <div className="parameters-grid">
+        {states.protocol.status === "error" && <p className="dashboard-error" role="status">Protocol parameters are unavailable. <button type="button" onClick={() => void retry("protocol")}>Retry</button></p>}
+        {states.protocol.status === "empty" && <p className="participation-empty">No protocol parameters were returned.</p>}
         <ParameterCard
           title="Governance Parameters"
           values={data?.Governance_Parameters?.[0]}
@@ -384,74 +397,37 @@ function SourceChartsWorkspace() {
   );
 }
 
+const governanceLoaders = {
+  live: async (signal: AbortSignal) =>
+    (await fetchCurrentGovernance(fetch, NAMADA_INDEXER_BASE_URL, signal))
+      .snapshot,
+  summary: (signal: AbortSignal) =>
+    fetchJson<ProposalSnapshot[]>(DATA_URL.proposalsUrl, signal, (value): value is ProposalSnapshot[] =>
+      Array.isArray(value) && value.every((row) => row && typeof row === "object" && Array.isArray(row.Proposal)),
+    ),
+  details: (signal: AbortSignal) =>
+    fetchJson<ProposalSnapshot[]>(DATA_URL.propsDetailsUrl, signal, (value): value is ProposalSnapshot[] =>
+      Array.isArray(value) && value.every((row) => row && typeof row === "object" && Array.isArray(row.Proposal)),
+    ),
+};
+
 function PaginatedGovernanceProposals() {
-  const [summarySnapshots, setSummarySnapshots] = useState<ProposalSnapshot[]>(
-    [],
-  );
-  const [detailSnapshots, setDetailSnapshots] = useState<ProposalSnapshot[]>(
-    [],
-  );
-  const [liveSnapshot, setLiveSnapshot] = useState<ProposalSnapshot | null>(
-    null,
-  );
-  const [governanceSource, setGovernanceSource] = useState<
-    "loading" | "live" | "snapshot"
-  >("loading");
-  const [snapshotUpdatedAt, setSnapshotUpdatedAt] = useState<string | null>(
-    null,
-  );
+  const { states, retryFailed } = useIndependentSources(governanceLoaders);
+  const summarySnapshots = useMemo(() => states.summary.data ?? [], [states.summary.data]);
+  const detailSnapshots = useMemo(() => states.details.data ?? [], [states.details.data]);
+  const liveSnapshot = states.live.data ?? null;
+  const governanceSource = liveSnapshot
+    ? "live"
+    : states.summary.data || states.details.data
+      ? "snapshot"
+      : "loading";
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const pageSize = 10;
 
-  useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-
-    const loadGovernance = async () => {
-      try {
-        const current = await fetchCurrentGovernance(
-          fetch,
-          NAMADA_INDEXER_BASE_URL,
-          controller.signal,
-        );
-        if (!active) return;
-        setLiveSnapshot(current.snapshot);
-        setGovernanceSource("live");
-        return;
-      } catch {
-        if (controller.signal.aborted) return;
-      }
-
-      try {
-        const [summary, details, updatedAt] = await Promise.all([
-          fetch(DATA_URL.proposalsUrl, { signal: controller.signal }).then(
-            (response) => response.json(),
-          ),
-          fetch(DATA_URL.propsDetailsUrl, { signal: controller.signal }).then(
-            (response) => response.json(),
-          ),
-          getLastUpdatedDate(DATE_URL.propsDetailsUrl, controller.signal),
-        ]);
-        if (!active) return;
-        setSummarySnapshots(summary as ProposalSnapshot[]);
-        setDetailSnapshots(details as ProposalSnapshot[]);
-        setSnapshotUpdatedAt(updatedAt === "N/A" ? null : updatedAt);
-        setGovernanceSource("snapshot");
-      } catch {
-        if (!active || controller.signal.aborted) return;
-        setSummarySnapshots([]);
-        setDetailSnapshots([]);
-        setGovernanceSource("snapshot");
-      }
-    };
-
-    void loadGovernance();
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, []);
+  const hasGovernanceFailures = Object.values(states).some(
+    (state) => state.status === "error" || state.status === "stale",
+  );
 
   const { proposals, conflicts } = useMemo(
     () =>
@@ -489,10 +465,12 @@ function PaginatedGovernanceProposals() {
     governanceSource === "live"
       ? `Live Namada indexer · ${proposals.length} proposals`
       : governanceSource === "snapshot"
-        ? `Historical snapshot${snapshotUpdatedAt ? ` · ${new Date(snapshotUpdatedAt).toLocaleDateString()}` : ""} · ${proposals.length} proposals`
+        ? `Historical snapshot · ${proposals.length} proposals`
         : "Loading current governance…";
   return (
     <section className="governance-proposals section-wrap">
+      {hasGovernanceFailures && <p className="dashboard-error" role="status">One or more governance sources are unavailable. Successful sources remain visible. <button type="button" onClick={retryFailed}>Retry failed sources</button></p>}
+      {governanceSource !== "loading" && proposals.length === 0 && <p className="participation-empty">The governance source returned no proposals.</p>}
       <div className="epoch-banner">
         <span>{governanceSource === "snapshot" ? "Snapshot epoch" : "Current epoch"}</span>
         <b>{epoch || "Loading…"}</b>
@@ -509,6 +487,7 @@ function PaginatedGovernanceProposals() {
               <th>Start epoch</th>
               <th>End epoch</th>
               <th>Activation epoch</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -544,10 +523,11 @@ function PaginatedGovernanceProposals() {
                 <td>{proposal.Start_Epoch}</td>
                 <td>{proposal.End_Epoch}</td>
                 <td>{proposal.Activation_Epoch}</td>
+                <td><ProposalStatusBadge status={proposal.Status} /></td>
                 </tr>
                 {expandedId === proposal.id && (
                   <tr className="proposal-details-row">
-                    <td colSpan={7}>
+                    <td colSpan={8}>
                       <article className="proposal-details">
                         <div className="proposal-details-heading">
                           <div>
@@ -627,14 +607,9 @@ function PaginatedGovernanceProposals() {
 }
 
 function ValidatorTable() {
-  const [validators, setValidators] = useState<Validator[]>([]);
+  const { states, retry } = useIndependentSources(validatorLoaders);
+  const validators = states.validators.data ?? [];
   const [expanded, setExpanded] = useState<string | null>(null);
-  useEffect(() => {
-    fetch("/data/zechub.json")
-      .then((response) => response.json())
-      .then(setValidators)
-      .catch(() => setValidators([]));
-  }, []);
   return (
     <section className="validator-directory section-wrap">
       <div className="directory-heading">
@@ -648,6 +623,8 @@ function ValidatorTable() {
         </span>
       </div>
       <div className="validator-table-wrap">
+        {states.validators.status === "error" && <p className="dashboard-error" role="status">Validator data is unavailable. <button type="button" onClick={() => void retry("validators")}>Retry</button></p>}
+        {states.validators.status === "empty" && <p className="participation-empty">No validators were returned.</p>}
         <table className="validator-table">
           <thead>
             <tr>
