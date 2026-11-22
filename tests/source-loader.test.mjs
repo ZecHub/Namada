@@ -74,4 +74,3 @@ test("settles independent sources separately and retries only failed sources", a
   assert.equal(healthyCalls, 1);
   assert.equal(flakyCalls, 2);
 });
-
