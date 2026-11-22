@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { ArrowUpRight, BookOpen, CheckCircle2, ChevronRight, Code2, Coins, ExternalLink, Github, Globe2, Menu, Search, Server, Shield, SlidersHorizontal, Sparkles, Vote, WalletCards, X } from "lucide-react";
 import { DATA_URL, DATE_URL } from "../components/lib/chart/data-url";
 import { safeHttpsUrl } from "../lib/safe-url";
+import { normalizeSupplyData } from "../lib/supply-normalization";
 import ProposalStatusBadge from "../components/ProposalStatusBadge";
 import { fetchJson, useIndependentSources } from "../lib/source-loader";
 import {

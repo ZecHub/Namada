@@ -65,6 +65,24 @@ The lifecycle names follow the [Namada proposal status enum](https://github.com/
 and the [governance query documentation](https://docs.namada.net/users/query).
 Final outcome names are taken from the [Namada indexer proposal API](https://indexer.namada.net/api/v1/gov/proposal).
 
+## Namada supply history normalization
+
+All dashboard supply consumers use `normalizeSupplyData` from
+`src/lib/supply-normalization.ts`. It accepts only real `MM/DD/YYYY` dates,
+finite non-negative native NAM supply, and exactly one valid Namada total
+supply asset. An asset with missing or invalid numeric values is omitted from
+that record instead of being treated as zero; records without the required
+Namada values are rejected.
+
+Records are sorted oldest to newest. Duplicate dates are reduced to the record
+with the most valid asset entries; ties select the lexicographically smallest
+normalized record. This makes latest metrics and chart history independent of
+the order in which equal-date source rows arrive. The source currently contains
+multiple same-date rows, including three rows dated `05/23/2025` with different
+NAM supply values, so array position alone does not identify a unique daily
+snapshot.
+
+
 ## Learn More
 
 Check out [vite.dev](https://vite.dev/) to learn more about Vite.
