@@ -15,7 +15,8 @@ import TransparentTokenEcosystem from "./TransparentTokenEcosystem";
 import ProposalsChart from "./ProposalsChart";
 
 type NamadaChartProps = {
-  lastUpdated: Date;
+  /** Unused: each chart tab's footer loads its own data date. */
+  lastUpdated?: Date;
   divChartRef: RefObject<HTMLDivElement | null>;
   showMetrics?: boolean;
   handleSaveToPng: (

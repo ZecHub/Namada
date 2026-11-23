@@ -10,7 +10,6 @@ import {
 import { DATA_URL } from "../components/lib/chart/data-url";
 import NamadaChart from "../components/Charts/Namada/NamadaChart";
 import useExportDashboardAsPNG from "../components/hooks/useExportDashboardAsPNG";
-import { getLastUpdatedDate } from "../components/lib/chart/helpers";
 import { safeHttpsUrl } from "../lib/safe-url";
 import { normalizeSupplyData } from "../lib/supply-normalization";
 import { fetchJson, useIndependentSources } from "../lib/source-loader";
@@ -374,21 +373,11 @@ function MarketMetrics() {
 
 function SourceChartsWorkspace() {
   const { divChartRef, handleSaveToPng } = useExportDashboardAsPNG();
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    getLastUpdatedDate(DATA_URL.shieldedUrl, controller.signal)
-      .then((date) => setLastUpdated(date ? new Date(date) : null))
-      .catch(() => setLastUpdated(null));
-    return () => controller.abort();
-  }, []);
 
   return (
     <div className="source-charts-workspace">
       <MarketMetrics />
       <NamadaChart
-        lastUpdated={lastUpdated ?? new Date()}
         divChartRef={divChartRef}
         handleSaveToPng={handleSaveToPng}
         showMetrics={false}
