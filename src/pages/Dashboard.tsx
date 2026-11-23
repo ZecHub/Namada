@@ -15,6 +15,7 @@ import { safeHttpsUrl } from "../lib/safe-url";
 import { normalizeSupplyData } from "../lib/supply-normalization";
 import { fetchJson, useIndependentSources } from "../lib/source-loader";
 import ProposalStatusBadge from "../components/ProposalStatusBadge";
+import { formatFractionAsPercent, parameterLabel } from "../lib/display-format";
 import {
   fetchCurrentGovernance,
   NAMADA_INDEXER_BASE_URL,
@@ -66,7 +67,7 @@ const validatorLoaders = {
 function formatParameter(value: unknown, key: string) {
   if (typeof value === "boolean") return value ? "Yes" : "No";
   if (typeof value === "number" && /rate|ratio/i.test(key))
-    return `${value * 100}%`;
+    return formatFractionAsPercent(value);
   return String(value ?? "—");
 }
 function ParameterCard({
@@ -97,7 +98,7 @@ function ParameterCard({
       <div className="parameter-rows">
         {entries.map(([key, value]) => (
           <div className="parameter-row" key={key}>
-            <span>{key.replace(/_/g, " ")}</span>
+            <span>{parameterLabel(key)}</span>
             <b>{formatParameter(value, key)}</b>
           </div>
         ))}
@@ -680,12 +681,8 @@ function ValidatorTable() {
                           <i /> Active
                         </span>
                       </td>
-                      <td>
-                        {validator.Commission
-                          ? `${Number(validator.Commission) * 100}%`
-                          : "—"}
-                      </td>
-                      <td>{validator.Max_Change || "—"}</td>
+                      <td>{formatFractionAsPercent(validator.Commission)}</td>
+                      <td>{formatFractionAsPercent(validator.Max_Change)}</td>
                       <td>{validator.Epoch || "—"}</td>
                       <td>
                         {safeHttpsUrl(validator.Website) ? (
@@ -764,10 +761,12 @@ function ValidatorTable() {
                             <div>
                               <h4>Staking details</h4>
                               <p>
-                                Commission: <b>{validator.Commission || "—"}</b>
+                                Commission:{" "}
+                                <b>{formatFractionAsPercent(validator.Commission)}</b>
                               </p>
                               <p>
-                                Max change: <b>{validator.Max_Change || "—"}</b>
+                                Max change:{" "}
+                                <b>{formatFractionAsPercent(validator.Max_Change)}</b>
                               </p>
                               <p>
                                 Epoch: <b>{validator.Epoch || "—"}</b>
