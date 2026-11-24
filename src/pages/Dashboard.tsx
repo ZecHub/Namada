@@ -1,4 +1,11 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -21,6 +28,7 @@ import {
   reconcileProposals,
   type ProposalSnapshot,
 } from "../lib/proposal-reconciliation";
+import { getTabValueForKey } from "../lib/tab-navigation";
 
 type Validator = {
   Name?: string;
@@ -800,12 +808,27 @@ function ValidatorTable() {
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("parameters");
   const [menuOpen, setMenuOpen] = useState(false);
+  const tabButtons = useRef(new Map<string, HTMLButtonElement>());
   const tabs = [
     { id: "parameters", label: "Protocol Parameters" },
     { id: "proposals", label: "Governance Proposals" },
     { id: "validator", label: "Validator" },
     { id: "charts", label: "Charts" },
   ];
+  const handleTabKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    value: string,
+  ) => {
+    const nextValue = getTabValueForKey(
+      value,
+      tabs.map((tab) => tab.id),
+      event.key,
+    );
+    if (!nextValue) return;
+    event.preventDefault();
+    setActiveTab(nextValue);
+    tabButtons.current.get(nextValue)?.focus();
+  };
   return (
     <div className="dashboard-page">
       <header className="site-header dashboard-header">
@@ -865,23 +888,56 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="dashboard-view" data-view={activeTab}>
-          <nav className="dashboard-tabs" aria-label="Dashboard sections">
+          <nav
+            className="dashboard-tabs"
+            role="tablist"
+            aria-label="Dashboard sections"
+            aria-orientation="horizontal"
+          >
             {tabs.map((tab) => (
               <button
                 key={tab.id}
+                ref={(element) => {
+                  if (element) tabButtons.current.set(tab.id, element);
+                  else tabButtons.current.delete(tab.id);
+                }}
+                id={`dashboard-tab-${tab.id}`}
+                type="button"
+                role="tab"
                 className={activeTab === tab.id ? "active" : ""}
                 onClick={() => setActiveTab(tab.id)}
                 aria-selected={activeTab === tab.id}
-                role="tab"
+                aria-controls={`dashboard-panel-${tab.id}`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                onKeyDown={(event) => handleTabKeyDown(event, tab.id)}
               >
                 {tab.label}
               </button>
             ))}
           </nav>
-          {activeTab === "parameters" && <ProtocolParameters />}
-          {activeTab === "proposals" && <PaginatedGovernanceProposals />}
-          {activeTab === "validator" && <ValidatorTable />}
-          {activeTab === "charts" && <SourceChartsWorkspace />}
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              id={`dashboard-panel-${tab.id}`}
+              role="tabpanel"
+              aria-labelledby={`dashboard-tab-${tab.id}`}
+              tabIndex={0}
+              hidden={activeTab !== tab.id}
+            >
+              {activeTab === tab.id && tab.id === "parameters" && (
+                <ProtocolParameters />
+              )}
+              {activeTab === tab.id && tab.id === "proposals" && (
+                <PaginatedGovernanceProposals />
+              )}
+              {activeTab === tab.id && tab.id === "validator" && (
+                <ValidatorTable />
+              )}
+              {activeTab === tab.id && tab.id === "charts" && (
+                <SourceChartsWorkspace />
+              )}
+            </div>
+          ))}
         </div>
       </main>
     </div>

@@ -1,5 +1,6 @@
 import React, { RefObject, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import AccessibleChartTable from "../AccessibleChartTable";
 import { DATA_URL } from "../../lib/chart/data-url";
 import {
   Chart as ChartJS,
@@ -241,8 +242,19 @@ const ProposalsChart = (props: ProposalsChartProps) => {
       </div>
 
       <div className="w-full" style={{ height: "480px", position: "relative" }}>
-        <Bar data={chartData} options={options} />
+        <Bar
+          data={chartData}
+          options={options}
+          role="img"
+          aria-label={`Proposal voting participation chart showing address counts for ${filteredData.length} proposals.`}
+          fallbackContent={<span>Bar chart of addresses voting on Namada governance proposals.</span>}
+        />
       </div>
+      <AccessibleChartTable
+        caption="Address counts for Namada governance proposals"
+        headers={["Proposal index", "Addresses voted"]}
+        rows={filteredData.map((count, index) => [index + 1, count])}
+      />
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-blue-50 dark:bg-slate-800 p-4 rounded-lg">

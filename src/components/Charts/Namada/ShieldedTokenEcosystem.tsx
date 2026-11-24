@@ -152,7 +152,16 @@ export default function ShieldedTokenEcosystem(
                 <Spinner />
               </div>
             ) : (
-              <AreaChart data={chartData}>
+              <AreaChart
+                accessibilityLayer
+                title={
+                  props.selectedTokenId === "all"
+                    ? "Namada shielded token supply overview"
+                    : `${props.selectedTokenId} shielded supply history`
+                }
+                desc="Use the left and right arrow keys to inspect shielded supply values by date."
+                data={chartData}
+              >
                 <defs>
                   {activeTokenIds.map((id, index) => (
                     <linearGradient

@@ -26,6 +26,7 @@ import "chartjs-adapter-date-fns";
 import { format, parse } from "date-fns";
 import { RefObject, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import AccessibleChartTable from "../AccessibleChartTable";
 
 ChartJS.register(
   CategoryScale,
@@ -327,8 +328,24 @@ const RewardChart = (props: RewardChartProps) => {
       </div>
 
       <div className="w-full" style={{ height: "480px", position: "relative" }}>
-        <Line data={chartData} options={options} />
+        <Line
+          data={chartData}
+          options={options}
+          role="img"
+          aria-label={`Namada staking rewards, staked ratio, and inflation chart. ${filteredData.length} data points for the selected ${timeRange} range.`}
+          fallbackContent={<span>Chart of Namada staking rewards, staked ratio, and inflation over time.</span>}
+        />
       </div>
+      <AccessibleChartTable
+        caption={`Namada staking metrics for the selected ${timeRange} range`}
+        headers={["Date", "Staked ratio", "Annual staking rewards", "Inflation rate"]}
+        rows={filteredData.map((item) => [
+          item.Date,
+          `${(Number(item.Staked_Ratio) * 100).toFixed(2)}%`,
+          `${(Number(item.Annual_Staking_Rewards_Ratio) * 100).toFixed(2)}%`,
+          `${(Number(item.Inflation_Rate) * 100).toFixed(2)}%`,
+        ])}
+      />
       {/* <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-blue-50 dark:bg-slate-800 p-4 rounded-lg">
           <h3 className="font-semibold text-blue-800">Current Staked Ratio</h3>

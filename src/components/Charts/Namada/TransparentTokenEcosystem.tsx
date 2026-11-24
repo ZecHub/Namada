@@ -152,7 +152,16 @@ export default function TransparentTokenEcosystem(
                 <Spinner />
               </div>
             ) : (
-              <AreaChart data={chartData}>
+              <AreaChart
+                accessibilityLayer
+                title={
+                  props.selectedTokenId === "all"
+                    ? "Namada transparent token supply overview"
+                    : `${props.selectedTokenId} transparent supply history`
+                }
+                desc="Use the left and right arrow keys to inspect transparent supply values by date."
+                data={chartData}
+              >
                 <defs>
                   {activeTokenIds.map((id, index) => (
                     <linearGradient
