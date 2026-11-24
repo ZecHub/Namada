@@ -1,4 +1,11 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { isChartTabActive } from "../../lib/chart-tab-activity";
+
+const ChartTabActivityContext = createContext<boolean | null>(null);
+
+export function useChartTabActive() {
+  return isChartTabActive(useContext(ChartTabActivityContext));
+}
 
 // Tabs component - simple implementation
 export const Tabs = ({ children, defaultValue, value, onValueChange }: any) => {
@@ -36,5 +43,7 @@ export const TabsTrigger = ({ value, children, activeTab, setActiveTab }: any) =
 );
 
 export const TabsContent = ({ value, children, activeTab }: any) => (
-  <div className={activeTab === value ? "block" : "hidden"}>{children}</div>
+  <ChartTabActivityContext.Provider value={activeTab === value}>
+    <div className={activeTab === value ? "block" : "hidden"}>{children}</div>
+  </ChartTabActivityContext.Provider>
 );

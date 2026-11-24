@@ -11,6 +11,8 @@ import {
 } from "../../UI/shadcn/select";
 
 import { DATA_URL } from "../../lib/chart/data-url";
+import { useChartTabActive } from "../Tabs";
+import { pollSequentially } from "../../../lib/polling";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -53,17 +55,19 @@ const RewardChart = (props: RewardChartProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [namadaRewards, setNamadaRewards] = useState<RewardData[]>([]);
+  const isActive = useChartTabActive();
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d" | "all">(
     "90d",
   );
 
   useEffect(() => {
-    const fetchRewards = async () => {
+    if (!isActive) return;
+    const fetchRewards = async (signal: AbortSignal) => {
       try {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(DATA_URL.namadaRewardUrl);
+        const response = await fetch(DATA_URL.namadaRewardUrl, { signal });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -77,22 +81,18 @@ const RewardChart = (props: RewardChartProps) => {
 
         setNamadaRewards(data);
       } catch (err) {
+        if (signal.aborted) return;
         console.error("Fetch error:", err);
         setError(
           err instanceof Error ? err.message : "Failed to load reward data",
         );
       } finally {
-        setLoading(false);
+        if (!signal.aborted) setLoading(false);
       }
     };
 
-    fetchRewards();
-
-    // Optional: Set up polling for live data
-    const interval = setInterval(fetchRewards, 300000); // 5 minutes
-
-    return () => clearInterval(interval);
-  }, []);
+    return pollSequentially(fetchRewards, 300000);
+  }, [isActive]);
 
   // Filter relative to the newest snapshot in the dataset. The JSON is an
   // archive and may lag behind today, so comparing it with the current clock

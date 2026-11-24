@@ -51,6 +51,10 @@ order:
 This protects future dataset updates without claiming that the current
 snapshots contain incorrect dashboard results.
 
+Chart panels only fetch while their tab is active. Reward and proposal refreshes
+run sequentially and are aborted when the user leaves the tab, avoiding hidden
+panels continuing to poll in the background.
+
 ## Governance proposal statuses
 
 Proposal badges use one shared mapping in `src/lib/proposal-status.ts`.
