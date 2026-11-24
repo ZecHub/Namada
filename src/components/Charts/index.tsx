@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [selectedCrypto, setSelectedCrypto] = useState("namada");
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const { divChartRef, handleSaveToPng } = useExportDashboardAsPNG();
+  const { handleSaveToPng } = useExportDashboardAsPNG();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -66,7 +66,6 @@ const Dashboard = () => {
         {selectedCrypto === "namada" && (
           <NamadaChart
             lastUpdated={lastUpdated!}
-            divChartRef={divChartRef}
             handleSaveToPng={handleSaveToPng}
           />
         )}

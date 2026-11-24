@@ -10,11 +10,13 @@ export const PoolsType = {
 
 /// This hook is use to handle the export of the dashboard chart
 const useExportDashboardAsPNG = () => {
-  const divChartRef = useRef<HTMLDivElement>(null);
-
-  const handleSaveToPng = async (label: string) => {
+  const handleSaveToPng = async (
+    target: HTMLDivElement | null,
+    label: string,
+  ) => {
     try {
-      const canvas = await html2canvas(divChartRef.current!, {
+      if (!target) throw new Error("The selected chart is not ready to export");
+      const canvas = await html2canvas(target, {
         scale: 3, // renders at 3x resolution
         useCORS: true,
       });
@@ -30,7 +32,7 @@ const useExportDashboardAsPNG = () => {
     }
   };
 
-  return { divChartRef, handleSaveToPng };
+  return { handleSaveToPng };
 };
 
 const useExportDashboardAsPNGBackup = () => {

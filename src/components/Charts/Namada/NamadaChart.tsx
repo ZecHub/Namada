@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../UI/shadcn/card";
 
-import { RefObject, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 
 import { ErrorBoundary } from "../../ErrorBoundary/ErrorBoundary";
 import CryptoMetrics from "../../ShieldedPool/Metric";
@@ -16,24 +16,25 @@ import ProposalsChart from "./ProposalsChart";
 
 type NamadaChartProps = {
   lastUpdated: Date;
-  divChartRef: RefObject<HTMLDivElement | null>;
   showMetrics?: boolean;
-  handleSaveToPng: (
-    poolType: string,
-    poolData: Record<
-      string,
-      {
-        timestamp: string;
-        supply: number;
-      } | null
-    >,
-    toolType: string
-  ) => Promise<void>;
+  handleSaveToPng: (target: HTMLDivElement | null, label: string) => Promise<void>;
 };
 
 function NamadaChart(props: NamadaChartProps) {
   const [selectedTokenId, setSelectedTokenId] = useState<string>("all");
   const [activeTab, setActiveTab] = useState("total supply");
+  const totalSupplyRef = useRef<HTMLDivElement | null>(null);
+  const shieldedSupplyRef = useRef<HTMLDivElement | null>(null);
+  const transparentSupplyRef = useRef<HTMLDivElement | null>(null);
+  const rewardsRef = useRef<HTMLDivElement | null>(null);
+  const proposalsRef = useRef<HTMLDivElement | null>(null);
+  const chartRefs: Record<string, RefObject<HTMLDivElement | null>> = {
+    "total supply": totalSupplyRef,
+    "shielded supply": shieldedSupplyRef,
+    "transparent supply": transparentSupplyRef,
+    rewards: rewardsRef,
+    proposals: proposalsRef,
+  };
   const tabLabels = [
     "Total Supply",
     "Shielded Supply",
@@ -74,7 +75,7 @@ function NamadaChart(props: NamadaChartProps) {
 
                   <TabsContent value="total supply" activeTab={activeTab}>
                     <TokenEcosystem
-                      divChartRef={props.divChartRef}
+                      exportRef={totalSupplyRef}
                       selectedTokenId={selectedTokenId}
                       setSelectedTokenId={setSelectedTokenId}
                     />
@@ -82,7 +83,7 @@ function NamadaChart(props: NamadaChartProps) {
 
                   <TabsContent value="shielded supply" activeTab={activeTab}>
                     <ShieldedTokenEcosystem
-                      divChartRef={props.divChartRef}
+                      exportRef={shieldedSupplyRef}
                       selectedTokenId={selectedTokenId}
                       setSelectedTokenId={setSelectedTokenId}
                     />
@@ -90,23 +91,25 @@ function NamadaChart(props: NamadaChartProps) {
 
                   <TabsContent value="transparent supply" activeTab={activeTab}>
                     <TransparentTokenEcosystem
-                      divChartRef={props.divChartRef}
+                      exportRef={transparentSupplyRef}
                       selectedTokenId={selectedTokenId}
                       setSelectedTokenId={setSelectedTokenId}
                     />
                   </TabsContent>
 
                   <TabsContent value="rewards" activeTab={activeTab}>
-                    <RewardChart divChartRef={props.divChartRef} />
+                    <RewardChart exportRef={rewardsRef} />
                   </TabsContent>
 
                   <TabsContent value="proposals" activeTab={activeTab}>
-                    <ProposalsChart divChartRef={props.divChartRef} />
+                    <ProposalsChart exportRef={proposalsRef} />
                   </TabsContent>
 
                   <ChartFooter
                     imgLabel={selectedTokenId}
-                    handleSaveToPng={props.handleSaveToPng}
+                    handleSaveToPng={(label) =>
+                      props.handleSaveToPng(chartRefs[activeTab]?.current ?? null, label)
+                    }
                     lastUpdatedDate={activeTab}
                   />
                 </>

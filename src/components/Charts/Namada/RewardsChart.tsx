@@ -46,7 +46,7 @@ interface RewardData {
 }
 
 interface RewardChartProps {
-  divChartRef: RefObject<HTMLDivElement | null>;
+  exportRef: RefObject<HTMLDivElement | null>;
 }
 
 const RewardChart = (props: RewardChartProps) => {
@@ -287,7 +287,7 @@ const RewardChart = (props: RewardChartProps) => {
 
   return (
       <div
-        ref={props.divChartRef}
+        ref={props.exportRef}
       className="source-reward-chart bg-white dark:bg-slate-900 px-4 py-6 imd:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >
