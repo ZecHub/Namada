@@ -49,6 +49,39 @@ type RewardPoint = {
   Inflation_Rate: string;
 };
 
+type MarketPrice = {
+  namada?: { usd?: number; btc?: number; usd_market_cap?: number };
+};
+
+function isMarketPrice(value: unknown): value is MarketPrice {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const namada = (value as Record<string, unknown>).namada;
+  if (!namada || typeof namada !== "object" || Array.isArray(namada)) return false;
+  const prices = namada as Record<string, unknown>;
+  return [prices.usd, prices.btc, prices.usd_market_cap].some(
+    (field) => typeof field === "number" && Number.isFinite(field),
+  );
+}
+
+const marketLoaders = {
+  price: (signal: AbortSignal) =>
+    fetchJson<MarketPrice>(
+      "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true",
+      signal,
+      isMarketPrice,
+    ),
+  supply: async (signal: AbortSignal) => {
+    const data = await fetchJson<unknown[]>(
+      DATA_URL.namadaSupplyUrl,
+      signal,
+      (value): value is unknown[] => Array.isArray(value),
+    );
+    const records = normalizeSupplyData(data).records;
+    if (!records.length) throw new Error("No valid supply records were returned");
+    return records;
+  },
+};
+
 const protocolLoaders = {
   protocol: (signal: AbortSignal) =>
     fetchJson<ProtocolData[]>("/data/protocol_parameters.json", signal, (value): value is ProtocolData[] =>
@@ -303,34 +336,16 @@ export function RewardsChart() {
 }
 
 function MarketMetrics() {
-  const [price, setPrice] = useState<{
-    namada?: { usd?: number; btc?: number; usd_market_cap?: number };
-  } | null>(null);
-  const [totalSupply, setTotalSupply] = useState(0);
-
-  useEffect(() => {
-    Promise.all([
-      fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=namada&vs_currencies=usd,btc&include_market_cap=true",
-      ).then((response) => response.json()),
-      fetch(DATA_URL.namadaSupplyUrl).then((response) => response.json()),
-    ])
-      .then(([market, supply]) => {
-        const normalizedSupply = normalizeSupplyData(supply).records;
-        const latest = normalizedSupply[normalizedSupply.length - 1];
-        const namada = latest?.Total_Supply?.find(
-          (token: { id: string }) => token.id === "Namada",
-        );
-        setPrice(market);
-        setTotalSupply(namada?.totalSupply ? Number(namada.totalSupply) : 0);
-      })
-      .catch(() => {
-        setPrice(null);
-        setTotalSupply(0);
-      });
-  }, []);
-
+  const { states, retryFailed } = useIndependentSources(marketLoaders);
+  const price = states.price.data;
+  const supplyRows = states.supply.data ?? [];
+  const latest = supplyRows[supplyRows.length - 1];
+  const namada = latest?.Total_Supply.find((token) => token.id === "Namada");
+  const totalSupply = namada ? Number(namada.totalSupply) : 0;
   const usd = price?.namada?.usd;
+  const hasFailures = [states.price, states.supply].some(
+    (state) => state.status === "error" || state.status === "stale",
+  );
   return (
     <section className="charts-workspace section-wrap">
       <div className="metrics-heading">
@@ -342,13 +357,28 @@ function MarketMetrics() {
           Price source: CoinGecko · supply source: Namada
         </span>
       </div>
+      {hasFailures && (
+        <p className="dashboard-error" role="status">
+          {states.price.status === "error" || states.price.status === "stale"
+            ? "Price data is unavailable. "
+            : ""}
+          {states.supply.status === "error" || states.supply.status === "stale"
+            ? "Supply data is unavailable. "
+            : ""}
+          <button type="button" onClick={retryFailed}>
+            Retry unavailable sources
+          </button>
+        </p>
+      )}
       <div className="metric-cards">
         <div>
           <span>Market cap</span>
           <b>
             {usd && totalSupply
               ? `$${(usd * totalSupply).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
-              : "Loading…"}
+              : states.price.status === "error" || states.supply.status === "error"
+                ? "Unavailable"
+                : "Loading…"}
           </b>
         </div>
         <div>
@@ -356,16 +386,30 @@ function MarketMetrics() {
           <b>
             {totalSupply
               ? `${totalSupply.toLocaleString(undefined, { maximumFractionDigits: 0 })} NAM`
-              : "Loading…"}
+              : states.supply.status === "error"
+                ? "Unavailable"
+                : "Loading…"}
           </b>
         </div>
         <div>
           <span>Market price (USD)</span>
-          <b>{usd ? `$${usd.toFixed(6)}` : "—"}</b>
+          <b>
+            {usd
+              ? `$${usd.toFixed(6)}`
+              : states.price.status === "error"
+                ? "Unavailable"
+                : "—"}
+          </b>
         </div>
         <div>
           <span>Market price (BTC)</span>
-          <b>{price?.namada?.btc ? price.namada.btc.toFixed(10) : "—"}</b>
+          <b>
+            {price?.namada?.btc
+              ? price.namada.btc.toFixed(10)
+              : states.price.status === "error"
+                ? "Unavailable"
+                : "—"}
+          </b>
         </div>
       </div>
     </section>
