@@ -218,24 +218,16 @@ export async function getNamadaSupply(
   url: string,
   signal?: AbortSignal
 ): Promise<NamadaRawData[]> {
-  try {
-    const res = await fetch(url, { signal });
-
-    if (!res.ok) {
-      console.warn(`Fetch failed: ${res.status} ${res.statusText}`);
-      return [];
-    }
-
-    const data: unknown = await res.json();
-    return normalizeSupplyData(data).records;
-  } catch (err: unknown) {
-    if (err instanceof Error && err.name === "AbortError") {
-      console.warn("Fetch aborted.");
-    } else {
-      console.error("Error fetching Namada supply:", err);
-    }
-    return [];
+  const response = await fetch(url, { signal });
+  if (!response.ok) {
+    throw new Error(`Namada supply request failed (${response.status})`);
   }
+
+  const data: unknown = await response.json();
+  if (!Array.isArray(data)) {
+    throw new Error("Namada supply response had an unexpected shape");
+  }
+  return normalizeSupplyData(data).records;
 }
 
 export async function fetchTransactionData(
