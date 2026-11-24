@@ -2,15 +2,13 @@ import {
   Dispatch,
   RefObject,
   SetStateAction,
-  useEffect,
-  useState,
 } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../UI/shadcn/card";
 
 import { useResponsiveFontSize } from "../../hooks/useResponsiveFontSize";
-import { DATA_URL } from "../../lib/chart/data-url";
-import { getNamadaSupply } from "../../lib/chart/helpers";
+import { useNamadaSupply } from "../../hooks/useNamadaSupply";
+import LoadingError from "../LoadingError";
 import { FlattenedTokenData } from "../../lib/chart/types";
 import { formatSupplyAmount } from "../../../lib/supply-format";
 import { Spinner } from "flowbite-react";
@@ -32,7 +30,6 @@ import {
   SelectValue,
 } from "../../UI/shadcn/select";
 
-import { NamadaRawData } from "../../lib/chart/types";
 
 // type NamadaAsset = {
 //   id: string;
@@ -54,38 +51,11 @@ type TokenEcosystemProps = {
 };
 
 export default function TokenEcosystem(props: TokenEcosystemProps) {
-  const [rawData, setRawData] = useState<NamadaRawData[]>([]);
-  const [tokenIds, setTokenIds] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const { data: rawData, loading, error, retry } = useNamadaSupply();
+  const tokenIds = [...new Set(
+    rawData.flatMap((entry) => entry.Total_Supply.map((token) => token.id)),
+  )];
   const fontSize = useResponsiveFontSize();
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const data = await getNamadaSupply(
-          DATA_URL.namadaSupplyUrl,
-          controller.signal
-        );
-        setRawData(data || []);
-
-        const availableTokenIds = [...new Set(
-          (data || []).flatMap((entry) => entry.Total_Supply.map((token) => token.id)),
-        )];
-        setTokenIds(availableTokenIds);
-      } catch (err) {
-        console.error("Failed to fetch namada data:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-    return () => controller.abort();
-  }, []);
 
   const flattenedData: FlattenedTokenData[] = rawData.map((entry) => {
     const row: FlattenedTokenData = { Date: entry.Date };
@@ -161,6 +131,8 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
               <div className="flex justify-center items-center h-full">
                 <Spinner />
               </div>
+            ) : error ? (
+              <LoadingError message={error} onRetry={retry} />
             ) : (
               <AreaChart data={chartData}>
                 <defs>
