@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../UI/shadcn/card";
 import { useResponsiveFontSize } from "../../hooks/useResponsiveFontSize";
 import { DATA_URL } from "../../lib/chart/data-url";
 import { getNamadaSupply } from "../../lib/chart/helpers";
+import { useChartTabActive } from "../Tabs";
 import { FlattenedTokenData } from "../../lib/chart/types";
 import { formatSupplyAmount } from "../../../lib/supply-format";
 import { Spinner } from "flowbite-react";
@@ -59,8 +60,10 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
   const [loading, setLoading] = useState(true);
 
   const fontSize = useResponsiveFontSize();
+  const isActive = useChartTabActive();
 
   useEffect(() => {
+    if (!isActive) return;
     const controller = new AbortController();
 
     async function fetchData() {
@@ -70,6 +73,7 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
           DATA_URL.namadaSupplyUrl,
           controller.signal
         );
+        if (controller.signal.aborted) return;
         setRawData(data || []);
 
         const availableTokenIds = [...new Set(
@@ -77,15 +81,17 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
         )];
         setTokenIds(availableTokenIds);
       } catch (err) {
-        console.error("Failed to fetch namada data:", err);
+        if (!controller.signal.aborted) {
+          console.error("Failed to fetch namada data:", err);
+        }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     }
 
     fetchData();
     return () => controller.abort();
-  }, []);
+  }, [isActive]);
 
   const flattenedData: FlattenedTokenData[] = rawData.map((entry) => {
     const row: FlattenedTokenData = { Date: entry.Date };

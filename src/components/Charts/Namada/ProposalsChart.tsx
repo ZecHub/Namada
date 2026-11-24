@@ -1,6 +1,8 @@
 import React, { RefObject, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { DATA_URL } from "../../lib/chart/data-url";
+import { useChartTabActive } from "../Tabs";
+import { pollSequentially } from "../../../lib/polling";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,16 +30,18 @@ const ProposalsChart = (props: ProposalsChartProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [voteCounts, setVoteCounts] = useState<number[]>([]);
+  const isActive = useChartTabActive();
   const [timeRange, setTimeRange] = useState<"10" | "20" | "all">("all");
 
   useEffect(() => {
-    const fetchVoteCounts = async () => {
+    if (!isActive) return;
+    const fetchVoteCounts = async (signal: AbortSignal) => {
       try {
         setLoading(true);
         setError(null);
 
         // Replace with your actual DATA_URL.propAddressesCounts
-        const response = await fetch(DATA_URL.propAddressesCounts);
+        const response = await fetch(DATA_URL.propAddressesCounts, { signal });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,22 +55,18 @@ const ProposalsChart = (props: ProposalsChartProps) => {
 
         setVoteCounts(data);
       } catch (err) {
+        if (signal.aborted) return;
         console.error("Fetch error:", err);
         setError(
           err instanceof Error ? err.message : "Failed to load vote data"
         );
       } finally {
-        setLoading(false);
+        if (!signal.aborted) setLoading(false);
       }
     };
 
-    fetchVoteCounts();
-
-    // Optional: Set up polling for live data
-    const interval = setInterval(fetchVoteCounts, 300000); // 5 minutes
-
-    return () => clearInterval(interval);
-  }, []);
+    return pollSequentially(fetchVoteCounts, 300000);
+  }, [isActive]);
 
   // Filter data based on time range
   const filteredData = (() => {
