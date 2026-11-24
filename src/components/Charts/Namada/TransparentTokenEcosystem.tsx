@@ -35,7 +35,7 @@ import {
 import { NamadaRawData } from "../../lib/chart/types";
 
 type TransparentTokenEcosystemProps = {
-  divChartRef: RefObject<HTMLDivElement | null>;
+  exportRef: RefObject<HTMLDivElement | null>;
   selectedTokenId: string;
   setSelectedTokenId: Dispatch<SetStateAction<string>>;
 };
@@ -106,7 +106,7 @@ export default function TransparentTokenEcosystem(
 
   return (
     <Card
-      ref={props.divChartRef}
+      ref={props.exportRef}
       className="shadow-sm border border-gray-200 dark:border-slate-700"
     >
       <CardHeader className="flex flex-col items-start gap-4 mb-12 lg:flex-row lg:items-center lg:gap-6">

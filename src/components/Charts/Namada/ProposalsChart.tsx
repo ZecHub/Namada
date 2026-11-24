@@ -21,7 +21,7 @@ ChartJS.register(
 );
 
 interface ProposalsChartProps {
-  divChartRef?: RefObject<HTMLDivElement | null>;
+  exportRef?: RefObject<HTMLDivElement | null>;
 }
 
 const ProposalsChart = (props: ProposalsChartProps) => {
@@ -218,7 +218,7 @@ const ProposalsChart = (props: ProposalsChartProps) => {
 
   return (
     <div
-      ref={props.divChartRef}
+      ref={props.exportRef}
       className="source-proposals-chart bg-white dark:bg-slate-900 px-4 py-6 md:px-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"
       style={{ width: "100%" }}
     >

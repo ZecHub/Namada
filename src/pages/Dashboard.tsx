@@ -373,7 +373,7 @@ function MarketMetrics() {
 }
 
 function SourceChartsWorkspace() {
-  const { divChartRef, handleSaveToPng } = useExportDashboardAsPNG();
+  const { handleSaveToPng } = useExportDashboardAsPNG();
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -389,7 +389,6 @@ function SourceChartsWorkspace() {
       <MarketMetrics />
       <NamadaChart
         lastUpdated={lastUpdated ?? new Date()}
-        divChartRef={divChartRef}
         handleSaveToPng={handleSaveToPng}
         showMetrics={false}
       />
