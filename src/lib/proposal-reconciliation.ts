@@ -239,6 +239,8 @@ export function reconcileProposals(
 }
 
 export const NAMADA_INDEXER_BASE_URL = "https://indexer.namada.net";
+const MAX_GOVERNANCE_PAGES = 100;
+const GOVERNANCE_PAGE_BATCH_SIZE = 10;
 
 type NamadaIndexerProposal = {
   id?: number;
@@ -399,17 +401,33 @@ export async function fetchCurrentGovernance(
   ]);
 
   const totalPages = Number(firstPage.pagination?.totalPages ?? 1);
-  if (!Number.isInteger(totalPages) || totalPages < 1) {
+  if (
+    !Number.isInteger(totalPages) ||
+    totalPages < 1 ||
+    totalPages > MAX_GOVERNANCE_PAGES
+  ) {
     throw new Error("Namada indexer returned invalid proposal pagination");
   }
 
-  const remainingPages = await Promise.all(
-    Array.from({ length: totalPages - 1 }, (_, index) =>
-      getJson<NamadaIndexerProposalPage>(
-        `${baseUrl}/api/v1/gov/proposal?page=${index + 2}`,
+  const remainingPages: NamadaIndexerProposalPage[] = [];
+  for (
+    let startPage = 2;
+    startPage <= totalPages;
+    startPage += GOVERNANCE_PAGE_BATCH_SIZE
+  ) {
+    const batchSize = Math.min(
+      GOVERNANCE_PAGE_BATCH_SIZE,
+      totalPages - startPage + 1,
+    );
+    const batch = await Promise.all(
+      Array.from({ length: batchSize }, (_, index) =>
+        getJson<NamadaIndexerProposalPage>(
+          `${baseUrl}/api/v1/gov/proposal?page=${startPage + index}`,
+        ),
       ),
-    ),
-  );
+    );
+    remainingPages.push(...batch);
+  }
 
   const current = buildLiveGovernanceSnapshot(epochPayload, [
     firstPage,
