@@ -57,22 +57,24 @@ function NamadaChart(props: NamadaChartProps) {
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              {({ activeTab, setActiveTab }: any) => (
+              {({ activeTab, setActiveTab, idPrefix }: any) => (
                 <>
-                  <TabsList>
+                  <TabsList idPrefix={idPrefix} label="Namada chart views">
                     {tabLabels.map((label) => (
                       <TabsTrigger
                         key={label}
                         value={label.toLowerCase()}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
+                        idPrefix={idPrefix}
+                        tabValues={tabLabels.map((tab) => tab.toLowerCase())}
                       >
                         {label}
                       </TabsTrigger>
                     ))}
                   </TabsList>
 
-                  <TabsContent value="total supply" activeTab={activeTab}>
+                  <TabsContent value="total supply" activeTab={activeTab} idPrefix={idPrefix}>
                     <TokenEcosystem
                       divChartRef={props.divChartRef}
                       selectedTokenId={selectedTokenId}
@@ -80,7 +82,7 @@ function NamadaChart(props: NamadaChartProps) {
                     />
                   </TabsContent>
 
-                  <TabsContent value="shielded supply" activeTab={activeTab}>
+                  <TabsContent value="shielded supply" activeTab={activeTab} idPrefix={idPrefix}>
                     <ShieldedTokenEcosystem
                       divChartRef={props.divChartRef}
                       selectedTokenId={selectedTokenId}
@@ -88,7 +90,7 @@ function NamadaChart(props: NamadaChartProps) {
                     />
                   </TabsContent>
 
-                  <TabsContent value="transparent supply" activeTab={activeTab}>
+                  <TabsContent value="transparent supply" activeTab={activeTab} idPrefix={idPrefix}>
                     <TransparentTokenEcosystem
                       divChartRef={props.divChartRef}
                       selectedTokenId={selectedTokenId}
@@ -96,11 +98,11 @@ function NamadaChart(props: NamadaChartProps) {
                     />
                   </TabsContent>
 
-                  <TabsContent value="rewards" activeTab={activeTab}>
+                  <TabsContent value="rewards" activeTab={activeTab} idPrefix={idPrefix}>
                     <RewardChart divChartRef={props.divChartRef} />
                   </TabsContent>
 
-                  <TabsContent value="proposals" activeTab={activeTab}>
+                  <TabsContent value="proposals" activeTab={activeTab} idPrefix={idPrefix}>
                     <ProposalsChart divChartRef={props.divChartRef} />
                   </TabsContent>
 

@@ -162,7 +162,16 @@ export default function TokenEcosystem(props: TokenEcosystemProps) {
                 <Spinner />
               </div>
             ) : (
-              <AreaChart data={chartData}>
+              <AreaChart
+                accessibilityLayer
+                title={
+                  props.selectedTokenId === "all"
+                    ? "Namada token supply overview"
+                    : `${props.selectedTokenId} supply history`
+                }
+                desc="Use the left and right arrow keys to inspect supply values by date."
+                data={chartData}
+              >
                 <defs>
                   {activeTokenIds.map((id, index) => (
                     <linearGradient

@@ -1,0 +1,15 @@
+.chart-tabs-list [role="tab"]:focus-visible {
+  outline: 3px solid var(--lime, #d8f36b);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.chart-tabs-list [role="tab"][aria-selected="true"] {
+  color: var(--ink, #f4f5f0);
+}
+
+.chart-tabs-list + [role="tabpanel"]:focus-visible {
+  outline: 2px solid var(--lime, #d8f36b);
+  outline-offset: 4px;
+}

@@ -51,6 +51,14 @@ order:
 This protects future dataset updates without claiming that the current
 snapshots contain incorrect dashboard results.
 
+## Keyboard and chart access
+
+Dashboard sections and chart views use the tab pattern: focus a selected tab,
+then use the left/right arrow keys to move between tabs, or Home/End to jump to
+the first/last tab. Recharts supply views support arrow-key inspection of data
+points. Rewards and proposal charts expose a concise accessible description.
+Those canvas charts also provide their selected data as screen-reader tables.
+
 ## Governance proposal statuses
 
 Proposal badges use one shared mapping in `src/lib/proposal-status.ts`.

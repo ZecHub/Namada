@@ -29,6 +29,17 @@
     border-bottom-color: #d8f36b
 }
 
+.dashboard-tabs button:focus-visible {
+    outline: 3px solid #d8f36b;
+    outline-offset: 4px;
+    border-radius: 2px
+}
+
+.dashboard-view [role="tabpanel"]:focus-visible {
+    outline: 2px solid #d8f36b;
+    outline-offset: 4px
+}
+
 .dashboard-view .dashboard {
     padding-top: 30px
 }
